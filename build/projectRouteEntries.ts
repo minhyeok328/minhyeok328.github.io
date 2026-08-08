@@ -20,16 +20,28 @@ function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+function assertExactlyOneRequiredId(html: string, id: string) {
+  const pattern = new RegExp(
+    `<[a-z][^>]*\\bid=["']${escapeRegExp(id)}["'][^>]*>`,
+    'gi',
+  )
+  const matches = html.match(pattern) ?? []
+
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected exactly one required metadata id: ${id}; found ${matches.length}`,
+    )
+  }
+}
+
 function replaceTitle(html: string, id: string, content: string) {
   const pattern = new RegExp(
     `(<title\\b(?=[^>]*\\bid=["']${escapeRegExp(id)}["'])[^>]*>)[\\s\\S]*?(</title>)`,
     'i',
   )
-  const matches = html.match(new RegExp(pattern.source, 'gi')) ?? []
-
-  if (matches.length !== 1) {
+  if (!pattern.test(html)) {
     throw new Error(
-      `Expected exactly one required title element: ${id}; found ${matches.length}`,
+      `Required metadata id must identify a title element: ${id}`,
     )
   }
 
@@ -46,15 +58,14 @@ function replaceMetaContent(html: string, id: string, content: string) {
     `<meta\\b(?=[^>]*\\bid=["']${escapeRegExp(id)}["'])[^>]*>`,
     'i',
   )
-  const matches = html.match(new RegExp(pattern.source, 'gi')) ?? []
+  const tag = html.match(pattern)?.[0]
 
-  if (matches.length !== 1) {
+  if (!tag) {
     throw new Error(
-      `Expected exactly one required meta element: ${id}; found ${matches.length}`,
+      `Required metadata id must identify a meta element: ${id}`,
     )
   }
 
-  const tag = matches[0]
   const contentPattern = /\bcontent=(["'])([\s\S]*?)\1/i
 
   if (!contentPattern.test(tag)) {
@@ -74,6 +85,16 @@ export function renderProjectEntryHtml(
   project: Project,
   profile: Pick<Profile, 'name'>,
 ) {
+  const requiredIds = [
+    'page-title',
+    'page-description',
+    'page-og-title',
+    'page-og-description',
+    'page-og-url',
+  ]
+
+  requiredIds.forEach((id) => assertExactlyOneRequiredId(rootHtml, id))
+
   const metadata = getProjectMetadata(project, profile)
   let html = replaceTitle(rootHtml, 'page-title', metadata.title)
   html = replaceMetaContent(html, 'page-description', metadata.description)
