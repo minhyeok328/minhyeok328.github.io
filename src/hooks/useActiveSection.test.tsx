@@ -153,6 +153,26 @@ describe('useActiveSection', () => {
     expect(replaceState).not.toHaveBeenCalled()
   })
 
+  it('preserves an explicit canonical hash when native scroll settling ends on another section', () => {
+    vi.spyOn(document, 'onscrollend', 'get').mockReturnValue(null)
+    const animationFrame = installAnimationFrame()
+    document.body.innerHTML = '<section id="about"></section><section id="projects"></section>'
+    window.history.replaceState(null, '', '/#projects')
+    const emit = installIntersectionObserver()
+    const replaceState = vi.spyOn(window.history, 'replaceState')
+    const about = document.getElementById('about')!
+    renderHook(() => useActiveSection(['about', 'projects']))
+
+    emit([intersectionEntry(about, true, 0.8)])
+    act(() => document.dispatchEvent(new Event('scrollend')))
+    animationFrame.flushNextFrame()
+    animationFrame.flushNextFrame()
+
+    expect(window.location.hash).toBe('#projects')
+    expect(replaceState).not.toHaveBeenCalled()
+    expect(animationFrame.pendingCount()).toBe(0)
+  })
+
   it('preserves a project hash while its deepest canonical owner is active', () => {
     document.body.innerHTML = `
       <section id="projects">
