@@ -1,11 +1,20 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import postcss, { type Rule } from 'postcss'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { portfolioData } from '../data/portfolio'
+import type { ProjectModalPhase } from '../hooks/useProjectModalPresence'
 import { getOrderedProjects } from '../lib/projects'
+import { installPortfolioStylesheet, readPortfolioStylesheet } from '../test/portfolioStylesheet'
 import type { Project } from '../types/portfolio'
 import { ProjectDetailModal } from './ProjectDetailModal'
+
+const stylesheet = await readPortfolioStylesheet()
+
+function fireAnimationEnd(element: Element) {
+  fireEvent(element, new Event('webkitAnimationEnd', { bubbles: true }))
+}
 
 const projects = getOrderedProjects(portfolioData)
 const pickle = projects.find((project) => project.id === 'pickle') as Project
@@ -31,6 +40,8 @@ interface ModalHarnessProps {
   onClose?: () => void
   onPreviousProject?: () => void
   onNextProject?: () => void
+  phase?: ProjectModalPhase
+  onExitComplete?: () => void
 }
 
 function ModalHarness({
@@ -40,6 +51,8 @@ function ModalHarness({
   onClose = () => undefined,
   onPreviousProject = () => undefined,
   onNextProject = () => undefined,
+  phase = 'open',
+  onExitComplete = () => undefined,
 }: ModalHarnessProps) {
   return (
     <AppShell>
@@ -53,6 +66,8 @@ function ModalHarness({
           onClose={onClose}
           onPreviousProject={onPreviousProject}
           onNextProject={project.id === 'pickle' ? onNextProject : undefined}
+          phase={phase}
+          onExitComplete={onExitComplete}
         />
       ) : null}
     </AppShell>
@@ -77,7 +92,7 @@ describe('ProjectDetailModal', () => {
     )
   })
 
-  it('closes from the close button and Escape', async () => {
+  it('accepts only the first synchronous exit request', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
     render(<ModalHarness onClose={onClose} />)
@@ -86,7 +101,54 @@ describe('ProjectDetailModal', () => {
     expect(onClose).toHaveBeenCalledTimes(1)
 
     await user.keyboard('{Escape}')
-    expect(onClose).toHaveBeenCalledTimes(2)
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('marks a closing backdrop and completes only its own animation', () => {
+    const onExitComplete = vi.fn()
+    render(<ModalHarness phase="closing" onExitComplete={onExitComplete} />)
+
+    const dialog = screen.getByRole('dialog')
+    const backdrop = dialog.parentElement as HTMLElement
+
+    expect(backdrop).toHaveClass('project-detail-modal__backdrop--closing')
+
+    fireAnimationEnd(dialog)
+    expect(onExitComplete).not.toHaveBeenCalled()
+
+    fireAnimationEnd(backdrop)
+    expect(onExitComplete).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores dismissal and project navigation interactions while closing', () => {
+    const onClose = vi.fn()
+    const onPreviousProject = vi.fn()
+    const onNextProject = vi.fn()
+    render(
+      <ModalHarness
+        phase="closing"
+        onClose={onClose}
+        onPreviousProject={onPreviousProject}
+        onNextProject={onNextProject}
+      />,
+    )
+
+    const dialog = screen.getByRole('dialog')
+    const backdrop = dialog.parentElement as HTMLElement
+    const closeButton = document.querySelector<HTMLButtonElement>('.project-detail-modal__close')
+
+    expect(closeButton).not.toBeNull()
+    fireEvent.click(closeButton as HTMLButtonElement)
+    fireEvent.keyDown(document, { key: 'Escape' })
+    fireEvent.pointerDown(backdrop)
+    fireEvent.pointerUp(backdrop)
+    fireEvent.click(backdrop)
+    document.querySelectorAll<HTMLButtonElement>('.project-detail__project-navigation button')
+      .forEach((button) => fireEvent.click(button))
+
+    expect(onClose).not.toHaveBeenCalled()
+    expect(onPreviousProject).not.toHaveBeenCalled()
+    expect(onNextProject).not.toHaveBeenCalled()
   })
 
   it('closes only when the backdrop itself is clicked', async () => {
@@ -200,5 +262,79 @@ describe('ProjectDetailModal', () => {
     rerender(<ModalHarness show={false} openingCardId="missing-trigger" />)
 
     expect(document.activeElement).toBe(screen.getByRole('heading', { name: 'Projects' }))
+  })
+
+  it('applies matching 160ms backdrop and panel animations for open and closing phases', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      const { rerender } = render(<ModalHarness />)
+      const dialog = screen.getByRole('dialog')
+      const backdrop = dialog.parentElement as HTMLElement
+
+      expect(getComputedStyle(backdrop).backdropFilter).toBe('blur(4px)')
+      expect(getComputedStyle(backdrop).animation).toBe(
+        'project-detail-modal-backdrop-open 160ms ease both',
+      )
+      expect(getComputedStyle(dialog).animation).toBe(
+        'project-detail-modal-panel-open 160ms ease both',
+      )
+
+      rerender(<ModalHarness phase="closing" />)
+
+      expect(getComputedStyle(backdrop).animation).toBe(
+        'project-detail-modal-backdrop-close 160ms ease both',
+      )
+      expect(getComputedStyle(dialog).animation).toBe(
+        'project-detail-modal-panel-close 160ms ease both',
+      )
+    } finally {
+      removeStyles()
+    }
+  })
+
+  it('gives forced-colors backdrop overrides priority over active animations', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      const forcedColorsMediaRule = Array.from(document.styleSheets)
+        .flatMap((sheet) => Array.from(sheet.cssRules))
+        .find((rule): rule is CSSMediaRule => (
+          rule instanceof CSSMediaRule
+          && rule.conditionText === '(forced-colors: active)'
+        ))
+      const backdropRule = Array.from(forcedColorsMediaRule?.cssRules ?? [])
+        .find((rule): rule is CSSStyleRule => (
+          rule instanceof CSSStyleRule
+          && rule.selectorText === '.project-detail-modal__backdrop'
+        ))
+
+      expect(backdropRule?.style.getPropertyValue('background')).toBe('canvas')
+      expect(backdropRule?.style.getPropertyPriority('background')).toBe('important')
+      expect(backdropRule?.style.getPropertyValue('backdrop-filter')).toBe('none')
+      expect(backdropRule?.style.getPropertyPriority('backdrop-filter')).toBe('important')
+
+      const parsedStylesheet = postcss.parse(stylesheet)
+      let parsedBackdropRule: Rule | undefined
+      parsedStylesheet.walkAtRules('media', (mediaRule) => {
+        if (mediaRule.params !== '(forced-colors: active)') return
+
+        mediaRule.walkRules('.project-detail-modal__backdrop', (rule) => {
+          parsedBackdropRule = rule
+        })
+      })
+      const parsedDeclarations = new Map<string, { value: string; important: boolean }>()
+      parsedBackdropRule?.walkDecls((declaration) => {
+        parsedDeclarations.set(declaration.prop, {
+          value: declaration.value,
+          important: declaration.important,
+        })
+      })
+
+      expect(parsedDeclarations.get('-webkit-backdrop-filter')).toEqual({
+        value: 'none',
+        important: true,
+      })
+    } finally {
+      removeStyles()
+    }
   })
 })

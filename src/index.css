@@ -836,6 +836,9 @@ ol {
   place-items: center;
   padding: 1rem;
   background: rgb(17 19 24 / 72%);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: project-detail-modal-backdrop-open 160ms ease both;
 }
 
 .project-detail-modal__panel {
@@ -849,6 +852,67 @@ ol {
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-large);
   box-shadow: var(--shadow-card);
+  animation: project-detail-modal-panel-open 160ms ease both;
+}
+
+.project-detail-modal__backdrop--closing {
+  animation: project-detail-modal-backdrop-close 160ms ease both;
+}
+
+.project-detail-modal__backdrop--closing .project-detail-modal__panel {
+  animation: project-detail-modal-panel-close 160ms ease both;
+}
+
+@keyframes project-detail-modal-backdrop-open {
+  from {
+    background: rgb(17 19 24 / 0%);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+
+  to {
+    background: rgb(17 19 24 / 72%);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes project-detail-modal-backdrop-close {
+  from {
+    background: rgb(17 19 24 / 72%);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  to {
+    background: rgb(17 19 24 / 0%);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes project-detail-modal-panel-open {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.995);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes project-detail-modal-panel-close {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.995);
+  }
 }
 
 .project-detail-modal__close {
@@ -1429,7 +1493,9 @@ ol {
     transition-duration: 0.01ms !important;
   }
 
-  .project-detail-modal__detail {
+  .project-detail-modal__detail,
+  .project-detail-modal__panel,
+  .project-detail-modal__backdrop {
     animation: none;
   }
 
@@ -1457,6 +1523,8 @@ ol {
   }
 
   .project-detail-modal__backdrop {
-    background: Canvas;
+    background: Canvas !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

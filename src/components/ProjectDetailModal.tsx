@@ -1,12 +1,15 @@
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
+  type AnimationEvent as ReactAnimationEvent,
   type MouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { createPortal } from 'react-dom'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
+import type { ProjectModalPhase } from '../hooks/useProjectModalPresence'
 import type { Project } from '../types/portfolio'
 import { ProjectDetailView } from './project-detail/ProjectDetailView'
 
@@ -19,6 +22,8 @@ export interface ProjectDetailModalProps {
   onClose: () => void
   onPreviousProject?: () => void
   onNextProject?: () => void
+  phase: ProjectModalPhase
+  onExitComplete: () => void
 }
 
 const tabbableSelector = [
@@ -44,12 +49,15 @@ export function ProjectDetailModal({
   onClose,
   onPreviousProject,
   onNextProject,
+  phase,
+  onExitComplete,
 }: ProjectDetailModalProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const backdropPointerIdRef = useRef<number | null>(null)
   const backdropPointerEndedRef = useRef(false)
+  const exitRequestedRef = useRef(false)
 
   useBodyScrollLock(homeScrollY)
 
@@ -76,9 +84,40 @@ export function ProjectDetailModal({
   }, [project.id])
 
   useEffect(() => {
+    if (phase === 'open') {
+      exitRequestedRef.current = false
+    }
+  }, [phase, project.id])
+
+  const requestExit = useCallback(() => {
+    if (phase !== 'open' || exitRequestedRef.current) {
+      return
+    }
+
+    exitRequestedRef.current = true
+    onClose()
+  }, [onClose, phase])
+
+  const requestPreviousProject = useCallback(() => {
+    if (phase !== 'open' || exitRequestedRef.current) {
+      return
+    }
+
+    onPreviousProject?.()
+  }, [onPreviousProject, phase])
+
+  const requestNextProject = useCallback(() => {
+    if (phase !== 'open' || exitRequestedRef.current) {
+      return
+    }
+
+    onNextProject?.()
+  }, [onNextProject, phase])
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose()
+        requestExit()
         return
       }
 
@@ -112,7 +151,7 @@ export function ProjectDetailModal({
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [onClose])
+  }, [requestExit])
 
   const resetBackdropPointer = () => {
     backdropPointerIdRef.current = null
@@ -139,17 +178,24 @@ export function ProjectDetailModal({
     resetBackdropPointer()
 
     if (shouldClose) {
-      onClose()
+      requestExit()
+    }
+  }
+
+  const handleBackdropAnimationEnd = (event: ReactAnimationEvent<HTMLDivElement>) => {
+    if (phase === 'closing' && event.target === event.currentTarget) {
+      onExitComplete()
     }
   }
 
   return createPortal(
     <div
-      className="project-detail-modal__backdrop"
+      className={`project-detail-modal__backdrop${phase === 'closing' ? ' project-detail-modal__backdrop--closing' : ''}`}
       onPointerDown={handleBackdropPointerDown}
       onPointerUp={handleBackdropPointerUp}
       onPointerCancel={resetBackdropPointer}
       onClick={handleBackdropClick}
+      onAnimationEnd={handleBackdropAnimationEnd}
     >
       <div
         ref={panelRef}
@@ -159,7 +205,7 @@ export function ProjectDetailModal({
         aria-labelledby="project-detail-heading"
         tabIndex={-1}
       >
-        <button className="project-detail-modal__close" type="button" onClick={onClose}>
+        <button className="project-detail-modal__close" type="button" onClick={requestExit}>
           닫기
         </button>
         <div ref={contentRef} className="project-detail-modal__content">
@@ -169,8 +215,8 @@ export function ProjectDetailModal({
               previousProject={previousProject}
               nextProject={nextProject}
               headingRef={headingRef}
-              onPreviousProject={onPreviousProject}
-              onNextProject={onNextProject}
+              onPreviousProject={onPreviousProject ? requestPreviousProject : undefined}
+              onNextProject={onNextProject ? requestNextProject : undefined}
             />
           </div>
         </div>

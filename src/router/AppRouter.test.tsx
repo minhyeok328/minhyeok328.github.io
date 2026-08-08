@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createBrowserRouter, createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
@@ -14,6 +14,10 @@ function renderRoute(path: string) {
 function expectRootLocation(router: ReturnType<typeof createMemoryRouter>) {
   expect(router.state.location.pathname).toBe('/')
   expect(router.state.location.hash).toBe('')
+}
+
+function fireAnimationEnd(element: Element) {
+  fireEvent(element, new Event('webkitAnimationEnd', { bubbles: true }))
 }
 
 async function openProjectDialog(
@@ -190,6 +194,130 @@ describe('AppRouter', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('retains a closing dialog after close while Router state is already home', async () => {
+    const user = userEvent.setup()
+    const { router } = renderRoute('/')
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home' },
+      })
+    })
+    const trigger = document.getElementById('project-card-trigger-pickle') as HTMLButtonElement
+    await user.click(trigger)
+    const dialog = await screen.findByRole('dialog')
+    const closeButton = dialog.querySelector<HTMLButtonElement>('.project-detail-modal__close')
+
+    expect(closeButton).not.toBeNull()
+    await user.click(closeButton as HTMLButtonElement)
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home', openingCardId: 'project-card-trigger-pickle' },
+      })
+    })
+    expectRootLocation(router)
+    expect(screen.getByRole('dialog')).toBe(dialog)
+    expect(dialog.parentElement).toHaveClass('project-detail-modal__backdrop--closing')
+  })
+
+  it('finishes a closing dialog from the backdrop animation and restores home state', async () => {
+    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(640)
+    const user = userEvent.setup()
+    const { router } = renderRoute('/')
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home' },
+      })
+    })
+    const trigger = document.getElementById('project-card-trigger-pickle') as HTMLButtonElement
+    await user.click(trigger)
+    const dialog = await screen.findByRole('dialog')
+    const closeButton = dialog.querySelector<HTMLButtonElement>('.project-detail-modal__close')
+    vi.mocked(window.scrollTo).mockClear()
+
+    await user.click(closeButton as HTMLButtonElement)
+    const backdrop = dialog.parentElement as HTMLElement
+    expect(backdrop).toHaveClass('project-detail-modal__backdrop--closing')
+    expect(document.getElementById('portfolio-app-shell')).toHaveAttribute('inert')
+    expect(window.scrollTo).not.toHaveBeenCalled()
+
+    fireAnimationEnd(backdrop)
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(document.getElementById('portfolio-app-shell')).not.toHaveAttribute('inert')
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
+    expect(document.activeElement).toBe(trigger)
+    expectRootLocation(router)
+  })
+
+  it('uses the same closing presence for Back and cancels it on Forward', async () => {
+    const user = userEvent.setup()
+    const { router } = renderRoute('/')
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home' },
+      })
+    })
+    const trigger = document.getElementById('project-card-trigger-pickle') as HTMLButtonElement
+    await user.click(trigger)
+    const dialog = await screen.findByRole('dialog')
+
+    await act(async () => {
+      await router.navigate(-1)
+    })
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home' },
+      })
+    })
+    expectRootLocation(router)
+    expect(screen.getByRole('dialog')).toBe(dialog)
+    expect(dialog.parentElement).toHaveClass('project-detail-modal__backdrop--closing')
+
+    await act(async () => {
+      await router.navigate(1)
+    })
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'project', projectId: 'pickle' },
+      })
+    })
+    expect(screen.getByRole('dialog')).toBe(dialog)
+    expect(dialog.parentElement).not.toHaveClass('project-detail-modal__backdrop--closing')
+    expectRootLocation(router)
+  })
+
+  it('switches projects in the original open dialog without entering closing presence', async () => {
+    const user = userEvent.setup()
+    const { router } = renderRoute('/')
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'home' },
+      })
+    })
+    const trigger = document.getElementById('project-card-trigger-pickle') as HTMLButtonElement
+    await user.click(trigger)
+    const dialog = await screen.findByRole('dialog')
+    const navigationButtons = dialog.querySelectorAll<HTMLButtonElement>(
+      '.project-detail__project-navigation button',
+    )
+
+    await user.click(navigationButtons[navigationButtons.length - 1])
+
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        portfolioModal: { view: 'project', projectId: 'lg-home-ai' },
+      })
+    })
+    expect(screen.getByRole('dialog')).toBe(dialog)
+    expect(dialog.parentElement).not.toHaveClass('project-detail-modal__backdrop--closing')
+    expectRootLocation(router)
   })
 
   it('keeps the repository action safe and omits a project-list action in the dialog', async () => {
