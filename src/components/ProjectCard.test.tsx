@@ -93,15 +93,18 @@ describe('ProjectCard', () => {
 
   it('does not keep the card elevated when the restored trigger receives focus', () => {
     const removeStyles = installPortfolioStylesheet(stylesheet)
-    renderProjectCard()
-    const card = screen.getByTestId('journey-project')
-    const trigger = within(card).getByRole('button')
+    try {
+      renderProjectCard()
+      const card = screen.getByTestId('journey-project')
+      const trigger = within(card).getByRole('button')
 
-    trigger.focus()
+      trigger.focus()
 
-    expect(getComputedStyle(card).transform).not.toBe('translateY(-3px)')
-    expect(getComputedStyle(card).boxShadow).not.toBe('var(--shadow-card)')
-    expect(getComputedStyle(trigger).outline).toContain('3px solid')
-    removeStyles()
+      expect(getComputedStyle(card).transform).not.toBe('translateY(-3px)')
+      expect(getComputedStyle(card).boxShadow).not.toBe('var(--shadow-card)')
+      expect(getComputedStyle(trigger).outline).toContain('3px solid')
+    } finally {
+      removeStyles()
+    }
   })
 })
