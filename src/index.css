@@ -184,6 +184,10 @@ ol {
   font-size: 0.9375rem;
   font-weight: 850;
   letter-spacing: -0.045em;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: 0;
   text-decoration: none;
 }
 
@@ -196,7 +200,7 @@ ol {
   list-style: none;
 }
 
-.header__navigation-list a {
+.header__navigation-list :is(a, button) {
   position: relative;
   display: inline-flex;
   min-height: 2.75rem;
@@ -205,11 +209,15 @@ ol {
   font-size: 0.8125rem;
   font-weight: 650;
   letter-spacing: -0.01em;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: 0;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
-.header__navigation-list a::after {
+.header__navigation-list :is(a, button)::after {
   position: absolute;
   right: 0;
   bottom: 0.25rem;
@@ -222,11 +230,13 @@ ol {
   transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
-.header__navigation-list a:hover,
+.header__navigation-list :is(a, button):hover,
+.header__navigation-list :is(a, button)[aria-current='location'],
 .header__navigation-list a[aria-current='page'] {
   color: var(--color-text-primary);
 }
 
+.header__navigation-list :is(a, button)[aria-current='location']::after,
 .header__navigation-list a[aria-current='page']::after {
   opacity: 1;
   transform: scaleX(1);
@@ -441,18 +451,22 @@ ol {
   border-radius: 50%;
 }
 
-.projects-section__growth-line a {
+.projects-section__growth-line :is(a, button) {
   display: block;
   color: var(--color-text-secondary);
   font-size: 0.75rem;
   font-weight: 650;
   line-height: 1.45;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: 0;
   text-decoration: none;
   overflow-wrap: anywhere;
   transition: color var(--transition-fast);
 }
 
-.projects-section__growth-line a:hover {
+.projects-section__growth-line :is(a, button):hover {
   color: var(--color-text-primary);
 }
 
@@ -1078,9 +1092,13 @@ ol {
   font-size: 0.75rem;
 }
 
-.site-footer a {
+.site-footer :is(a, button) {
   color: var(--color-text-secondary);
   font-weight: 650;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 
 @media (max-width: 1023px) {
@@ -1162,19 +1180,20 @@ ol {
     gap: 0;
   }
 
-  .header__mobile-navigation .header__navigation-list a {
+  .header__mobile-navigation .header__navigation-list :is(a, button) {
     width: 100%;
     min-height: 2.875rem;
     padding-inline: 0.75rem;
     border-radius: var(--radius-small);
   }
 
-  .header__mobile-navigation .header__navigation-list a:hover,
+  .header__mobile-navigation .header__navigation-list :is(a, button):hover,
+  .header__mobile-navigation .header__navigation-list :is(a, button)[aria-current='location'],
   .header__mobile-navigation .header__navigation-list a[aria-current='page'] {
     background: var(--color-surface-muted);
   }
 
-  .header__mobile-navigation .header__navigation-list a::after {
+  .header__mobile-navigation .header__navigation-list :is(a, button)::after {
     display: none;
   }
 

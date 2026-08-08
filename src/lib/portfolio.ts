@@ -17,7 +17,6 @@ export function getNavigationItems(data: PortfolioData) {
   return [
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },
-    { id: 'journey', label: 'Journey' },
     { id: 'skills', label: 'Skills' },
     ...(hasExperience(data) ? [{ id: 'experience', label: 'Experience' }] : []),
     { id: 'contact', label: 'Contact' },

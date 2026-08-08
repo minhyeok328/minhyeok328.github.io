@@ -25,20 +25,25 @@ function mockDesktopMediaQuery() {
 }
 
 describe('Header', () => {
-  it('links the visible MH brand to the top of the page', () => {
+  it('renders the visible MH brand as a native button', () => {
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)
 
-    const brandLink = screen.getByRole('link', { name: 'MH' })
+    expect(screen.getByRole('button', { name: 'MH' })).toBeVisible()
+  })
 
-    expect(brandLink).toBeVisible()
-    expect(brandLink).toHaveAttribute('href', '#top')
+  it('renders data-backed navigation controls as native buttons', () => {
+    render(<Header items={[{ id: 'about', label: 'About' }, { id: 'projects', label: 'Projects' }]} activeSection="about" />)
+
+    expect(screen.getAllByRole('button', { name: 'About' })).toHaveLength(1)
+    expect(screen.getAllByRole('button', { name: 'Projects' })).toHaveLength(1)
+    expect(screen.queryByRole('button', { name: 'Journey' })).not.toBeInTheDocument()
   })
 
   it('opens from the menu button and closes on Escape', async () => {
     const user = userEvent.setup()
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)
 
-    const menuButton = screen.getByRole('button', { name: '메뉴 열기' })
+    const menuButton = screen.getByRole('button', { name: /메뉴 열기/ })
     await user.click(menuButton)
     expect(menuButton).toHaveAttribute('aria-expanded', 'true')
     expect(menuButton).toHaveAccessibleName('메뉴 닫기')
@@ -49,7 +54,7 @@ describe('Header', () => {
     expect(menuButton).toHaveAccessibleName('메뉴 열기')
   })
 
-  it('marks the active data-backed navigation item as the current page', () => {
+  it('marks the active data-backed navigation button as the current location', () => {
     render(
       <Header
         items={[
@@ -60,16 +65,16 @@ describe('Header', () => {
       />,
     )
 
-    expect(screen.getAllByRole('link', { name: 'Projects' })).toHaveLength(1)
-    for (const link of screen.getAllByRole('link', { name: 'Projects' })) {
-      expect(link).toHaveAttribute('aria-current', 'page')
+    expect(screen.getAllByRole('button', { name: 'Projects' })).toHaveLength(1)
+    for (const button of screen.getAllByRole('button', { name: 'Projects' })) {
+      expect(button).toHaveAttribute('aria-current', 'location')
     }
-    for (const link of screen.getAllByRole('link', { name: 'About' })) {
-      expect(link).not.toHaveAttribute('aria-current')
+    for (const button of screen.getAllByRole('button', { name: 'About' })) {
+      expect(button).not.toHaveAttribute('aria-current')
     }
   })
 
-  it('marks no desktop or mobile navigation link current while the top section is active', () => {
+  it('marks no desktop or mobile navigation button current while the top section is active', () => {
     render(
       <Header
         items={[
@@ -80,19 +85,19 @@ describe('Header', () => {
       />,
     )
 
-    const navigationLinks = document.querySelectorAll('.header__navigation-list a')
+    const navigationButtons = document.querySelectorAll('.header__navigation-list button')
 
-    expect(navigationLinks).toHaveLength(4)
-    navigationLinks.forEach((link) => expect(link).not.toHaveAttribute('aria-current'))
+    expect(navigationButtons).toHaveLength(4)
+    navigationButtons.forEach((button) => expect(button).not.toHaveAttribute('aria-current'))
   })
 
-  it('closes the mobile navigation after a mobile link is selected', async () => {
+  it('closes the mobile navigation after a mobile button is selected', async () => {
     const user = userEvent.setup()
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)
 
-    const menuButton = screen.getByRole('button', { name: '메뉴 열기' })
+    const menuButton = screen.getByRole('button', { name: /메뉴 열기/ })
     await user.click(menuButton)
-    await user.click(within(screen.getByRole('navigation', { name: '모바일 탐색' })).getByRole('link'))
+    await user.click(within(screen.getByRole('navigation', { name: /모바일 탐색/ })).getByRole('button'))
 
     expect(menuButton).toHaveAttribute('aria-expanded', 'false')
   })
@@ -101,7 +106,7 @@ describe('Header', () => {
     const user = userEvent.setup()
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)
 
-    const menuButton = screen.getByRole('button', { name: '메뉴 열기' })
+    const menuButton = screen.getByRole('button', { name: /메뉴 열기/ })
     await user.click(menuButton)
     await user.pointer({ target: document.body, keys: '[MouseLeft]' })
 
@@ -113,7 +118,7 @@ describe('Header', () => {
     const user = userEvent.setup()
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)
 
-    const menuButton = screen.getByRole('button', { name: '메뉴 열기' })
+    const menuButton = screen.getByRole('button', { name: /메뉴 열기/ })
     await user.click(menuButton)
     act(emitDesktopChange)
 
