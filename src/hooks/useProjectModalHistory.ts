@@ -68,7 +68,7 @@ export function useProjectModalHistory({
       return
     }
 
-    const openingCardId = `project-card-${projectId}`
+    const openingCardId = `project-card-trigger-${projectId}`
     const homeScrollY = window.scrollY
     const restore = { openingCardId, homeScrollY }
 

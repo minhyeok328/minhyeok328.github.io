@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import type { Project } from '../types/portfolio'
 import { ProjectCard } from './ProjectCard'
 
@@ -17,45 +17,59 @@ const project: Project = {
   image: '/images/missing-project.webp',
 }
 
-function renderProjectCard(variant: 'flagship' | 'journey' = 'journey') {
-  return render(
-    <MemoryRouter>
-      <ProjectCard project={project} variant={variant} />
-    </MemoryRouter>,
-  )
+function renderProjectCard(
+  variant: 'flagship' | 'journey' = 'journey',
+  onOpenProject = vi.fn(),
+) {
+  return {
+    onOpenProject,
+    ...render(
+      <ProjectCard
+        project={project}
+        variant={variant}
+        onOpenProject={onOpenProject}
+      />,
+    ),
+  }
 }
 
 describe('ProjectCard', () => {
-  it('uses the full compact card as the only internal project action', () => {
-    renderProjectCard('journey')
+  it('uses one full-card dialog trigger with a stable identity and no route link', async () => {
+    const user = userEvent.setup()
+    const { onOpenProject } = renderProjectCard('journey')
 
     const card = screen.getByTestId('journey-project')
-    const link = within(card).getByRole('link', {
-      name: '테스트 프로젝트 상세 페이지 보기',
+    const trigger = within(card).getByRole('button', {
+      name: '테스트 프로젝트 프로젝트 상세 보기',
     })
 
-    expect(link).toHaveAttribute('href', '/projects/test-project/')
-    expect(link).toHaveTextContent('테스트 설명')
-    expect(link).toHaveTextContent('첫 번째 테스트 기여')
-    expect(within(link).getByText('내 역할')).toBeInTheDocument()
-    expect(within(link).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+    expect(card).toHaveAttribute('id', 'test-project')
+    expect(trigger).toHaveAttribute('id', 'project-card-trigger-test-project')
+    expect(trigger).toHaveAttribute('aria-haspopup', 'dialog')
+    expect(within(card).getAllByRole('button')).toHaveLength(1)
+    expect(within(card).queryByRole('link')).not.toBeInTheDocument()
+    expect(card).toHaveTextContent('테스트 설명')
+    expect(card).toHaveTextContent('첫 번째 테스트 기여')
+    expect(within(card).getByText('내 역할')).toBeInTheDocument()
+    expect(within(card).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
       'TypeScript',
       'React',
     ])
     expect(within(card).queryByText('상세 보기')).not.toBeInTheDocument()
     expect(within(card).queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument()
-    expect(link.querySelectorAll('a, button, input, select, textarea')).toHaveLength(0)
-    expect(link).not.toHaveTextContent(/[→←]/)
+    expect(card).not.toHaveTextContent(/[→←]/)
+
+    await user.click(trigger)
+    expect(onOpenProject).toHaveBeenCalledWith('test-project')
   })
 
   it('uses explicit card role copy when provided', () => {
     render(
-      <MemoryRouter>
-        <ProjectCard
-          project={{ ...project, cardRoleSummary: '명시된 카드 역할' }}
-          variant="flagship"
-        />
-      </MemoryRouter>,
+      <ProjectCard
+        project={{ ...project, cardRoleSummary: '명시된 카드 역할' }}
+        variant="flagship"
+        onOpenProject={() => undefined}
+      />,
     )
 
     expect(screen.getByText('명시된 카드 역할')).toBeInTheDocument()

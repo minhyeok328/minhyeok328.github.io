@@ -67,7 +67,7 @@ describe('App', () => {
     expect(screen.getByText('AI Full-Stack')).toBeInTheDocument()
   })
 
-  it('links every project card to its clean detail route without a visible CTA', () => {
+  it('gives every project card one stable dialog trigger without a visible CTA', () => {
     render(<App />)
 
     const projectCards = [
@@ -76,28 +76,29 @@ describe('App', () => {
     ]
 
     expect(projectCards.map((card) => (
-      within(card).getByRole('link').getAttribute('href')
+      within(card).getByRole('button').getAttribute('id')
     ))).toEqual([
-      '/projects/humour/',
-      '/projects/vehicle-tco/',
-      '/projects/bank-churners/',
-      '/projects/pickle/',
-      '/projects/lg-home-ai/',
+      'project-card-trigger-humour',
+      'project-card-trigger-vehicle-tco',
+      'project-card-trigger-bank-churners',
+      'project-card-trigger-pickle',
+      'project-card-trigger-lg-home-ai',
     ])
     expect(projectCards.map((card) => (
-      within(card).getByRole('link').getAttribute('aria-label')
+      within(card).getByRole('button').getAttribute('aria-label')
     ))).toEqual([
-      'HumouR 상세 페이지 보기',
-      '차량 운영·관리 비용 계산 시스템 상세 페이지 보기',
-      '신용카드 고객 이탈 분석 상세 페이지 보기',
-      'PICKLE 맛집 추천 챗봇 상세 페이지 보기',
-      'LG Home AI 가전 상담 상세 페이지 보기',
+      'HumouR 프로젝트 상세 보기',
+      '차량 운영·관리 비용 계산 시스템 프로젝트 상세 보기',
+      '신용카드 고객 이탈 분석 프로젝트 상세 보기',
+      'PICKLE 맛집 추천 챗봇 프로젝트 상세 보기',
+      'LG Home AI 가전 상담 프로젝트 상세 보기',
     ])
 
     projectCards.forEach((card) => {
-      expect(within(card).getAllByRole('link')).toHaveLength(1)
+      expect(within(card).getAllByRole('button')).toHaveLength(1)
+      expect(within(card).queryByRole('link')).not.toBeInTheDocument()
+      expect(within(card).getByRole('button')).toHaveAttribute('aria-haspopup', 'dialog')
       expect(within(card).queryByText('상세 보기')).not.toBeInTheDocument()
-      expect(within(card).queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument()
       expect(card).not.toHaveTextContent(/[→←]/)
     })
   })

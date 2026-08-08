@@ -1,14 +1,14 @@
-import { Link } from 'react-router'
-import { getProjectPath, getProjectRoleSummary } from '../lib/projects'
+import { getProjectRoleSummary } from '../lib/projects'
 import type { Project } from '../types/portfolio'
 import { ProjectImage } from './ProjectImage'
 
 interface ProjectCardProps {
   project: Project
   variant: 'flagship' | 'journey'
+  onOpenProject: (projectId: string) => void
 }
 
-export function ProjectCard({ project, variant }: ProjectCardProps) {
+export function ProjectCard({ project, variant, onOpenProject }: ProjectCardProps) {
   const roleSummary = getProjectRoleSummary(project)
   const technologyLimit = variant === 'flagship' ? 4 : 2
   const visibleTechnologies = project.technologies.slice(0, technologyLimit)
@@ -19,11 +19,15 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
       className={`project-card project-card--${variant}${variant === 'flagship' ? ' flagship-project' : ''}`}
       data-testid={variant === 'flagship' ? 'flagship-project' : 'journey-project'}
     >
-      <Link
-        className="project-card__link"
-        to={getProjectPath(project)}
-        aria-label={`${project.title} 상세 페이지 보기`}
-      >
+      <button
+        id={`project-card-trigger-${project.id}`}
+        className="project-card__trigger"
+        type="button"
+        aria-haspopup="dialog"
+        aria-label={`${project.title} 프로젝트 상세 보기`}
+        onClick={() => onOpenProject(project.id)}
+      />
+      <div className="project-card__visual">
         <ProjectImage
           project={project}
           className="project-card__image"
@@ -47,7 +51,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
             ))}
           </ul>
         </div>
-      </Link>
+      </div>
     </article>
   )
 }

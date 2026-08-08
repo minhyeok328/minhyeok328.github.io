@@ -77,14 +77,14 @@ describe('useProjectModalHistory', () => {
       {
         view: 'home',
         sessionToken: 'current',
-        openingCardId: 'project-card-pickle',
+        openingCardId: 'project-card-trigger-pickle',
         homeScrollY: 640,
       },
       {
         view: 'project',
         sessionToken: 'current',
         projectId: 'pickle',
-        openingCardId: 'project-card-pickle',
+        openingCardId: 'project-card-trigger-pickle',
         homeScrollY: 640,
         depth: 1,
       },
@@ -112,7 +112,7 @@ describe('useProjectModalHistory', () => {
       view: 'project',
       sessionToken: 'current',
       projectId: 'lg-home-ai',
-      openingCardId: 'project-card-pickle',
+      openingCardId: 'project-card-trigger-pickle',
       homeScrollY: 640,
       depth: 2,
     })
@@ -128,7 +128,7 @@ describe('useProjectModalHistory', () => {
       portfolioModal: {
         view: 'home',
         sessionToken: 'current',
-        openingCardId: 'project-card-pickle',
+        openingCardId: 'project-card-trigger-pickle',
         homeScrollY: 640,
       },
     })
@@ -157,7 +157,7 @@ describe('useProjectModalHistory', () => {
     expect(history.current.modalState).toEqual({
       view: 'home',
       sessionToken: 'current',
-      openingCardId: 'project-card-pickle',
+      openingCardId: 'project-card-trigger-pickle',
       homeScrollY: 640,
     })
     expect(history.current.activeProject).toBeNull()
@@ -180,7 +180,7 @@ describe('useProjectModalHistory', () => {
     expect(history.current.modalState).toEqual({
       view: 'home',
       sessionToken: 'current',
-      openingCardId: 'project-card-pickle',
+      openingCardId: 'project-card-trigger-pickle',
       homeScrollY: 640,
     })
     expect(history.router.state.location.state).toMatchObject({ unrelated: 'keep-me' })

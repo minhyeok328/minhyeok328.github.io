@@ -1,22 +1,19 @@
-import { Outlet, ScrollRestoration, type RouteObject } from 'react-router'
+import { Outlet, type RouteObject } from 'react-router'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PortfolioHomePage } from '../pages/PortfolioHomePage'
 import { ProjectDetailPage } from '../pages/ProjectDetailPage'
 
-const appRouteLayout = (
-  <>
-    <Outlet />
-    <ScrollRestoration />
-  </>
-)
+const appRouteLayout = <Outlet />
 
-export const appRoutes: RouteObject[] = [
-  {
-    element: appRouteLayout,
-    children: [
-      { index: true, element: <PortfolioHomePage /> },
-      { path: 'projects/:projectId/', element: <ProjectDetailPage /> },
-      { path: '*', element: <NotFoundPage /> },
-    ],
-  },
-]
+export function createAppRoutes(pageSessionToken: string): RouteObject[] {
+  return [
+    {
+      element: appRouteLayout,
+      children: [
+        { index: true, element: <PortfolioHomePage pageSessionToken={pageSessionToken} /> },
+        { path: 'projects/:projectId/', element: <ProjectDetailPage /> },
+        { path: '*', element: <NotFoundPage /> },
+      ],
+    },
+  ]
+}
