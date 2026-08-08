@@ -676,9 +676,11 @@ ol {
 }
 
 .project-card--journey {
-  display: flex;
+  display: grid;
   min-width: 0;
-  flex-direction: column;
+  grid-row: span 8;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   padding: 0.875rem;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
@@ -697,9 +699,11 @@ ol {
 }
 
 .project-card--journey .project-card__content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  display: grid;
+  min-width: 0;
+  grid-row: span 7;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   padding: 1.125rem 0.25rem 0.25rem;
 }
 
@@ -716,7 +720,7 @@ ol {
 }
 
 .project-card--journey .project-card__content > a {
-  margin-top: auto;
+  margin-top: 1.5rem;
   margin-right: auto;
   padding-top: 0.5rem;
 }
