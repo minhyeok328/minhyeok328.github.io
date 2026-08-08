@@ -98,7 +98,7 @@ describe('App', () => {
       expect(within(card).getAllByRole('link')).toHaveLength(1)
       expect(within(card).queryByText('상세 보기')).not.toBeInTheDocument()
       expect(within(card).queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument()
-      expect(card).not.toHaveTextContent(/[?믠넀]/)
+      expect(card).not.toHaveTextContent(/[→←]/)
     })
   })
 
@@ -115,7 +115,7 @@ describe('App', () => {
     screen.getAllByTestId('journey-project').forEach((card) => {
       const cardScope = within(card)
 
-      expect(cardScope.getByText('역할')).toBeInTheDocument()
+      expect(cardScope.getByText('내 역할')).toBeInTheDocument()
       expect(cardScope.getByRole('list', { name: /주요 기술/ })).toBeInTheDocument()
       expect(cardScope.getAllByRole('listitem')).toHaveLength(2)
       expect(cardScope.queryByRole('heading', { name: '직접 기여' })).not.toBeInTheDocument()

@@ -37,6 +37,7 @@ describe('ProjectCard', () => {
     expect(link).toHaveAttribute('href', '/projects/test-project/')
     expect(link).toHaveTextContent('테스트 설명')
     expect(link).toHaveTextContent('첫 번째 테스트 기여')
+    expect(within(link).getByText('내 역할')).toBeInTheDocument()
     expect(within(link).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
       'TypeScript',
       'React',
@@ -44,7 +45,7 @@ describe('ProjectCard', () => {
     expect(within(card).queryByText('상세 보기')).not.toBeInTheDocument()
     expect(within(card).queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument()
     expect(link.querySelectorAll('a, button, input, select, textarea')).toHaveLength(0)
-    expect(link).not.toHaveTextContent(/[?믠넀]/)
+    expect(link).not.toHaveTextContent(/[→←]/)
   })
 
   it('uses explicit card role copy when provided', () => {

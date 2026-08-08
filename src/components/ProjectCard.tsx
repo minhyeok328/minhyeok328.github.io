@@ -35,7 +35,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
           <h3>{project.title}</h3>
           <p>{project.description}</p>
           <p className="project-card__role">
-            <strong>역할</strong>
+            <strong>내 역할</strong>
             <span>{roleSummary}</span>
           </p>
           <ul
