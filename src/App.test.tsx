@@ -54,6 +54,7 @@ describe('App', () => {
     expect(fallbackImage).toHaveTextContent('MH')
     expect(screen.queryByAltText('서민혁 프로필 사진')).not.toBeInTheDocument()
   })
+
   it('presents HumouR as the only flagship and all four earlier stages as a journey', () => {
     render(<App />)
 
@@ -66,12 +67,7 @@ describe('App', () => {
     expect(screen.getByText('AI Full-Stack')).toBeInTheDocument()
   })
 
-  it('links every project to its verified GitHub repository', () => {
-    render(<App />)
-
-    expect(screen.getAllByRole('link', { name: 'GitHub에서 보기' })).toHaveLength(5)
-  })
-  it('keeps the flagship and journey GitHub links in verified display order', () => {
+  it('links every project card to its clean detail route without a visible CTA', () => {
     render(<App />)
 
     const projectCards = [
@@ -80,36 +76,51 @@ describe('App', () => {
     ]
 
     expect(projectCards.map((card) => (
-      within(card).getByRole('link', { name: 'GitHub에서 보기' }).getAttribute('href')
+      within(card).getByRole('link').getAttribute('href')
     ))).toEqual([
-      'https://github.com/minhyeok328/Final_project',
-      'https://github.com/minhyeok328/1st_project',
-      'https://github.com/minhyeok328/2nd_project',
-      'https://github.com/minhyeok328/3rd_project',
-      'https://github.com/minhyeok328/4th_project',
+      '/projects/humour/',
+      '/projects/vehicle-tco/',
+      '/projects/bank-churners/',
+      '/projects/pickle/',
+      '/projects/lg-home-ai/',
     ])
+    expect(projectCards.map((card) => (
+      within(card).getByRole('link').getAttribute('aria-label')
+    ))).toEqual([
+      'HumouR 상세 페이지 보기',
+      '차량 운영·관리 비용 계산 시스템 상세 페이지 보기',
+      '신용카드 고객 이탈 분석 상세 페이지 보기',
+      'PICKLE 맛집 추천 챗봇 상세 페이지 보기',
+      'LG Home AI 가전 상담 상세 페이지 보기',
+    ])
+
+    projectCards.forEach((card) => {
+      expect(within(card).getAllByRole('link')).toHaveLength(1)
+      expect(within(card).queryByText('상세 보기')).not.toBeInTheDocument()
+      expect(within(card).queryByRole('link', { name: /GitHub/ })).not.toBeInTheDocument()
+      expect(card).not.toHaveTextContent(/[?믠넀]/)
+    })
   })
 
   it('uses accessible placeholders instead of empty project image sources', () => {
     const { container } = render(<App />)
 
-    expect(screen.getAllByRole('img', { name: /프로젝트 이미지 대체$/ })).toHaveLength(5)
+    expect(screen.getAllByRole('img', { name: /프로젝트 이미지 대체 이미지$/ })).toHaveLength(5)
     expect(container.querySelectorAll('img[src=""]')).toHaveLength(0)
   })
 
-  it('shows contribution, growth, and technologies for every journey project', () => {
+  it('keeps Journey cards to one role summary and two technology tags', () => {
     render(<App />)
 
     screen.getAllByTestId('journey-project').forEach((card) => {
       const cardScope = within(card)
 
-      expect(cardScope.getByRole('heading', { level: 4, name: '직접 기여' })).toBeInTheDocument()
-      expect(cardScope.getByText('성장')).toBeInTheDocument()
-      expect(cardScope.getByRole('heading', { level: 4, name: '기술' })).toBeInTheDocument()
-      expect(cardScope.getAllByRole('list')).toHaveLength(2)
-      cardScope.getAllByRole('list').forEach((list) => {
-        expect(within(list).getAllByRole('listitem').length).toBeGreaterThan(0)
-      })
+      expect(cardScope.getByText('역할')).toBeInTheDocument()
+      expect(cardScope.getByRole('list', { name: /주요 기술/ })).toBeInTheDocument()
+      expect(cardScope.getAllByRole('listitem')).toHaveLength(2)
+      expect(cardScope.queryByRole('heading', { name: '직접 기여' })).not.toBeInTheDocument()
+      expect(cardScope.queryByText('성장')).not.toBeInTheDocument()
+      expect(cardScope.queryByText('팀 시스템 연동')).not.toBeInTheDocument()
     })
   })
 
@@ -164,58 +175,6 @@ describe('App', () => {
       expect(within(primarySkills).getAllByRole('listitem').map((item) => item.textContent)).toEqual(primary)
       expect(within(experienceSkills).getAllByRole('listitem').map((item) => item.textContent)).toEqual(experience)
     })
-  })
-  it('keeps the flagship contribution, growth, and technology content distinct', () => {
-    render(<App />)
-
-    const flagship = within(screen.getByTestId('flagship-project'))
-    const contribution = flagship.getByRole('region', { name: '직접 기여' })
-    const technologies = flagship.getByRole('region', { name: '핵심 기술' })
-
-    expect(flagship.getByText('성장')).toBeInTheDocument()
-    expect(within(contribution).getAllByRole('listitem').length).toBeGreaterThan(0)
-    expect(within(technologies).getAllByRole('listitem').length).toBeGreaterThan(0)
-    expect(contribution).not.toBe(technologies)
-    expect(contribution).not.toContainElement(technologies)
-    expect(technologies).not.toContainElement(contribution)
-  })
-
-  it('renders all six approved HumouR direct contributions', () => {
-    render(<App />)
-
-    const flagship = within(screen.getByTestId('flagship-project'))
-    const contribution = flagship.getByRole('region', { name: '직접 기여' })
-
-    expect(within(contribution).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
-      '프론트엔드 CODEOWNER로서 React·TypeScript 애플리케이션 구조와 통합 품질 주도',
-      'Axios·CSRF, API Client, Zod 계약, Adapter, TanStack Query로 이어지는 데이터 흐름 설계',
-      '일반 계정과 제한 API Key 세션의 권한·캐시 경계 처리',
-      '인증 만료, 요청 취소, 오류 정제, 캐시 정리 등 요청 수명주기 안정화',
-      'JD·지원서·분석 리포트·공유·문서 챗의 API 연동과 통합 검증',
-      '프론트엔드 테스트, QA, 문서 정합성 관리',
-    ])
-  })
-
-  it('separates HumouR core technologies from the exact team-system list', () => {
-    render(<App />)
-
-    const flagship = within(screen.getByTestId('flagship-project'))
-    const coreTechnologies = flagship.getByRole('region', { name: '핵심 기술' })
-    const teamSystems = flagship.getByRole('region', { name: '팀 시스템 연동' })
-
-    expect(within(coreTechnologies).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
-      'React 19',
-      'TypeScript',
-      'TanStack Query',
-      'Zod',
-    ])
-    expect(within(teamSystems).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
-      'Django',
-      'Celery',
-      'LangGraph',
-      'Pinecone',
-      'AWS',
-    ])
   })
 
   it('renders exactly four skill groups', () => {
