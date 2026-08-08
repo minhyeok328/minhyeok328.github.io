@@ -52,4 +52,26 @@ describe('renderProjectEntryHtml', () => {
       portfolioData.profile,
     )).toThrow('page-og-url')
   })
+
+  it('throws when the required title element is duplicated', () => {
+    expect(() => renderProjectEntryHtml(
+      rootHtml.replace(
+        '</head>',
+        '<title id="page-title">중복 제목</title></head>',
+      ),
+      portfolioData.flagshipProject,
+      portfolioData.profile,
+    )).toThrow('page-title')
+  })
+
+  it('throws when a required meta element is duplicated', () => {
+    expect(() => renderProjectEntryHtml(
+      rootHtml.replace(
+        '</head>',
+        '<meta id="page-og-url" property="og:url" content="https://example.com/" /></head>',
+      ),
+      portfolioData.flagshipProject,
+      portfolioData.profile,
+    )).toThrow('page-og-url')
+  })
 })

@@ -25,9 +25,12 @@ function replaceTitle(html: string, id: string, content: string) {
     `(<title\\b(?=[^>]*\\bid=["']${escapeRegExp(id)}["'])[^>]*>)[\\s\\S]*?(</title>)`,
     'i',
   )
+  const matches = html.match(new RegExp(pattern.source, 'gi')) ?? []
 
-  if (!pattern.test(html)) {
-    throw new Error(`Missing required title element: ${id}`)
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected exactly one required title element: ${id}; found ${matches.length}`,
+    )
   }
 
   return html.replace(
@@ -43,13 +46,15 @@ function replaceMetaContent(html: string, id: string, content: string) {
     `<meta\\b(?=[^>]*\\bid=["']${escapeRegExp(id)}["'])[^>]*>`,
     'i',
   )
-  const match = html.match(pattern)
+  const matches = html.match(new RegExp(pattern.source, 'gi')) ?? []
 
-  if (!match) {
-    throw new Error(`Missing required meta element: ${id}`)
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected exactly one required meta element: ${id}; found ${matches.length}`,
+    )
   }
 
-  const tag = match[0]
+  const tag = matches[0]
   const contentPattern = /\bcontent=(["'])([\s\S]*?)\1/i
 
   if (!contentPattern.test(tag)) {
