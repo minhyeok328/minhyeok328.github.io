@@ -11,9 +11,9 @@ describe('portfolio visibility rules', () => {
     ])
   })
 
-  it('omits Experience navigation when no verified entries exist', () => {
+  it('keeps Project Journey nested under Projects and omits Experience without entries', () => {
     expect(getNavigationItems(portfolioData).map((item) => item.id)).toEqual([
-      'about', 'projects', 'journey', 'skills', 'contact',
+      'about', 'projects', 'skills', 'contact',
     ])
   })
 

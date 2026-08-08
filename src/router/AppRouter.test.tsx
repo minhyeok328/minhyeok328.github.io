@@ -121,10 +121,12 @@ describe('AppRouter', () => {
     expect(heading).toHaveAttribute('tabindex', '-1')
   })
 
-  it('scrolls an initial home hash after the Projects section exists', () => {
-    renderRoute('/#projects')
+  it('renders the home route at the root address without a hash target', () => {
+    const { router } = renderRoute('/')
 
-    expect(scrollIntoView).toHaveBeenCalled()
+    expect(router.state.location.pathname).toBe('/')
+    expect(router.state.location.hash).toBe('')
+    expect(scrollIntoView).not.toHaveBeenCalled()
   })
 
   it('handles the explicit project-list PUSH through ScrollRestoration', async () => {

@@ -129,13 +129,22 @@ describe('App', () => {
 
     const growthLine = screen.getByRole('navigation', { name: '프로젝트 성장 단계' })
 
-    expect(within(growthLine).getAllByRole('link').map((link) => link.textContent)).toEqual([
+    expect(within(growthLine).getAllByRole('button').map((button) => button.textContent)).toEqual([
       '1단계 · Data Integration',
       '2단계 · ML Experimentation',
       '3단계 · LLM & RAG',
       '4단계 · Web Integration',
       '5단계 · AI Full-Stack',
     ])
+  })
+
+  it('keeps Project Journey visible inside Projects without its own section id', () => {
+    render(<App />)
+
+    const journeyHeading = screen.getByRole('heading', { level: 3, name: 'Project Journey' })
+
+    expect(journeyHeading).toBeVisible()
+    expect(journeyHeading.closest('.projects-section__journey')).not.toHaveAttribute('id')
   })
 
   it('renders the supplied primary and experience skills in each skill group', () => {

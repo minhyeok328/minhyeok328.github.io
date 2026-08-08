@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { scrollToSection } from '../lib/sectionNavigation'
 import { ThemeToggle } from './ThemeToggle'
 
 export interface NavigationItem {
@@ -14,19 +15,19 @@ interface HeaderProps {
 function NavigationLinks({ items, activeSection, onNavigate }: {
   items: NavigationItem[]
   activeSection: string
-  onNavigate?: () => void
+  onNavigate: (sectionId: string) => void
 }) {
   return (
     <ul className="header__navigation-list">
       {items.map((item) => (
         <li key={item.id}>
-          <a
-            href={`#${item.id}`}
-            aria-current={item.id === activeSection ? 'page' : undefined}
-            onClick={onNavigate}
+          <button
+            type="button"
+            aria-current={item.id === activeSection ? 'location' : undefined}
+            onClick={() => onNavigate(item.id)}
           >
             {item.label}
-          </a>
+          </button>
         </li>
       ))}
     </ul>
@@ -87,10 +88,10 @@ export function Header({ items, activeSection }: HeaderProps) {
   return (
     <header ref={headerRef} className="site-header">
       <div className="site-container site-header__inner">
-        <a className="header__brand" href="#top">MH</a>
+        <button type="button" className="header__brand" onClick={() => scrollToSection('top')}>MH</button>
 
         <nav className="header__desktop-navigation" aria-label="기본 탐색">
-          <NavigationLinks items={items} activeSection={activeSection} />
+          <NavigationLinks items={items} activeSection={activeSection} onNavigate={scrollToSection} />
         </nav>
 
         <div className="header__actions">
@@ -116,7 +117,10 @@ export function Header({ items, activeSection }: HeaderProps) {
           <NavigationLinks
             items={items}
             activeSection={activeSection}
-            onNavigate={() => setIsMenuOpen(false)}
+            onNavigate={(sectionId) => {
+              scrollToSection(sectionId)
+              setIsMenuOpen(false)
+            }}
           />
         </nav>
       </div>
