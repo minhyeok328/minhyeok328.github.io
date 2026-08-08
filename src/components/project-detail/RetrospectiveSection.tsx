@@ -9,7 +9,7 @@ export function RetrospectiveSection({ paragraphs }: RetrospectiveSectionProps) 
 
   return (
     <section className="project-detail__section" aria-labelledby="project-retrospective-heading">
-      <h2 id="project-retrospective-heading">?깆옣怨??뚭퀬</h2>
+      <h2 id="project-retrospective-heading">성장과 회고</h2>
       {paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
     </section>
   )
