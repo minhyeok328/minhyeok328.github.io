@@ -125,8 +125,14 @@ export function useActiveSection(sectionIds: string[]): string {
         return
       }
 
+      const isCanonicalHash = window.location.hash.slice(1) === pendingHashOwner
       pendingHashOwner = ''
       clearScrollSettleWork()
+
+      if (isCanonicalHash) {
+        return
+      }
+
       syncHash(selectedSectionId, observedSectionIds)
     }
 
