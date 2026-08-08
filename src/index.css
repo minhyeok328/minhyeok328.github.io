@@ -498,7 +498,7 @@ ol {
   border-radius: inherit;
 }
 
-.project-card:is(:hover, :focus-within) {
+.project-card:hover {
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-card);
   transform: translateY(-3px);

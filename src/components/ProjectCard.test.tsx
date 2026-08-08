@@ -2,7 +2,10 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import type { Project } from '../types/portfolio'
+import { installPortfolioStylesheet, readPortfolioStylesheet } from '../test/portfolioStylesheet'
 import { ProjectCard } from './ProjectCard'
+
+const stylesheet = await readPortfolioStylesheet()
 
 const project: Project = {
   id: 'test-project',
@@ -86,5 +89,19 @@ describe('ProjectCard', () => {
       name: '테스트 프로젝트 프로젝트 이미지 대체 이미지',
     })
     expect(fallback).toHaveTextContent('테스')
+  })
+
+  it('does not keep the card elevated when the restored trigger receives focus', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    renderProjectCard()
+    const card = screen.getByTestId('journey-project')
+    const trigger = within(card).getByRole('button')
+
+    trigger.focus()
+
+    expect(getComputedStyle(card).transform).not.toBe('translateY(-3px)')
+    expect(getComputedStyle(card).boxShadow).not.toBe('var(--shadow-card)')
+    expect(getComputedStyle(trigger).outline).toContain('3px solid')
+    removeStyles()
   })
 })
