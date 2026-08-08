@@ -1,8 +1,6 @@
 import type { RefObject } from 'react'
-import { Link } from 'react-router'
 import {
   getProjectContributionItems,
-  getProjectPath,
   getProjectRoleSummary,
 } from '../../lib/projects'
 import type { Project } from '../../types/portfolio'
@@ -18,6 +16,8 @@ interface ProjectDetailViewProps {
   previousProject: Project | null
   nextProject: Project | null
   headingRef: RefObject<HTMLHeadingElement | null>
+  onPreviousProject?: () => void
+  onNextProject?: () => void
 }
 
 export function ProjectDetailView({
@@ -25,6 +25,8 @@ export function ProjectDetailView({
   previousProject,
   nextProject,
   headingRef,
+  onPreviousProject,
+  onNextProject,
 }: ProjectDetailViewProps) {
   const roleSummary = getProjectRoleSummary(project)
   const contributionItems = getProjectContributionItems(project)
@@ -39,11 +41,15 @@ export function ProjectDetailView({
       <RetrospectiveSection paragraphs={project.detail?.retrospective ?? []} />
 
       <nav className="project-detail__project-navigation" aria-label="다른 프로젝트">
-        {previousProject ? (
-          <Link to={getProjectPath(previousProject)}>이전 · {previousProject.title}</Link>
+        {previousProject && onPreviousProject ? (
+          <button type="button" onClick={onPreviousProject}>
+            이전 · {previousProject.title}
+          </button>
         ) : <span />}
-        {nextProject ? (
-          <Link to={getProjectPath(nextProject)}>다음 · {nextProject.title}</Link>
+        {nextProject && onNextProject ? (
+          <button type="button" onClick={onNextProject}>
+            다음 · {nextProject.title}
+          </button>
         ) : <span />}
       </nav>
     </article>

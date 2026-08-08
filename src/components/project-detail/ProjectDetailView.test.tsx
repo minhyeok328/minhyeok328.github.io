@@ -1,7 +1,7 @@
 import { createRef } from 'react'
 import { render, screen, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import type { Project } from '../../types/portfolio'
 import { ProjectDetailView } from './ProjectDetailView'
 
@@ -26,22 +26,30 @@ function renderDetail(project: Project = makeProject()) {
   const previousProject = makeProject({ id: 'previous', title: '이전 프로젝트' })
   const nextProject = makeProject({ id: 'next', title: '다음 프로젝트' })
 
-  return render(
-    <MemoryRouter>
+  const onPreviousProject = vi.fn()
+  const onNextProject = vi.fn()
+
+  return {
+    onPreviousProject,
+    onNextProject,
+    ...render(
       <ProjectDetailView
         project={project}
         previousProject={previousProject}
         nextProject={nextProject}
         headingRef={createRef<HTMLHeadingElement>()}
+        onPreviousProject={onPreviousProject}
+        onNextProject={onNextProject}
       />
-    </MemoryRouter>,
-  )
+    ),
+  }
 }
 
 describe('ProjectDetailView', () => {
-  it('renders current project data once and keeps optional sections absent', () => {
+  it('renders current project data once and keeps optional sections absent', async () => {
     const project = makeProject()
-    renderDetail(project)
+    const user = userEvent.setup()
+    const { onNextProject } = renderDetail(project)
 
     expect(screen.getByRole('heading', { level: 1, name: project.title })).toBeInTheDocument()
     expect(screen.getAllByText(project.description)).toHaveLength(1)
@@ -67,16 +75,13 @@ describe('ProjectDetailView', () => {
     expect(screen.getByText('프로젝트', { selector: 'dt' })).toBeInTheDocument()
     expect(screen.getByText('내 역할', { selector: 'dt' })).toBeInTheDocument()
     expect(screen.getByText('성장', { selector: 'dt' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '프로젝트 목록' })).toHaveAttribute('href', '/#projects')
+    expect(screen.queryByText('프로젝트 목록')).not.toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: '다른 프로젝트' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '이전 · 이전 프로젝트' })).toHaveAttribute(
-      'href',
-      '/projects/previous/',
-    )
-    expect(screen.getByRole('link', { name: '다음 · 다음 프로젝트' })).toHaveAttribute(
-      'href',
-      '/projects/next/',
-    )
+    expect(screen.getByRole('button', { name: '이전 · 이전 프로젝트' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '다음 · 다음 프로젝트' }))
+
+    expect(onNextProject).toHaveBeenCalledOnce()
   })
 
   it('uses explicit detail copy without removing any contributions', () => {
@@ -135,33 +140,35 @@ describe('ProjectDetailView', () => {
   it('shows only next at the first boundary and only previous at the last boundary', () => {
     const previousProject = makeProject({ id: 'previous', title: '이전 프로젝트' })
     const nextProject = makeProject({ id: 'next', title: '다음 프로젝트' })
+    const onPreviousProject = vi.fn()
+    const onNextProject = vi.fn()
     const first = render(
-      <MemoryRouter>
-        <ProjectDetailView
-          project={makeProject()}
-          previousProject={null}
-          nextProject={nextProject}
-          headingRef={createRef<HTMLHeadingElement>()}
-        />
-      </MemoryRouter>,
+      <ProjectDetailView
+        project={makeProject()}
+        previousProject={null}
+        nextProject={nextProject}
+        headingRef={createRef<HTMLHeadingElement>()}
+        onPreviousProject={onPreviousProject}
+        onNextProject={onNextProject}
+      />,
     )
 
-    expect(screen.queryByRole('link', { name: '이전 · 이전 프로젝트' })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '다음 · 다음 프로젝트' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '이전 · 이전 프로젝트' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '다음 · 다음 프로젝트' })).toBeInTheDocument()
     first.unmount()
 
     render(
-      <MemoryRouter>
-        <ProjectDetailView
-          project={makeProject()}
-          previousProject={previousProject}
-          nextProject={null}
-          headingRef={createRef<HTMLHeadingElement>()}
-        />
-      </MemoryRouter>,
+      <ProjectDetailView
+        project={makeProject()}
+        previousProject={previousProject}
+        nextProject={null}
+        headingRef={createRef<HTMLHeadingElement>()}
+        onPreviousProject={onPreviousProject}
+        onNextProject={onNextProject}
+      />,
     )
 
-    expect(screen.getByRole('link', { name: '이전 · 이전 프로젝트' })).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: '다음 · 다음 프로젝트' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '이전 · 이전 프로젝트' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '다음 · 다음 프로젝트' })).not.toBeInTheDocument()
   })
 })

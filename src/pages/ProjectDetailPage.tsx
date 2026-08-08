@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { DocumentMetadata } from '../components/DocumentMetadata'
 import { ProjectDetailLayout } from '../components/project-detail/ProjectDetailLayout'
 import { ProjectDetailView } from '../components/project-detail/ProjectDetailView'
 import { portfolioData } from '../data/portfolio'
 import { getProjectMetadata } from '../lib/projectMetadata'
-import { findProjectById, getAdjacentProjects, getOrderedProjects } from '../lib/projects'
+import { findProjectById, getAdjacentProjects, getOrderedProjects, getProjectPath } from '../lib/projects'
 import type { Project } from '../types/portfolio'
 import { NotFoundPage } from './NotFoundPage'
 
@@ -13,6 +13,7 @@ const projects = getOrderedProjects(portfolioData)
 
 function ResolvedProjectDetailPage({ project }: { project: Project }) {
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const navigate = useNavigate()
   const metadata = getProjectMetadata(project, portfolioData.profile)
   const { previous, next } = getAdjacentProjects(projects, project.id)
 
@@ -32,6 +33,8 @@ function ResolvedProjectDetailPage({ project }: { project: Project }) {
           previousProject={previous}
           nextProject={next}
           headingRef={headingRef}
+          onPreviousProject={previous ? () => navigate(getProjectPath(previous)) : undefined}
+          onNextProject={next ? () => navigate(getProjectPath(next)) : undefined}
         />
       </ProjectDetailLayout>
     </>
