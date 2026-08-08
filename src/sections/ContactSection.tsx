@@ -1,3 +1,4 @@
+import { ContactIcon } from '../components/ContactIcon'
 import { getVisibleContactLinks } from '../lib/portfolio'
 import type { Profile } from '../types/portfolio'
 
@@ -22,6 +23,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
       <ul className="contact-section__links">
         {socialLinks.map((link) => {
           const isExternal = link.href.startsWith('http')
+          const actionLabel = getActionLabel(link.label)
 
           return (
             <li key={link.label}>
@@ -29,8 +31,10 @@ export function ContactSection({ profile }: ContactSectionProps) {
                 href={link.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noreferrer' : undefined}
+                aria-label={actionLabel}
+                title={actionLabel}
               >
-                {getActionLabel(link.label)}
+                <ContactIcon label={link.label} />
               </a>
             </li>
           )

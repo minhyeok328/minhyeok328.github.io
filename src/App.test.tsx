@@ -29,11 +29,10 @@ describe('App', () => {
     const contactLinks = within(contact).getAllByRole('link')
 
     expect(within(contact).getByRole('link', { name: 'GitHub 보기' })).toHaveAttribute('href', 'https://github.com/minhyeok328')
-    expect(contactLinks.map((link) => link.textContent)).toEqual([
-      'GitHub 보기',
-      '블로그 보기',
-      'Email 보내기',
-    ])
+    expect(contactLinks).toHaveLength(3)
+    expect(contactLinks[0]).toHaveAccessibleName('GitHub 보기')
+    expect(contactLinks[1]).toHaveAccessibleName('블로그 보기')
+    expect(contactLinks[2]).toHaveAccessibleName('Email 보내기')
     expect(screen.getByRole('link', { name: '블로그 보기' })).toHaveAttribute(
       'href',
       'https://minhyeok328.tistory.com/',
