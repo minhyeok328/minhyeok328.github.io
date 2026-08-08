@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -101,6 +101,46 @@ describe('ProjectDetailModal', () => {
     expect(onClose).not.toHaveBeenCalled()
 
     await user.click(backdrop)
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not close when a panel-originated pointer interaction is retargeted to the backdrop', () => {
+    const onClose = vi.fn()
+    render(<ModalHarness onClose={onClose} />)
+
+    const dialog = screen.getByRole('dialog')
+    const backdrop = dialog.parentElement as HTMLElement
+
+    fireEvent.pointerDown(dialog)
+    fireEvent.pointerUp(backdrop)
+    fireEvent.click(backdrop)
+
+    expect(onClose).not.toHaveBeenCalled()
+
+    fireEvent.pointerDown(backdrop)
+    fireEvent.pointerUp(backdrop)
+    fireEvent.click(backdrop)
+
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('cancels a pending backdrop pointer activation safely', () => {
+    const onClose = vi.fn()
+    render(<ModalHarness onClose={onClose} />)
+
+    const dialog = screen.getByRole('dialog')
+    const backdrop = dialog.parentElement as HTMLElement
+
+    fireEvent.pointerDown(backdrop)
+    fireEvent.pointerCancel(backdrop)
+    fireEvent.click(backdrop)
+
+    expect(onClose).not.toHaveBeenCalled()
+
+    fireEvent.pointerDown(backdrop)
+    fireEvent.pointerUp(backdrop)
+    fireEvent.click(backdrop)
+
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
