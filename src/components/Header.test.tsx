@@ -69,6 +69,23 @@ describe('Header', () => {
     }
   })
 
+  it('marks no desktop or mobile navigation link current while the top section is active', () => {
+    render(
+      <Header
+        items={[
+          { id: 'about', label: 'About' },
+          { id: 'projects', label: 'Projects' },
+        ]}
+        activeSection="top"
+      />,
+    )
+
+    const navigationLinks = document.querySelectorAll('.header__navigation-list a')
+
+    expect(navigationLinks).toHaveLength(4)
+    navigationLinks.forEach((link) => expect(link).not.toHaveAttribute('aria-current'))
+  })
+
   it('closes the mobile navigation after a mobile link is selected', async () => {
     const user = userEvent.setup()
     render(<Header items={[{ id: 'about', label: 'About' }]} activeSection="about" />)

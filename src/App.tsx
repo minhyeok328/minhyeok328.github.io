@@ -12,7 +12,8 @@ import { SkillsSection } from './sections/SkillsSection'
 
 export default function App() {
   const navigationItems = getNavigationItems(portfolioData)
-  const activeSection = useActiveSection(navigationItems.map((item) => item.id))
+  const observedSectionIds = ['top', ...navigationItems.map((item) => item.id)]
+  const activeSection = useActiveSection(observedSectionIds)
 
   return (
     <>
