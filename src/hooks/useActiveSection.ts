@@ -64,7 +64,7 @@ export function useActiveSection(sectionIds: string[]): string {
 
       return (
         hashTargetId
-        && !observedSectionIds.includes(hashTargetId)
+        && hashOwner
         && hashOwner !== selectedSectionId
       ) ? hashOwner : ''
     }
@@ -168,7 +168,19 @@ export function useActiveSection(sectionIds: string[]): string {
 
       const visibleEntry = [...latestEntries.values()]
         .filter((entry) => entry.isIntersecting)
-        .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0]
+        .sort((first, second) => {
+          const ratioDifference = second.intersectionRatio - first.intersectionRatio
+
+          if (ratioDifference !== 0) {
+            return ratioDifference
+          }
+
+          if (first.target.id === pendingHashOwner) {
+            return -1
+          }
+
+          return second.target.id === pendingHashOwner ? 1 : 0
+        })[0]
 
       if (visibleEntry) {
         selectSection(visibleEntry.target.id)

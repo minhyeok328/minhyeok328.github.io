@@ -131,6 +131,28 @@ describe('useActiveSection', () => {
     expect(replaceState).not.toHaveBeenCalled()
   })
 
+  it('preserves an initial canonical hash until that section becomes active', () => {
+    document.body.innerHTML = '<section id="top"></section><section id="projects"></section>'
+    window.history.replaceState(null, '', '/#projects')
+    const emit = installIntersectionObserver()
+    const replaceState = vi.spyOn(window.history, 'replaceState')
+    const top = document.getElementById('top')!
+    const projects = document.getElementById('projects')!
+    const { result } = renderHook(() => useActiveSection(['top', 'projects']))
+
+    emit([intersectionEntry(top, true, 1)])
+
+    expect(result.current).toBe('top')
+    expect(window.location.hash).toBe('#projects')
+    expect(replaceState).not.toHaveBeenCalled()
+
+    emit([intersectionEntry(projects, true, 1)])
+
+    expect(result.current).toBe('projects')
+    expect(window.location.hash).toBe('#projects')
+    expect(replaceState).not.toHaveBeenCalled()
+  })
+
   it('preserves a project hash while its deepest canonical owner is active', () => {
     document.body.innerHTML = `
       <section id="projects">
