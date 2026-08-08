@@ -17,31 +17,23 @@ const profile: Profile = {
 }
 
 describe('HeroSection', () => {
-  it('places the verified GitHub link after the actions and before the profile visual while omitting empty links', () => {
+  it('renders only the introduction and profile visual', () => {
     render(<HeroSection profile={profile} />)
 
     const hero = screen.getByRole('region', { name: '서민혁입니다.' })
     const heroScope = within(hero)
-    const projectLink = heroScope.getByRole('link', { name: '프로젝트 보기' })
-    const socialRegion = heroScope.getByRole('navigation', { name: '소셜 링크' })
-    const githubLink = within(socialRegion).getByRole('link', { name: 'GitHub 보기' })
-    const profileVisual = heroScope.getByRole('img', { name: '서민혁 프로필 사진 대체 이미지' })
 
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/minhyeok328')
-    expect(githubLink).toHaveAttribute('target', '_blank')
-    expect(githubLink).toHaveAttribute('rel', 'noreferrer')
-    expect(within(socialRegion).queryByRole('link', { name: '블로그 보기' })).not.toBeInTheDocument()
-    expect(within(socialRegion).queryByRole('link', { name: 'Email 보내기' })).not.toBeInTheDocument()
-    expect(within(socialRegion).queryByRole('link', { name: 'LinkedIn 보기' })).not.toBeInTheDocument()
-    expect(projectLink.compareDocumentPosition(socialRegion) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-    expect(socialRegion.compareDocumentPosition(profileVisual) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(heroScope.queryByRole('link')).not.toBeInTheDocument()
+    expect(heroScope.queryByRole('navigation')).not.toBeInTheDocument()
+    expect(heroScope.getByRole('img', { name: '서민혁 프로필 사진 대체 이미지' })).toBeVisible()
   })
 
-  it('keeps Blog, Email, and LinkedIn out of the Hero even when populated', () => {
+  it('does not create Hero destinations when optional profile links are populated', () => {
     render(
       <HeroSection
         profile={{
           ...profile,
+          resumeUrl: '/resume.pdf',
           blogUrl: 'https://minhyeok328.tistory.com/',
           email: 'hello@example.com',
           linkedinUrl: 'https://www.linkedin.com/in/example',
@@ -49,12 +41,10 @@ describe('HeroSection', () => {
       />,
     )
 
-    const socialRegion = screen.getByRole('navigation', { name: '소셜 링크' })
-    const links = within(socialRegion).getAllByRole('link')
+    const hero = screen.getByRole('region', { name: '서민혁입니다.' })
+    const heroScope = within(hero)
 
-    expect(links.map((link) => link.textContent)).toEqual(['GitHub 보기'])
-    expect(within(socialRegion).queryByRole('link', { name: '블로그 보기' })).not.toBeInTheDocument()
-    expect(within(socialRegion).queryByRole('link', { name: 'Email 보내기' })).not.toBeInTheDocument()
-    expect(within(socialRegion).queryByRole('link', { name: 'LinkedIn 보기' })).not.toBeInTheDocument()
+    expect(heroScope.queryByRole('link')).not.toBeInTheDocument()
+    expect(heroScope.queryByRole('navigation')).not.toBeInTheDocument()
   })
 })

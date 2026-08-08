@@ -10,28 +10,25 @@ describe('App', () => {
     expect(screen.getByText('프론트엔드 강점을 가진 AI 풀스택 개발자')).toBeInTheDocument()
   })
 
-  it('always links to Projects from the hero while omitting an unavailable resume', () => {
+  it('keeps all destinations out of the Hero and renders GitHub in Contact', () => {
     render(<App />)
 
-    expect(screen.getByRole('link', { name: '프로젝트 보기' })).toHaveAttribute('href', '#projects')
-    expect(screen.queryByRole('link', { name: '이력서 다운로드' })).not.toBeInTheDocument()
+    const hero = screen.getByRole('region', { name: '서민혁입니다.' })
+    const contact = screen.getByRole('region', { name: 'Contact' })
+
+    expect(within(hero).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(hero).queryByRole('navigation')).not.toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'GitHub 보기' })).toHaveLength(1)
+    expect(within(contact).getByRole('link', { name: 'GitHub 보기' })).toBeVisible()
   })
 
   it('keeps Contact details out of the Hero and renders them in Contact', () => {
     render(<App />)
 
-    const heroSocials = screen.getByRole('navigation', { name: '소셜 링크' })
     const contact = screen.getByRole('region', { name: 'Contact' })
-    const githubLinks = screen.getAllByRole('link', { name: 'GitHub 보기' })
     const contactLinks = within(contact).getAllByRole('link')
 
-    expect(githubLinks).toHaveLength(2)
-    githubLinks.forEach((githubLink) => {
-      expect(githubLink).toHaveAttribute('href', 'https://github.com/minhyeok328')
-      expect(githubLink).toHaveAttribute('target', '_blank')
-      expect(githubLink).toHaveAttribute('rel', 'noreferrer')
-    })
-    expect(within(heroSocials).getAllByRole('link').map((link) => link.textContent)).toEqual(['GitHub 보기'])
+    expect(within(contact).getByRole('link', { name: 'GitHub 보기' })).toHaveAttribute('href', 'https://github.com/minhyeok328')
     expect(contactLinks.map((link) => link.textContent)).toEqual([
       'GitHub 보기',
       '블로그 보기',
