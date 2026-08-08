@@ -8,6 +8,12 @@ Object.defineProperty(HTMLElement.prototype, 'scrollTo', {
   value: () => undefined,
 })
 
+Object.defineProperty(window, 'scrollTo', {
+  configurable: true,
+  writable: true,
+  value: vi.fn(),
+})
+
 beforeEach(() => {
   vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
   vi.spyOn(HTMLElement.prototype, 'scrollTo').mockImplementation(() => undefined)

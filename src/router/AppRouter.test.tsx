@@ -1,14 +1,19 @@
-import { act, render, screen, waitFor, within } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createMemoryRouter } from 'react-router'
+import { createBrowserRouter, createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { portfolioData } from '../data/portfolio'
 import { createAppRoutes } from './AppRouter'
+import { normalizeInitialBrowserEntry } from './modalHistory'
 
 function renderRoute(path: string) {
   const router = createMemoryRouter(createAppRoutes('test-session'), { initialEntries: [path] })
   return { router, ...render(<RouterProvider router={router} />) }
+}
+
+function expectRootLocation(router: ReturnType<typeof createMemoryRouter>) {
+  expect(router.state.location.pathname).toBe('/')
+  expect(router.state.location.hash).toBe('')
 }
 
 async function openProjectDialog(
@@ -48,124 +53,60 @@ describe('AppRouter', () => {
     Reflect.deleteProperty(HTMLElement.prototype, 'scrollIntoView')
   })
 
-  it.each([
-    ['/projects/humour/', 'HumouR', 'https://github.com/minhyeok328/Final_project'],
-    ['/projects/vehicle-tco/', '차량 운영·관리 비용 계산 시스템', 'https://github.com/minhyeok328/1st_project'],
-    ['/projects/bank-churners/', '신용카드 고객 이탈 분석', 'https://github.com/minhyeok328/2nd_project'],
-    ['/projects/pickle/', 'PICKLE 맛집 추천 챗봇', 'https://github.com/minhyeok328/3rd_project'],
-    ['/projects/lg-home-ai/', 'LG Home AI 가전 상담', 'https://github.com/minhyeok328/4th_project'],
-  ])('renders %s with its matching project and repository', (path, title, repository) => {
-    renderRoute(path)
+  it('declares the home page as the only application route', () => {
+    const routes = createAppRoutes('test-session')
 
-    expect(screen.getByRole('heading', { level: 1, name: title })).toBeInTheDocument()
-    const codeLink = screen.getByRole('link', { name: 'GitHub에서 코드 보기' })
-    expect(codeLink).toHaveAttribute('href', repository)
-    expect(codeLink).toHaveAttribute('target', '_blank')
-    expect(codeLink).toHaveAttribute('rel', 'noreferrer')
-  })
-
-  it('uses nested-safe detail header destinations and the one repository action', () => {
-    renderRoute('/projects/humour/')
-
-    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/')
-    expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/#projects')
-    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
-      'href',
-      'https://github.com/minhyeok328',
-    )
-    expect(screen.getByRole('link', { name: 'GitHub에서 코드 보기' })).toHaveAttribute(
-      'href',
-      'https://github.com/minhyeok328/Final_project',
-    )
-  })
-
-  it('renders direct project navigation as callback buttons without a list action', () => {
-    renderRoute('/projects/bank-churners/')
-
-    expect(screen.getByRole('button', { name: '이전 · 차량 운영·관리 비용 계산 시스템' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '다음 · PICKLE 맛집 추천 챗봇' })).toBeInTheDocument()
-    expect(screen.queryByText('프로젝트 목록')).not.toBeInTheDocument()
-  })
-
-  it('applies project metadata on direct detail entry', () => {
-    renderRoute('/projects/humour/')
-
-    expect(document.title).toBe('HumouR | 서민혁 포트폴리오')
-    expect(document.getElementById('page-description')).toHaveAttribute(
-      'content',
-      '기업 정보, 채용 공고, 지원서 분석, 리포트, 면접 질문과 문서 챗을 하나의 흐름으로 연결한 AI 기반 채용 운영 서비스입니다.',
-    )
-    expect(document.getElementById('page-og-url')).toHaveAttribute(
-      'content',
-      'https://minhyeok328.github.io/projects/humour/',
-    )
-  })
-
-  it('replaces metadata across detail-to-detail and detail-to-home navigation', async () => {
-    const { router } = renderRoute('/projects/humour/')
-
-    await act(async () => {
-      await router.navigate('/projects/pickle/')
-    })
-    expect(document.title).toBe('PICKLE 맛집 추천 챗봇 | 서민혁 포트폴리오')
-    expect(document.getElementById('page-description')).toHaveAttribute(
-      'content',
-      portfolioData.journeyProjects[2].description,
-    )
-    expect(document.getElementById('page-og-url')).toHaveAttribute(
-      'content',
-      'https://minhyeok328.github.io/projects/pickle/',
-    )
-
-    await act(async () => {
-      await router.navigate('/')
-    })
-    expect(document.title).toBe('서민혁 | 프론트엔드 강점을 가진 AI 풀스택 개발자')
-    expect(document.getElementById('page-og-url')).toHaveAttribute(
-      'content',
-      'https://minhyeok328.github.io/',
-    )
-  })
-
-  it('moves HumouR contribution and team-system depth from the card to its detail page', () => {
-    renderRoute('/projects/humour/')
-
-    const contribution = screen.getByRole('region', { name: '직접 기여' })
-    const teamTechnologies = screen.getByRole('region', { name: '팀 시스템 연동' })
-
-    expect(screen.getAllByText(portfolioData.flagshipProject.contribution[0])).toHaveLength(1)
-    expect(within(contribution).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
-      portfolioData.flagshipProject.contribution.slice(1),
-    )
-    expect(within(teamTechnologies).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
-      portfolioData.flagshipProject.teamTechnologies,
-    )
-  })
-
-  it('focuses the project heading without adding it to the Tab order', () => {
-    renderRoute('/projects/pickle/')
-
-    const heading = screen.getByRole('heading', { level: 1, name: 'PICKLE 맛집 추천 챗봇' })
-    expect(document.activeElement).toBe(heading)
-    expect(heading).toHaveAttribute('tabindex', '-1')
+    expect(routes).toHaveLength(1)
+    expect(routes[0]).toMatchObject({ path: '/' })
+    expect(routes[0].children).toBeUndefined()
   })
 
   it('renders the home route at the root address without a hash target', () => {
     const { router } = renderRoute('/')
 
-    expect(router.state.location.pathname).toBe('/')
-    expect(router.state.location.hash).toBe('')
+    expectRootLocation(router)
     expect(scrollIntoView).not.toHaveBeenCalled()
   })
 
+  it.each([
+    '/projects/pickle/#journey',
+    '/#projects',
+    '/missing/?from=legacy#unknown',
+  ])('normalizes the legacy entry %s before constructing the browser router', async (path) => {
+    window.history.replaceState({
+      idx: 7,
+      key: 'legacy-key',
+      usr: {
+        unrelated: 'keep-me',
+        portfolioModal: {
+          view: 'project',
+          sessionToken: 'stale-session',
+          projectId: 'pickle',
+        },
+      },
+    }, '', path)
 
-  it('renders not found for an unknown project id and an unknown path', () => {
-    const first = renderRoute('/projects/missing/')
-    expect(screen.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' })).toBeInTheDocument()
-    first.unmount()
+    normalizeInitialBrowserEntry(window)
+    const router = createBrowserRouter(createAppRoutes('fresh-session'))
+    render(<RouterProvider router={router} />)
 
-    renderRoute('/missing/')
-    expect(screen.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' })).toBeInTheDocument()
+    await waitFor(() => {
+      expect(router.state.location.state).toMatchObject({
+        unrelated: 'keep-me',
+        portfolioModal: { view: 'home', sessionToken: 'fresh-session' },
+      })
+    })
+    expect(window.location.pathname).toBe('/')
+    expect(window.location.search).toBe('')
+    expect(window.location.hash).toBe('')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(document.title).toBe('서민혁 | 프론트엔드 강점을 가진 AI 풀스택 개발자')
+    expect(document.getElementById('page-og-url')).toHaveAttribute(
+      'content',
+      'https://minhyeok328.github.io/',
+    )
+
+    router.dispose()
   })
 
   it.each([
@@ -201,30 +142,37 @@ describe('AppRouter', () => {
     const user = userEvent.setup()
     const { router } = renderRoute('/')
     await openProjectDialog(router, 'PICKLE 맛집 추천 챗봇')
+    expectRootLocation(router)
     await user.click(screen.getByRole('button', { name: '다음 · LG Home AI 가전 상담' }))
     await screen.findByRole('dialog', { name: 'LG Home AI 가전 상담' })
+    expectRootLocation(router)
 
     await act(async () => {
       await router.navigate(-1)
     })
     expect(await screen.findByRole('dialog', { name: 'PICKLE 맛집 추천 챗봇' })).toBeInTheDocument()
+    expectRootLocation(router)
 
     await act(async () => {
       await router.navigate(-1)
     })
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expectRootLocation(router)
   })
 
   it('closes directly to home from a multi-project history', async () => {
     const user = userEvent.setup()
     const { router } = renderRoute('/')
     await openProjectDialog(router, 'PICKLE 맛집 추천 챗봇')
+    expectRootLocation(router)
     await user.click(screen.getByRole('button', { name: '다음 · LG Home AI 가전 상담' }))
     await screen.findByRole('dialog', { name: 'LG Home AI 가전 상담' })
+    expectRootLocation(router)
 
     await user.click(screen.getByRole('button', { name: '닫기' }))
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expectRootLocation(router)
     expect(router.state.location.state).toMatchObject({
       portfolioModal: { view: 'home', openingCardId: 'project-card-trigger-pickle' },
     })
