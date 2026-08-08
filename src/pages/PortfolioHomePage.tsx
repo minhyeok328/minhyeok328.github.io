@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { DocumentMetadata } from '../components/DocumentMetadata'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
@@ -5,6 +6,7 @@ import { ProjectDetailModal } from '../components/ProjectDetailModal'
 import { portfolioData } from '../data/portfolio'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useProjectModalHistory } from '../hooks/useProjectModalHistory'
+import { useProjectModalPresence } from '../hooks/useProjectModalPresence'
 import { getNavigationItems } from '../lib/portfolio'
 import { homeMetadata } from '../lib/projectMetadata'
 import { getOrderedProjects } from '../lib/projects'
@@ -34,6 +36,29 @@ export function PortfolioHomePage({ pageSessionToken }: PortfolioHomePageProps) 
     switchProject,
     closeProject,
   } = useProjectModalHistory({ projects, sessionToken: pageSessionToken })
+  const projectModalState = modalState?.view === 'project' ? modalState : null
+  const openingCardId = projectModalState?.openingCardId ?? null
+  const homeScrollY = projectModalState?.homeScrollY ?? null
+  const liveModalSnapshot = useMemo(() => {
+    if (!activeProject || openingCardId === null || homeScrollY === null) {
+      return null
+    }
+
+    return {
+      project: activeProject,
+      previousProject,
+      nextProject,
+      openingCardId,
+      homeScrollY,
+    }
+  }, [activeProject, homeScrollY, nextProject, openingCardId, previousProject])
+  const {
+    displayedValue: displayedModalSnapshot,
+    phase: modalPhase,
+    completeExit,
+  } = useProjectModalPresence(liveModalSnapshot)
+  const displayedPreviousProjectId = displayedModalSnapshot?.previousProject?.id ?? null
+  const displayedNextProjectId = displayedModalSnapshot?.nextProject?.id ?? null
 
   return (
     <>
@@ -54,20 +79,22 @@ export function PortfolioHomePage({ pageSessionToken }: PortfolioHomePageProps) 
         </main>
         <Footer name={portfolioData.profile.name} />
       </div>
-      {activeProject && modalState?.view === 'project' ? (
+      {displayedModalSnapshot ? (
         <ProjectDetailModal
-          project={activeProject}
-          previousProject={previousProject}
-          nextProject={nextProject}
-          openingCardId={modalState.openingCardId}
-          homeScrollY={modalState.homeScrollY}
+          project={displayedModalSnapshot.project}
+          previousProject={displayedModalSnapshot.previousProject}
+          nextProject={displayedModalSnapshot.nextProject}
+          openingCardId={displayedModalSnapshot.openingCardId}
+          homeScrollY={displayedModalSnapshot.homeScrollY}
           onClose={closeProject}
-          onPreviousProject={previousProject
-            ? () => switchProject(previousProject.id)
+          onPreviousProject={displayedPreviousProjectId
+            ? () => switchProject(displayedPreviousProjectId)
             : undefined}
-          onNextProject={nextProject
-            ? () => switchProject(nextProject.id)
+          onNextProject={displayedNextProjectId
+            ? () => switchProject(displayedNextProjectId)
             : undefined}
+          phase={modalPhase}
+          onExitComplete={completeExit}
         />
       ) : null}
     </>
