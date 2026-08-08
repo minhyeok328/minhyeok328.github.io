@@ -1,11 +1,5 @@
 import type { PortfolioData, Profile } from '../types/portfolio'
 
-export function getVisibleHeroLinks(profile: Profile) {
-  return [
-    { label: 'GitHub', href: profile.githubUrl },
-  ].filter((link) => link.href.length > 0)
-}
-
 export function getVisibleContactLinks(profile: Profile) {
   return [
     { label: 'GitHub', href: profile.githubUrl },

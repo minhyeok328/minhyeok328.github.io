@@ -1,14 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { portfolioData } from '../data/portfolio'
-import { getNavigationItems, getVisibleContactLinks, getVisibleHeroLinks } from './portfolio'
+import { getNavigationItems, getVisibleContactLinks } from './portfolio'
 
 describe('portfolio visibility rules', () => {
-  it('keeps the Hero limited to the verified GitHub link', () => {
-    expect(getVisibleHeroLinks(portfolioData.profile)).toEqual([
-      { label: 'GitHub', href: 'https://github.com/minhyeok328' },
-    ])
-  })
-
   it('returns verified Contact links in the approved order', () => {
     expect(getVisibleContactLinks(portfolioData.profile)).toEqual([
       { label: 'GitHub', href: 'https://github.com/minhyeok328' },
