@@ -471,6 +471,7 @@ ol {
 }
 
 .project-card {
+  position: relative;
   min-width: 0;
   padding: 0;
   cursor: pointer;
@@ -480,12 +481,21 @@ ol {
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
-.project-card__link {
+.project-card__trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.project-card__visual {
   height: 100%;
   color: inherit;
   border-radius: inherit;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 .project-card:is(:hover, :focus-within) {
@@ -494,12 +504,12 @@ ol {
   transform: translateY(-3px);
 }
 
-.project-card__link:focus-visible {
+.project-card__trigger:focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 
-.flagship-project .project-card__link {
+.flagship-project .project-card__visual {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: 32px;
@@ -638,7 +648,7 @@ ol {
   row-gap: 0;
 }
 
-.project-card--journey .project-card__link {
+.project-card--journey .project-card__visual {
   display: grid;
   grid-row: span 6;
   grid-template-rows: subgrid;
@@ -816,6 +826,78 @@ ol {
 
 .project-detail-page {
   padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+
+.project-detail-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(17 19 24 / 72%);
+}
+
+.project-detail-modal__panel {
+  display: flex;
+  width: min(1120px, calc(100% - 2rem));
+  max-height: 88dvh;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  background: var(--color-background);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-card);
+}
+
+.project-detail-modal__close {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 2;
+  align-self: flex-end;
+  min-height: 2.5rem;
+  margin: 0.75rem 0.75rem 0;
+  padding: 0.5rem 0.875rem;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-small);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.project-detail-modal__close:is(:hover, :focus-visible) {
+  background: var(--color-surface-muted);
+}
+
+.project-detail-modal__close:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.project-detail-modal__content {
+  min-height: 0;
+  padding: 0 0.75rem 0.75rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.project-detail-modal__detail {
+  animation: project-detail-modal-fade var(--transition-fast) both;
+}
+
+@keyframes project-detail-modal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .project-detail {
@@ -1193,7 +1275,7 @@ ol {
   }
 
   .hero,
-  .flagship-project .project-card__link,
+  .flagship-project .project-card__visual,
   .skills-grid {
     grid-template-columns: 1fr;
   }
@@ -1245,7 +1327,7 @@ ol {
     left: -0.3125rem;
   }
 
-  .flagship-project .project-card__link {
+  .flagship-project .project-card__visual {
     gap: 1.75rem;
     padding: 1rem;
   }
@@ -1258,7 +1340,7 @@ ol {
     grid-template-columns: 1fr;
   }
 
-  .project-card--journey .project-card__link {
+  .project-card--journey .project-card__visual {
     padding: 1rem;
   }
 
@@ -1296,6 +1378,24 @@ ol {
   .project-detail__project-navigation button:last-child {
     text-align: left;
   }
+
+  .project-detail-modal__backdrop {
+    display: block;
+    padding: 0;
+  }
+
+  .project-detail-modal__panel {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    gap: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    border-radius: 0;
+  }
+
+  .project-detail-modal__content {
+    padding: 0 1rem 1rem;
+  }
 }
 
 @media (max-width: 479px) {
@@ -1328,6 +1428,17 @@ ol {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .project-detail-modal__detail {
+    animation: none;
+  }
+
+  .project-detail-modal__panel,
+  .project-detail-modal__backdrop {
+    scroll-behavior: auto;
+    transform: none;
+    transition: none;
+  }
 }
 
 @media (forced-colors: active) {
@@ -1336,10 +1447,16 @@ ol {
   }
 
   .project-card,
+  .project-detail-modal__panel,
+  .project-detail-modal__close,
   .skills-section__group,
   .contact-section,
   .hero__profile-image,
   .project-card__image-placeholder {
     border-color: CanvasText;
+  }
+
+  .project-detail-modal__backdrop {
+    background: Canvas;
   }
 }
