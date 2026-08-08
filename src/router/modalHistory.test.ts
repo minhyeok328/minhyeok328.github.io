@@ -3,10 +3,46 @@ import {
   createHomeLocationState,
   createPageSessionToken,
   createProjectLocationState,
+  normalizeInitialBrowserEntry,
   parsePortfolioLocationState,
 } from './modalHistory'
 
 describe('modal history state', () => {
+  it('normalizes a legacy browser entry without discarding Router history state', () => {
+    window.history.replaceState({
+      idx: 7,
+      key: 'router-key',
+      usr: {
+        portfolioModal: { view: 'project' },
+        unrelated: 'keep-me',
+      },
+      envelopeExtra: { preserved: true },
+    }, '', '/projects/pickle/#journey')
+
+    normalizeInitialBrowserEntry(window)
+
+    expect(window.location.pathname).toBe('/')
+    expect(window.location.search).toBe('')
+    expect(window.location.hash).toBe('')
+    expect(window.history.state).toEqual({
+      idx: 7,
+      key: 'router-key',
+      usr: { unrelated: 'keep-me' },
+      envelopeExtra: { preserved: true },
+    })
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'auto' })
+  })
+
+  it('preserves a non-object history state while normalizing the address', () => {
+    window.history.replaceState(null, '', '/missing/?from=legacy#projects')
+
+    normalizeInitialBrowserEntry(window)
+
+    expect(window.location.href).toBe(`${window.location.origin}/`)
+    expect(window.history.state).toBeNull()
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'auto' })
+  })
+
   it('parses a valid current-session project state from its namespace', () => {
     expect(parsePortfolioLocationState({
       unrelated: 'keep-me',

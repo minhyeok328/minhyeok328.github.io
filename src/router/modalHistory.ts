@@ -60,6 +60,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+export function normalizeInitialBrowserEntry(browserWindow: Window) {
+  const currentState = browserWindow.history.state
+  let nextState = currentState
+
+  if (isRecord(currentState) && isRecord(currentState.usr)) {
+    const remainingUserState = { ...currentState.usr }
+    Reflect.deleteProperty(remainingUserState, 'portfolioModal')
+    nextState = { ...currentState, usr: remainingUserState }
+  }
+
+  browserWindow.history.replaceState(nextState, '', '/')
+  browserWindow.scrollTo({ top: 0, behavior: 'auto' })
+}
+
 function isNonBlankString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0
 }
