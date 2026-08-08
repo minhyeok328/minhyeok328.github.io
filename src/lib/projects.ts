@@ -32,10 +32,6 @@ export function getAdjacentProjects(
   }
 }
 
-export function getProjectPath(project: Pick<Project, 'id'>) {
-  return `/projects/${project.id}/`
-}
-
 export function getProjectRoleSummary(
   project: Pick<Project, 'cardRoleSummary' | 'contribution'>,
 ) {

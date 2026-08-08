@@ -6,7 +6,6 @@ import {
   getAdjacentProjects,
   getOrderedProjects,
   getProjectContributionItems,
-  getProjectPath,
   getProjectRoleSummary,
 } from './projects'
 
@@ -21,10 +20,6 @@ describe('project helpers', () => {
       'lg-home-ai',
       'humour',
     ])
-  })
-
-  it('builds the canonical trailing-slash route from a project id', () => {
-    expect(getProjectPath(portfolioData.flagshipProject)).toBe('/projects/humour/')
   })
 
   it('finds a known project and rejects an unknown id', () => {
