@@ -38,12 +38,12 @@ export function ProjectDetailView({
       <TechnicalSection project={project} />
       <RetrospectiveSection paragraphs={project.detail?.retrospective ?? []} />
 
-      <nav className="project-detail__project-navigation" aria-label="?ㅻⅨ ?꾨줈?앺듃">
+      <nav className="project-detail__project-navigation" aria-label="다른 프로젝트">
         {previousProject ? (
-          <Link to={getProjectPath(previousProject)}>?댁쟾 쨌 {previousProject.title}</Link>
+          <Link to={getProjectPath(previousProject)}>이전 · {previousProject.title}</Link>
         ) : <span />}
         {nextProject ? (
-          <Link to={getProjectPath(nextProject)}>?ㅼ쓬 쨌 {nextProject.title}</Link>
+          <Link to={getProjectPath(nextProject)}>다음 · {nextProject.title}</Link>
         ) : <span />}
       </nav>
     </article>

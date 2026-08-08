@@ -8,9 +8,9 @@ export function ProjectActions({ githubUrl }: ProjectActionsProps) {
   return (
     <div className="project-detail__hero-actions">
       <a href={githubUrl} target="_blank" rel="noreferrer">
-        GitHub?먯꽌 肄붾뱶 蹂닿린
+        GitHub에서 코드 보기
       </a>
-      <Link to="/#projects">?꾨줈?앺듃 紐⑸줉</Link>
+      <Link to="/#projects">프로젝트 목록</Link>
     </div>
   )
 }

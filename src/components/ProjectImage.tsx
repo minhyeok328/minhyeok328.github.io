@@ -13,7 +13,7 @@ export function ProjectImage({ project, className, fallbackClassName }: ProjectI
       className={className}
       fallbackClassName={fallbackClassName}
       src={project.image}
-      alt={`${project.title} ?꾨줈?앺듃 ?대?吏`}
+      alt={`${project.title} 프로젝트 이미지`}
       fallback={project.title.slice(0, 2)}
     />
   )

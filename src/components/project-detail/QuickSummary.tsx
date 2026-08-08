@@ -7,10 +7,10 @@ interface QuickSummaryProps {
 
 export function QuickSummary({ project, roleSummary }: QuickSummaryProps) {
   return (
-    <dl className="project-detail__summary" aria-label="?꾨줈?앺듃 鍮좊Ⅸ ?붿빟">
-      <div><dt>?꾨줈?앺듃</dt><dd>{project.description}</dd></div>
-      <div><dt>????븷</dt><dd>{roleSummary}</dd></div>
-      <div><dt>?깆옣</dt><dd>{project.growth}</dd></div>
+    <dl className="project-detail__summary" aria-label="프로젝트 빠른 요약">
+      <div><dt>프로젝트</dt><dd>{project.description}</dd></div>
+      <div><dt>내 역할</dt><dd>{roleSummary}</dd></div>
+      <div><dt>성장</dt><dd>{project.growth}</dd></div>
     </dl>
   )
 }
