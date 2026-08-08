@@ -11,6 +11,22 @@ export interface Profile {
   linkedinUrl: string
 }
 
+export interface ProjectDecision {
+  title: string
+  situation: string
+  choice: string
+  reason: string
+  implementation: string
+  result?: string
+  reflection?: string
+}
+
+export interface ProjectDetail {
+  overview?: string[]
+  decisions?: ProjectDecision[]
+  retrospective?: string[]
+}
+
 export interface Project {
   id: string
   order: number
@@ -23,6 +39,8 @@ export interface Project {
   teamTechnologies?: string[]
   githubUrl: string
   image: string
+  cardRoleSummary?: string
+  detail?: ProjectDetail
 }
 
 export interface SkillGroup {
