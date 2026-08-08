@@ -1,4 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type MouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import type { Project } from '../types/portfolio'
@@ -42,6 +48,8 @@ export function ProjectDetailModal({
   const panelRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const backdropPointerIdRef = useRef<number | null>(null)
+  const backdropPointerEndedRef = useRef(false)
 
   useBodyScrollLock(homeScrollY)
 
@@ -106,14 +114,43 @@ export function ProjectDetailModal({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
 
+  const resetBackdropPointer = () => {
+    backdropPointerIdRef.current = null
+    backdropPointerEndedRef.current = false
+  }
+
+  const handleBackdropPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    backdropPointerIdRef.current = event.target === event.currentTarget
+      ? event.pointerId
+      : null
+    backdropPointerEndedRef.current = false
+  }
+
+  const handleBackdropPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    backdropPointerEndedRef.current = event.target === event.currentTarget
+      && event.pointerId === backdropPointerIdRef.current
+  }
+
   const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
+    const shouldClose = event.target === event.currentTarget
+      && backdropPointerIdRef.current !== null
+      && backdropPointerEndedRef.current
+
+    resetBackdropPointer()
+
+    if (shouldClose) {
       onClose()
     }
   }
 
   return createPortal(
-    <div className="project-detail-modal__backdrop" onClick={handleBackdropClick}>
+    <div
+      className="project-detail-modal__backdrop"
+      onPointerDown={handleBackdropPointerDown}
+      onPointerUp={handleBackdropPointerUp}
+      onPointerCancel={resetBackdropPointer}
+      onClick={handleBackdropClick}
+    >
       <div
         ref={panelRef}
         className="project-detail-modal__panel"
