@@ -107,4 +107,36 @@ describe('ProjectCard', () => {
       removeStyles()
     }
   })
+
+  it('limits card hover elevation to devices with real hover input', () => {
+    const stylesheetIndex = document.styleSheets.length
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      const installedStylesheet = document.styleSheets.item(stylesheetIndex)
+      expect(installedStylesheet).not.toBeNull()
+      if (!installedStylesheet) return
+
+      const topLevelRules = Array.from(installedStylesheet.cssRules)
+      const topLevelCardHoverRule = topLevelRules.find(
+        (rule) => rule instanceof CSSStyleRule && rule.selectorText === '.project-card:hover',
+      )
+      const hoverMediaRule = topLevelRules.find(
+        (rule) => rule instanceof CSSMediaRule && rule.conditionText === '(hover: hover)',
+      ) as CSSMediaRule | undefined
+
+      expect(topLevelCardHoverRule).toBeUndefined()
+      expect(hoverMediaRule).toBeDefined()
+      expect(Array.from(hoverMediaRule?.cssRules ?? [])).toEqual([
+        expect.objectContaining({
+          selectorText: '.project-card:hover',
+          style: expect.objectContaining({
+            boxShadow: 'var(--shadow-card)',
+            transform: 'translateY(-3px)',
+          }),
+        }),
+      ])
+    } finally {
+      removeStyles()
+    }
+  })
 })
