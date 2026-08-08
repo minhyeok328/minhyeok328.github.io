@@ -1,5 +1,4 @@
 import { act, render, screen, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -56,6 +55,14 @@ describe('AppRouter', () => {
       'href',
       'https://github.com/minhyeok328/Final_project',
     )
+  })
+
+  it('renders direct project navigation as callback buttons without a list action', () => {
+    renderRoute('/projects/bank-churners/')
+
+    expect(screen.getByRole('button', { name: '이전 · 차량 운영·관리 비용 계산 시스템' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '다음 · PICKLE 맛집 추천 챗봇' })).toBeInTheDocument()
+    expect(screen.queryByText('프로젝트 목록')).not.toBeInTheDocument()
   })
 
   it('applies project metadata on direct detail entry', () => {
@@ -129,17 +136,6 @@ describe('AppRouter', () => {
     expect(scrollIntoView).not.toHaveBeenCalled()
   })
 
-  it('handles the explicit project-list PUSH through ScrollRestoration', async () => {
-    const user = userEvent.setup()
-    const { router } = renderRoute('/projects/humour/')
-    scrollIntoView.mockClear()
-
-    await user.click(screen.getByRole('link', { name: '프로젝트 목록' }))
-
-    expect(router.state.location.pathname).toBe('/')
-    expect(router.state.location.hash).toBe('#projects')
-    expect(scrollIntoView).toHaveBeenCalled()
-  })
 
   it('restores a saved home position on POP without forcing the hash target', async () => {
     let currentScrollY = 640
