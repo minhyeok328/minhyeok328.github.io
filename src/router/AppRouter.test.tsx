@@ -104,7 +104,11 @@ describe('AppRouter', () => {
     expect(window.location.search).toBe('')
     expect(window.location.hash).toBe('')
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-    expect(document.title).toBe('서민혁 | 프론트엔드 강점을 가진 AI 풀스택 개발자')
+    expect(document.title).toBe('서민혁 | AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')
+    expect(document.getElementById('page-og-title')).toHaveAttribute(
+      'content',
+      '서민혁 | AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자',
+    )
     expect(document.getElementById('page-og-url')).toHaveAttribute(
       'content',
       'https://minhyeok328.github.io/',
