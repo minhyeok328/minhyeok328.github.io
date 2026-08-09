@@ -4,8 +4,11 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { portfolioData } from '../../data/portfolio'
 import { getOrderedProjects } from '../../lib/projects'
+import { installPortfolioStylesheet, readPortfolioStylesheet } from '../../test/portfolioStylesheet'
 import type { Project } from '../../types/portfolio'
 import { ProjectDetailView } from './ProjectDetailView'
+
+const stylesheet = await readPortfolioStylesheet()
 
 function makeProject(overrides: Partial<Project> = {}): Project {
   return {
@@ -137,6 +140,72 @@ describe('ProjectDetailView', () => {
     expect(within(contribution).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
       project.contribution,
     )
+  })
+
+  it('groups each technical decision into context, execution, and outcome regions', () => {
+    renderDetail(makeProject({
+      detail: {
+        decisions: [{
+          title: '상태 관리 결정',
+          situation: '여러 화면에서 같은 서버 상태를 사용합니다.',
+          choice: '서버 상태를 별도로 관리했습니다.',
+          reason: '중복 요청과 불일치를 줄이기 위해서입니다.',
+          implementation: '공통 Query Key를 적용했습니다.',
+          result: '데이터 흐름이 단순해졌습니다.',
+          reflection: '경계 정의를 더 일찍 했어야 합니다.',
+        }, {
+          title: '결과가 없는 결정',
+          situation: '추가 상황입니다.',
+          choice: '추가 선택입니다.',
+          reason: '추가 이유입니다.',
+          implementation: '추가 구현입니다.',
+        }],
+      },
+    }))
+
+    const decisionSection = screen.getByRole('region', { name: '기술 설계와 판단' })
+    const [completeDecision, decisionWithoutOutcome] = within(decisionSection).getAllByRole('article')
+    const contextHeading = within(completeDecision).getByRole('heading', { level: 4, name: '판단 배경' })
+    const executionHeading = within(completeDecision).getByRole('heading', { level: 4, name: '선택과 실행' })
+    const outcomeHeading = within(completeDecision).getByRole('heading', { level: 4, name: '결과와 배움' })
+    const context = contextHeading.parentElement as HTMLElement
+    const execution = executionHeading.parentElement as HTMLElement
+    const outcome = outcomeHeading.parentElement as HTMLElement
+
+    expect(within(context).getByText('여러 화면에서 같은 서버 상태를 사용합니다.')).toBeInTheDocument()
+    expect(within(context).getByText('중복 요청과 불일치를 줄이기 위해서입니다.')).toBeInTheDocument()
+    expect(within(execution).getByText('서버 상태를 별도로 관리했습니다.')).toBeInTheDocument()
+    expect(within(execution).getByText('공통 Query Key를 적용했습니다.')).toBeInTheDocument()
+    expect(within(outcome).getByText('데이터 흐름이 단순해졌습니다.')).toBeInTheDocument()
+    expect(within(outcome).getByText('경계 정의를 더 일찍 했어야 합니다.')).toBeInTheDocument()
+    expect(within(decisionWithoutOutcome).queryByRole('heading', {
+      level: 4,
+      name: '결과와 배움',
+    })).not.toBeInTheDocument()
+  })
+
+  it('lets overview and retrospective prose use the full detail width', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      renderDetail(makeProject({
+        detail: {
+          overview: ['전체 폭 프로젝트 개요'],
+          retrospective: ['전체 폭 성장과 회고'],
+        },
+      }))
+
+      const overviewParagraph = within(
+        screen.getByRole('region', { name: '프로젝트 개요' }),
+      ).getByText('전체 폭 프로젝트 개요')
+      const retrospectiveParagraph = within(
+        screen.getByRole('region', { name: '성장과 회고' }),
+      ).getByText('전체 폭 성장과 회고')
+
+      expect(getComputedStyle(overviewParagraph).maxWidth).toBe('none')
+      expect(getComputedStyle(retrospectiveParagraph).maxWidth).toBe('none')
+    } finally {
+      removeStyles()
+    }
   })
 
   it('omits explicitly empty optional sections and team technologies', () => {

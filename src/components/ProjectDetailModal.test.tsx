@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import postcss, { type Rule } from 'postcss'
+import postcss, { type Declaration, type Rule } from 'postcss'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { portfolioData } from '../data/portfolio'
@@ -351,5 +351,43 @@ describe('ProjectDetailModal', () => {
     } finally {
       removeStyles()
     }
+  })
+
+  it('collapses decision groups and swaps their divider at tablet width', () => {
+    const parsedStylesheet = postcss.parse(stylesheet)
+    let desktopGroupsRule: Rule | undefined
+    let tabletGroupsRule: Rule | undefined
+    let tabletSecondGroupRule: Rule | undefined
+    const getDeclarationValue = (rule: Rule | undefined, property: string) => (
+      rule?.nodes.find((node): node is Declaration => (
+        node.type === 'decl' && node.prop === property
+      ))?.value
+    )
+
+    parsedStylesheet.walkRules((rule) => {
+      if (rule.selector === '.project-detail__decision-groups' && rule.parent?.type === 'root') {
+        desktopGroupsRule = rule
+      }
+
+      if (
+        rule.parent?.type === 'atrule'
+        && rule.parent.name === 'media'
+        && rule.parent.params === '(max-width: 1023px)'
+      ) {
+        if (rule.selector === '.project-detail__decision-groups') tabletGroupsRule = rule
+        if (rule.selector === '.project-detail__decision-group:nth-child(2)') {
+          tabletSecondGroupRule = rule
+        }
+      }
+    })
+
+    expect(getDeclarationValue(desktopGroupsRule, 'grid-template-columns')).toBe(
+      'repeat(2, minmax(0, 1fr))',
+    )
+    expect(getDeclarationValue(tabletGroupsRule, 'grid-template-columns')).toBe('1fr')
+    expect(getDeclarationValue(tabletSecondGroupRule, 'border-left')).toBe('0')
+    expect(getDeclarationValue(tabletSecondGroupRule, 'border-top')).toBe(
+      '1px solid var(--color-border)',
+    )
   })
 })

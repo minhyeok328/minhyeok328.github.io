@@ -16,14 +16,31 @@ export function TechnicalSection({ project }: TechnicalSectionProps) {
             {decisions.map((decision) => (
               <article key={decision.title}>
                 <h3>{decision.title}</h3>
-                <dl>
-                  <div><dt>상황</dt><dd>{decision.situation}</dd></div>
-                  <div><dt>선택</dt><dd>{decision.choice}</dd></div>
-                  <div><dt>이유</dt><dd>{decision.reason}</dd></div>
-                  <div><dt>구현</dt><dd>{decision.implementation}</dd></div>
-                  {decision.result ? <div><dt>결과</dt><dd>{decision.result}</dd></div> : null}
-                  {decision.reflection ? <div><dt>회고</dt><dd>{decision.reflection}</dd></div> : null}
-                </dl>
+                <div className="project-detail__decision-groups">
+                  <div className="project-detail__decision-group">
+                    <h4>판단 배경</h4>
+                    <dl>
+                      <div><dt>상황</dt><dd>{decision.situation}</dd></div>
+                      <div><dt>이유</dt><dd>{decision.reason}</dd></div>
+                    </dl>
+                  </div>
+                  <div className="project-detail__decision-group">
+                    <h4>선택과 실행</h4>
+                    <dl>
+                      <div><dt>선택</dt><dd>{decision.choice}</dd></div>
+                      <div><dt>구현</dt><dd>{decision.implementation}</dd></div>
+                    </dl>
+                  </div>
+                  {decision.result || decision.reflection ? (
+                    <div className="project-detail__decision-group project-detail__decision-group--outcome">
+                      <h4>결과와 배움</h4>
+                      <dl className={decision.result && decision.reflection ? undefined : 'project-detail__decision-outcome--single'}>
+                        {decision.result ? <div><dt>결과</dt><dd>{decision.result}</dd></div> : null}
+                        {decision.reflection ? <div><dt>회고</dt><dd>{decision.reflection}</dd></div> : null}
+                      </dl>
+                    </div>
+                  ) : null}
+                </div>
               </article>
             ))}
           </div>
