@@ -3,7 +3,7 @@ import { useLayoutEffect } from 'react'
 export function useBodyScrollLock(restoreScrollY: number) {
   useLayoutEffect(() => {
     const bodyStyle = document.body.style
-    const lockedScrollY = window.scrollY
+    const lockedScrollY = restoreScrollY
     const scrollbarWidth = Math.max(
       0,
       window.innerWidth - document.documentElement.clientWidth,
@@ -26,7 +26,7 @@ export function useBodyScrollLock(restoreScrollY: number) {
 
     return () => {
       Object.assign(bodyStyle, previousStyles)
-      window.scrollTo({ top: restoreScrollY, behavior: 'auto' })
+      window.scrollTo({ top: restoreScrollY, behavior: 'instant' })
     }
   }, [restoreScrollY])
 }

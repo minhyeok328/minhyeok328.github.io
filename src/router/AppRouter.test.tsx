@@ -192,7 +192,7 @@ describe('AppRouter', () => {
     await user.click(screen.getByRole('button', { name: '닫기' }))
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'instant' })
     expect(document.activeElement).toBe(trigger)
   })
 
@@ -249,7 +249,7 @@ describe('AppRouter', () => {
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
     expect(document.getElementById('portfolio-app-shell')).not.toHaveAttribute('inert')
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'instant' })
     expect(document.activeElement).toBe(trigger)
     expectRootLocation(router)
   })

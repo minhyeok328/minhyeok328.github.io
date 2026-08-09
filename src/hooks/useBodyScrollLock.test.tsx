@@ -42,7 +42,7 @@ describe('useBodyScrollLock', () => {
     expect(document.body.style.width).toBe('80%')
     expect(document.body.style.overflow).toBe('auto')
     expect(document.body.style.paddingRight).toBe('3px')
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'instant' })
 
     document.body.removeAttribute('style')
     if (originalClientWidth) {
@@ -50,5 +50,16 @@ describe('useBodyScrollLock', () => {
     } else {
       Reflect.deleteProperty(document.documentElement, 'clientWidth')
     }
+  })
+
+  it('locks to the saved position when navigation has already reset window scroll', () => {
+    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
+
+    const { unmount } = render(<LockHarness restoreScrollY={640} />)
+
+    expect(document.body.style.position).toBe('fixed')
+    expect(document.body.style.top).toBe('-640px')
+
+    unmount()
   })
 })
