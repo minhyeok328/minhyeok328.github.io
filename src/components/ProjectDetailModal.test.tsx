@@ -252,7 +252,7 @@ describe('ProjectDetailModal', () => {
     rerender(<ModalHarness show={false} />)
 
     expect(document.getElementById('portfolio-app-shell')).not.toHaveAttribute('inert')
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'auto' })
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 640, behavior: 'instant' })
     expect(document.activeElement).toBe(openingTrigger)
   })
 
