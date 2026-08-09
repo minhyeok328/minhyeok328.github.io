@@ -872,23 +872,28 @@ ol {
   position: sticky;
   top: 0.75rem;
   z-index: 2;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
   align-self: flex-end;
+  place-items: center;
   min-height: 2.5rem;
   margin: 0.75rem 0.75rem 0;
-  padding: 0.5rem 0.875rem;
-  color: var(--color-text-primary);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-small);
+  padding: 0;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
   font: inherit;
-  font-size: 0.8125rem;
-  font-weight: 750;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1;
   cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
 .project-detail-modal__close:is(:hover, :focus-visible) {
-  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
 }
 
 .project-detail-modal__close:focus-visible {

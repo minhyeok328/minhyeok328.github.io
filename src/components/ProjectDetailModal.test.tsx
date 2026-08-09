@@ -92,6 +92,21 @@ describe('ProjectDetailModal', () => {
     )
   })
 
+  it('renders an accessible borderless x control for closing the dialog', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      render(<ModalHarness />)
+
+      const closeButton = screen.getByRole('button', { name: '닫기' })
+
+      expect(closeButton).toHaveTextContent('×')
+      expect(getComputedStyle(closeButton).borderTopWidth).toBe('0px')
+      expect(getComputedStyle(closeButton).backgroundColor).toBe('rgba(0, 0, 0, 0)')
+    } finally {
+      removeStyles()
+    }
+  })
+
   it('accepts only the first synchronous exit request', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()

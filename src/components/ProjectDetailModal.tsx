@@ -205,8 +205,13 @@ export function ProjectDetailModal({
         aria-labelledby="project-detail-heading"
         tabIndex={-1}
       >
-        <button className="project-detail-modal__close" type="button" onClick={requestExit}>
-          닫기
+        <button
+          className="project-detail-modal__close"
+          type="button"
+          aria-label="닫기"
+          onClick={requestExit}
+        >
+          <span aria-hidden="true">×</span>
         </button>
         <div ref={contentRef} className="project-detail-modal__content">
           <div key={project.id} className="project-detail-modal__detail">
