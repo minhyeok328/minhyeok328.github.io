@@ -2,6 +2,8 @@ import { createRef } from 'react'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
+import { portfolioData } from '../../data/portfolio'
+import { getOrderedProjects } from '../../lib/projects'
 import type { Project } from '../../types/portfolio'
 import { ProjectDetailView } from './ProjectDetailView'
 
@@ -46,6 +48,19 @@ function renderDetail(project: Project = makeProject()) {
 }
 
 describe('ProjectDetailView', () => {
+  it.each(getOrderedProjects(portfolioData))(
+    'renders complete case-study sections for $title',
+    (project) => {
+      const { unmount } = renderDetail(project)
+
+      expect(screen.getByRole('region', { name: '프로젝트 개요' })).toBeInTheDocument()
+      expect(screen.getByRole('region', { name: '기술 설계와 판단' })).toBeInTheDocument()
+      expect(screen.getByRole('region', { name: '성장과 회고' })).toBeInTheDocument()
+
+      unmount()
+    },
+  )
+
   it('renders current project data once and keeps optional sections absent', async () => {
     const project = makeProject()
     const user = userEvent.setup()

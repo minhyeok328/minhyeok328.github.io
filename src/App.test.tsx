@@ -7,7 +7,10 @@ describe('App', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { level: 1, name: '서민혁입니다.' })).toBeInTheDocument()
-    expect(screen.getByText('프론트엔드 강점을 가진 AI 풀스택 개발자')).toBeInTheDocument()
+    expect(screen.getByText('AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'About' })).toHaveTextContent(
+      'SK네트웍스 Family AI 캠프 26기',
+    )
   })
 
   it('keeps all destinations out of the Hero and renders GitHub in Contact', () => {

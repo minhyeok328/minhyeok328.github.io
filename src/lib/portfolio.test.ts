@@ -22,4 +22,11 @@ describe('portfolio visibility rules', () => {
       'Data Integration', 'ML Experimentation', 'LLM & RAG', 'Web Integration',
     ])
   })
+
+  it('does not publish the retired CODEOWNER role claim', () => {
+    expect(JSON.stringify(portfolioData)).not.toMatch(/CODEOWNERS?/i)
+    expect(portfolioData.flagshipProject.cardRoleSummary).toBe(
+      'React·TypeScript 프론트엔드 구조와 서비스 통합 담당',
+    )
+  })
 })
