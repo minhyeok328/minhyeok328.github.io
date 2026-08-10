@@ -7,10 +7,11 @@ import { ProjectCard } from './ProjectCard'
 
 const stylesheet = await readPortfolioStylesheet()
 
-const project: Project = {
+const project = {
   id: 'test-project',
   order: 1,
   stage: 'Test Stage',
+  period: '2026.01.01 – 01.02',
   title: '테스트 프로젝트',
   description: '테스트 설명',
   contribution: ['첫 번째 테스트 기여', '두 번째 테스트 기여'],
@@ -18,7 +19,7 @@ const project: Project = {
   technologies: ['TypeScript', 'React', 'Vitest'],
   githubUrl: 'https://github.com/example/project',
   image: '/images/missing-project.webp',
-}
+} as Project & { period: string }
 
 function renderProjectCard(
   variant: 'flagship' | 'journey' = 'journey',
@@ -52,6 +53,7 @@ describe('ProjectCard', () => {
     expect(within(card).getAllByRole('button')).toHaveLength(1)
     expect(within(card).queryByRole('link')).not.toBeInTheDocument()
     expect(card).toHaveTextContent('테스트 설명')
+    expect(within(card).getByText('2026.01.01 – 01.02').tagName).toBe('TIME')
     expect(card).toHaveTextContent('첫 번째 테스트 기여')
     expect(within(card).getByText('내 역할')).toBeInTheDocument()
     expect(within(card).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
@@ -91,6 +93,22 @@ describe('ProjectCard', () => {
     expect(fallback).toHaveTextContent('테스')
   })
 
+  it('loads the flagship poster eagerly and Journey posters lazily', () => {
+    const { rerender } = render(
+      <ProjectCard project={project} variant="journey" onOpenProject={() => undefined} />,
+    )
+
+    expect(screen.getByAltText('테스트 프로젝트 프로젝트 이미지')).toHaveAttribute('loading', 'lazy')
+    expect(screen.getByAltText('테스트 프로젝트 프로젝트 이미지')).toHaveAttribute('decoding', 'async')
+
+    rerender(
+      <ProjectCard project={project} variant="flagship" onOpenProject={() => undefined} />,
+    )
+
+    expect(screen.getByAltText('테스트 프로젝트 프로젝트 이미지')).toHaveAttribute('loading', 'eager')
+    expect(screen.getByAltText('테스트 프로젝트 프로젝트 이미지')).toHaveAttribute('decoding', 'async')
+  })
+
   it('does not keep the card elevated when the restored trigger receives focus', () => {
     const removeStyles = installPortfolioStylesheet(stylesheet)
     try {
@@ -103,6 +121,22 @@ describe('ProjectCard', () => {
       expect(getComputedStyle(card).transform).not.toBe('translateY(-3px)')
       expect(getComputedStyle(card).boxShadow).not.toBe('var(--shadow-card)')
       expect(getComputedStyle(trigger).outline).toContain('3px solid')
+    } finally {
+      removeStyles()
+    }
+  })
+
+  it('aligns the project stage and period in one compact metadata row', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      renderProjectCard()
+      const card = screen.getByTestId('journey-project')
+      const metadata = card.querySelector('.project-card__meta') as HTMLElement
+      const period = within(card).getByText(project.period)
+
+      expect(getComputedStyle(metadata).display).toBe('flex')
+      expect(getComputedStyle(metadata).justifyContent).toBe('space-between')
+      expect(getComputedStyle(period).fontVariantNumeric).toBe('tabular-nums')
     } finally {
       removeStyles()
     }

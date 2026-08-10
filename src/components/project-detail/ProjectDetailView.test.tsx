@@ -15,6 +15,7 @@ function makeProject(overrides: Partial<Project> = {}): Project {
     id: 'test-project',
     order: 2,
     stage: 'Test Stage',
+    period: '2026.01.01 – 01.02',
     title: '테스트 프로젝트',
     description: '테스트 프로젝트 설명',
     contribution: ['테스트 역할 요약', '구현 A', '구현 B'],
@@ -58,7 +59,7 @@ describe('ProjectDetailView', () => {
 
       expect(screen.getByRole('region', { name: '프로젝트 개요' })).toBeInTheDocument()
       expect(screen.getByRole('region', { name: '기술 설계와 판단' })).toBeInTheDocument()
-      expect(screen.getByRole('region', { name: '성장과 회고' })).toBeInTheDocument()
+      expect(screen.getByRole('region', { name: '성장과 회고' })).toHaveTextContent(project.growth)
 
       unmount()
     },
@@ -72,7 +73,6 @@ describe('ProjectDetailView', () => {
     expect(screen.getByRole('heading', { level: 1, name: project.title })).toBeInTheDocument()
     expect(screen.getAllByText(project.description)).toHaveLength(1)
     expect(screen.getAllByText(project.contribution[0])).toHaveLength(1)
-    expect(screen.getAllByText(project.growth)).toHaveLength(1)
 
     const contribution = screen.getByRole('region', { name: '직접 기여' })
     expect(within(contribution).getAllByRole('listitem').map((item) => item.textContent)).toEqual([
@@ -84,15 +84,15 @@ describe('ProjectDetailView', () => {
     expect(screen.queryByRole('region', { name: '기술 설계와 판단' })).not.toBeInTheDocument()
     expect(screen.queryByRole('region', { name: '성장과 회고' })).not.toBeInTheDocument()
 
-    const codeLink = screen.getByRole('link', { name: 'GitHub에서 코드 보기' })
+    const codeLink = screen.getByRole('link', { name: '공식 팀 GitHub에서 코드 보기' })
     expect(codeLink).toHaveAttribute('href', project.githubUrl)
     expect(codeLink).toHaveAttribute('target', '_blank')
     expect(codeLink).toHaveAttribute('rel', 'noreferrer')
     expect(screen.getByRole('img', { name: '테스트 프로젝트 프로젝트 이미지 대체 이미지' })).toBeInTheDocument()
-    expect(screen.getByLabelText('프로젝트 빠른 요약')).toBeInTheDocument()
-    expect(screen.getByText('프로젝트', { selector: 'dt' })).toBeInTheDocument()
+    expect(screen.getByLabelText('프로젝트 핵심 정보')).toBeInTheDocument()
+    expect(screen.getByText('진행 기간', { selector: 'dt' })).toBeInTheDocument()
     expect(screen.getByText('내 역할', { selector: 'dt' })).toBeInTheDocument()
-    expect(screen.getByText('성장', { selector: 'dt' })).toBeInTheDocument()
+    expect(screen.getByText('저장소', { selector: 'dt' })).toBeInTheDocument()
     expect(screen.queryByText('프로젝트 목록')).not.toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: '다른 프로젝트' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '이전 · 이전 프로젝트' })).toBeInTheDocument()
@@ -100,6 +100,70 @@ describe('ProjectDetailView', () => {
     await user.click(screen.getByRole('button', { name: '다음 · 다음 프로젝트' }))
 
     expect(onNextProject).toHaveBeenCalledOnce()
+  })
+
+  it('shows verified facts, a user-controlled demo, and captioned implementation evidence before the case study', () => {
+    const project = {
+      ...makeProject(),
+      period: '2026.05.22 – 07.15',
+      operatingEnvironment: 'AWS 팀 배포 환경에서 프론트엔드·API 연동 및 동작 검증',
+      evidence: {
+        videoSrc: '/media/projects/humour/demo.webm',
+        disclosure: '합성 계정과 샘플 데이터를 사용한 로컬 데모입니다.',
+        screenshots: [
+          {
+            src: '/media/projects/humour/analysis-report.png',
+            alt: '지원서 분석 리포트 화면',
+            title: '분석 리포트',
+            caption: '원문과 AI 분석 근거를 함께 확인합니다.',
+          },
+          {
+            src: '/media/projects/humour/interview-questions.png',
+            alt: '면접 질문 화면',
+            title: '면접 질문',
+            caption: '분석 결과를 후속 질문으로 연결합니다.',
+          },
+        ],
+      },
+    } as Project & {
+      period: string
+      operatingEnvironment: string
+      evidence: {
+        videoSrc: string
+        disclosure: string
+        screenshots: Array<{ src: string; alt: string; title: string; caption: string }>
+      }
+    }
+
+    renderDetail(project)
+
+    const facts = screen.getByRole('region', { name: '프로젝트 핵심 정보' })
+    expect(within(facts).getByText('진행 기간', { selector: 'dt' })).toBeInTheDocument()
+    expect(within(facts).getByText(project.period)).toBeInTheDocument()
+    expect(within(facts).getByText('운영 환경', { selector: 'dt' })).toBeInTheDocument()
+    expect(within(facts).getByText(project.operatingEnvironment)).toBeInTheDocument()
+    expect(within(facts).getByRole('link', { name: '공식 팀 GitHub' })).toHaveAttribute(
+      'href',
+      project.githubUrl,
+    )
+
+    const demo = screen.getByLabelText(`${project.title} 데모 영상`)
+    expect(demo.tagName).toBe('VIDEO')
+    expect(demo).toHaveAttribute('controls')
+    expect(demo).toHaveAttribute('preload', 'metadata')
+    expect(demo).toHaveAttribute('poster', project.image)
+    expect(demo).not.toHaveAttribute('autoplay')
+    expect(screen.getByText('DEMO VIDEO')).toBeInTheDocument()
+    expect(screen.queryByText('LIVE DEMO')).not.toBeInTheDocument()
+    expect(screen.getByText(project.evidence.disclosure)).toBeInTheDocument()
+
+    const evidence = screen.getByRole('region', { name: '주요 화면과 구현 근거' })
+    expect(within(evidence).getAllByRole('figure')).toHaveLength(2)
+    expect(within(evidence).getByRole('img', { name: '지원서 분석 리포트 화면' })).toHaveAttribute(
+      'loading',
+      'lazy',
+    )
+    expect(within(evidence).getByText('원문과 AI 분석 근거를 함께 확인합니다.')).toBeInTheDocument()
   })
 
   it('uses explicit detail copy without removing any contributions', () => {
@@ -203,6 +267,30 @@ describe('ProjectDetailView', () => {
 
       expect(getComputedStyle(overviewParagraph).maxWidth).toBe('none')
       expect(getComputedStyle(retrospectiveParagraph).maxWidth).toBe('none')
+    } finally {
+      removeStyles()
+    }
+  })
+
+  it('uses a full-width demo and responsive evidence grid without autoplay', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      renderDetail(portfolioData.flagshipProject)
+
+      const video = screen.getByLabelText('HumouR 데모 영상')
+      const facts = screen.getByRole('region', { name: '프로젝트 핵심 정보' })
+      const evidenceGrid = document.querySelector('.project-detail__evidence-grid') as HTMLElement
+
+      expect(getComputedStyle(video).display).toBe('block')
+      expect(getComputedStyle(video).width).toBe('100%')
+      expect(getComputedStyle(video).aspectRatio).toBe('16 / 10')
+      expect(getComputedStyle(evidenceGrid).display).toBe('grid')
+      expect(getComputedStyle(evidenceGrid).gridTemplateColumns).toBe(
+        'repeat(auto-fit, minmax(230px, 1fr))',
+      )
+      expect(getComputedStyle(facts).gridTemplateColumns).toBe(
+        'repeat(auto-fit, minmax(180px, 1fr))',
+      )
     } finally {
       removeStyles()
     }

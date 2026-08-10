@@ -329,8 +329,8 @@ describe('AppRouter', () => {
     await openProjectDialog(router, 'PICKLE 맛집 추천 챗봇')
 
     expect(screen.queryByText('프로젝트 목록')).not.toBeInTheDocument()
-    const githubAction = screen.getByRole('link', { name: 'GitHub에서 코드 보기' })
-    expect(githubAction).toHaveAttribute('href', 'https://github.com/minhyeok328/3rd_project')
+    const githubAction = screen.getByRole('link', { name: '공식 팀 GitHub에서 코드 보기' })
+    expect(githubAction).toHaveAttribute('href', 'https://github.com/SKN26-3rd-3rd/3rd_project')
     expect(githubAction).toHaveAttribute('target', '_blank')
     expect(githubAction).toHaveAttribute('rel', 'noreferrer')
   })
