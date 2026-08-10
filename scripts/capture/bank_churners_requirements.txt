@@ -1,0 +1,7 @@
+# Capture-only runtime; the original repository has no local requirements file.
+mlflow==3.10.1
+imageio-ffmpeg==0.6.0
+pandas==2.2.3
+plotly==6.5.0
+requests==2.32.3
+streamlit==1.56.0
