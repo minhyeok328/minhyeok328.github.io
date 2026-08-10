@@ -32,10 +32,15 @@ export function ProjectCard({ project, variant, onOpenProject }: ProjectCardProp
           project={project}
           className="project-card__image"
           fallbackClassName="project-card__image-placeholder"
+          loading={variant === 'flagship' ? 'eager' : 'lazy'}
+          decoding="async"
         />
 
         <div className="project-card__content">
-          <p className="project-card__stage">{project.stage}</p>
+          <div className="project-card__meta">
+            <p className="project-card__stage">{project.stage}</p>
+            <time>{project.period}</time>
+          </div>
           <h3>{project.title}</h3>
           <p>{project.description}</p>
           <p className="project-card__role">

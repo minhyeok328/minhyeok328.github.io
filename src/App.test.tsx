@@ -67,7 +67,7 @@ describe('App', () => {
     expect(screen.getByText('ML Experimentation')).toBeInTheDocument()
     expect(screen.getAllByText('LLM & RAG').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('Web Integration')).toBeInTheDocument()
-    expect(screen.getByText('AI Full-Stack')).toBeInTheDocument()
+    expect(screen.getByText('Frontend Flagship')).toBeInTheDocument()
   })
 
   it('gives every project card one stable dialog trigger without a visible CTA', () => {
@@ -106,10 +106,18 @@ describe('App', () => {
     })
   })
 
-  it('uses accessible placeholders instead of empty project image sources', () => {
+  it('uses reviewed project posters without empty image sources', () => {
     const { container } = render(<App />)
 
-    expect(screen.getAllByRole('img', { name: /프로젝트 이미지 대체 이미지$/ })).toHaveLength(5)
+    expect(screen.getAllByRole('img', { name: /프로젝트 이미지$/ }).map((image) => (
+      image.getAttribute('src')
+    ))).toEqual([
+      '/media/projects/humour/poster.png',
+      '/media/projects/vehicle-tco/poster.png',
+      '/media/projects/bank-churners/poster.png',
+      '/media/projects/pickle/poster.png',
+      '/media/projects/lg-home-ai/poster.png',
+    ])
     expect(container.querySelectorAll('img[src=""]')).toHaveLength(0)
   })
 
@@ -138,7 +146,7 @@ describe('App', () => {
       '2단계 · ML Experimentation',
       '3단계 · LLM & RAG',
       '4단계 · Web Integration',
-      '5단계 · AI Full-Stack',
+      '5단계 · Frontend Flagship',
     ])
   })
 
@@ -173,7 +181,7 @@ describe('App', () => {
       {
         title: 'Quality & Delivery',
         primary: ['Vitest', 'Testing Library', 'MSW', 'Playwright', 'Git/GitHub'],
-        experience: ['Docker', 'GitHub Actions', 'AWS deployment configuration'],
+        experience: ['Docker', 'GitHub Actions', 'AWS deployment integration & verification'],
       },
     ]
 

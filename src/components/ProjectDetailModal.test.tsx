@@ -86,7 +86,7 @@ describe('ProjectDetailModal', () => {
     expect(document.getElementById('portfolio-app-shell')).toHaveAttribute('inert')
     expect(dialog.closest('#portfolio-app-shell')).toBeNull()
     expect(dialog.parentElement).toHaveClass('project-detail-modal__backdrop')
-    expect(screen.getByRole('link', { name: 'GitHub에서 코드 보기' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '공식 팀 GitHub에서 코드 보기' })).toHaveAttribute(
       'href',
       pickle.githubUrl,
     )

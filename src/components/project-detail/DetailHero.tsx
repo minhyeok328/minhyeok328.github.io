@@ -14,6 +14,7 @@ export function DetailHero({ project, headingRef }: DetailHeroProps) {
       <div className="project-detail__hero-copy">
         <p className="project-detail__stage">{project.stage}</p>
         <h1 id="project-detail-heading" ref={headingRef} tabIndex={-1}>{project.title}</h1>
+        <p className="project-detail__description">{project.description}</p>
         <ProjectActions githubUrl={project.githubUrl} />
       </div>
       <ProjectImage
