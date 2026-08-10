@@ -208,6 +208,20 @@ describe('ProjectDetailView', () => {
     }
   })
 
+  it('keeps a long project title on one line in the desktop detail hero', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      const project = makeProject({ title: '차량 운영·관리 비용 계산 시스템' })
+      renderDetail(project)
+
+      const heading = screen.getByRole('heading', { level: 1, name: project.title })
+
+      expect(getComputedStyle(heading).whiteSpace).toBe('nowrap')
+    } finally {
+      removeStyles()
+    }
+  })
+
   it('omits explicitly empty optional sections and team technologies', () => {
     renderDetail(makeProject({
       teamTechnologies: [],
