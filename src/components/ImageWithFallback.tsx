@@ -6,6 +6,8 @@ interface ImageWithFallbackProps {
   fallback: string
   className?: string
   fallbackClassName?: string
+  loading?: 'eager' | 'lazy'
+  decoding?: 'async' | 'auto' | 'sync'
 }
 
 export function ImageWithFallback({
@@ -14,6 +16,8 @@ export function ImageWithFallback({
   fallback,
   className,
   fallbackClassName = className,
+  loading,
+  decoding,
 }: ImageWithFallbackProps) {
   const [failed, setFailed] = useState(src.length === 0)
 
@@ -25,5 +29,14 @@ export function ImageWithFallback({
     )
   }
 
-  return <img className={className} src={src} alt={alt} onError={() => setFailed(true)} />
+  return (
+    <img
+      className={className}
+      src={src}
+      alt={alt}
+      loading={loading}
+      decoding={decoding}
+      onError={() => setFailed(true)}
+    />
+  )
 }

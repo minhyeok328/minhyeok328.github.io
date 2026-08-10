@@ -27,10 +27,24 @@ export interface ProjectDetail {
   retrospective?: string[]
 }
 
+export interface ProjectEvidenceScreenshot {
+  src: string
+  alt: string
+  title: string
+  caption: string
+}
+
+export interface ProjectEvidence {
+  videoSrc: string
+  disclosure: string
+  screenshots: ProjectEvidenceScreenshot[]
+}
+
 export interface Project {
   id: string
   order: number
   stage: string
+  period: string
   title: string
   description: string
   contribution: string[]
@@ -39,6 +53,8 @@ export interface Project {
   teamTechnologies?: string[]
   githubUrl: string
   image: string
+  operatingEnvironment?: string
+  evidence?: ProjectEvidence
   cardRoleSummary?: string
   detail?: ProjectDetail
 }

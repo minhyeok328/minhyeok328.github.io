@@ -21,7 +21,8 @@ export const portfolioData: PortfolioData = {
   flagshipProject: {
     id: 'humour',
     order: 5,
-    stage: 'AI Full-Stack',
+    stage: 'Frontend Flagship',
+    period: '2026.05.22 – 07.15',
     title: 'HumouR',
     description: '기업 정보, 채용 공고, 평가 기준, 지원서 분석, 리포트, 면접 질문과 외부 제한 공유를 하나의 업무 흐름으로 연결한 AI 채용 운영 보조 서비스입니다.',
     cardRoleSummary: 'React·TypeScript 프론트엔드 구조와 서비스 통합 담당',
@@ -35,8 +36,39 @@ export const portfolioData: PortfolioData = {
     growth: '인증·권한·보안·테스트와 배포 환경까지 함께 고려하는 서비스 관점으로 확장',
     technologies: ['React 19', 'TypeScript', 'TanStack Query', 'Zod'],
     teamTechnologies: ['Django', 'Celery', 'LangGraph', 'Pinecone', 'AWS'],
-    githubUrl: 'https://github.com/minhyeok328/Final_project',
-    image: '',
+    githubUrl: 'https://github.com/SKN26-Final-1st/Final_project',
+    image: '/media/projects/humour/poster.png',
+    operatingEnvironment: 'AWS 팀 배포 환경에서 프론트엔드·API 연동 및 동작 검증',
+    evidence: {
+      videoSrc: '/media/projects/humour/demo.webm',
+      disclosure: '합성 계정과 샘플 데이터를 사용한 로컬 데모입니다. AWS 인프라 배포는 팀원이 담당했고, 저는 프론트엔드·API 연동과 동작 검증을 담당했습니다.',
+      screenshots: [
+        {
+          src: '/media/projects/humour/analysis-report.png',
+          alt: '지원서 원문과 AI 평가 요약을 함께 보여주는 HumouR 분석 리포트 화면',
+          title: '분석 리포트',
+          caption: '지원서 원문과 AI 평가 요약을 한 화면에서 확인하고 후속 검토로 이어지는 흐름입니다.',
+        },
+        {
+          src: '/media/projects/humour/analysis-evidence.png',
+          alt: 'AI 분석 항목별 근거를 확인하는 HumouR 화면',
+          title: '분석 근거 확인',
+          caption: '평가 결과만 제시하지 않고 항목별 근거를 함께 확인할 수 있도록 구성했습니다.',
+        },
+        {
+          src: '/media/projects/humour/interview-questions.png',
+          alt: '분석 결과를 바탕으로 생성한 HumouR 면접 질문 화면',
+          title: '면접 질문',
+          caption: '지원서 분석 결과를 채용 담당자가 검토할 수 있는 후속 질문으로 연결했습니다.',
+        },
+        {
+          src: '/media/projects/humour/external-sharing.png',
+          alt: '외부 제한 공유 상태를 관리하는 HumouR 화면',
+          title: '외부 제한 공유',
+          caption: '로그인 사용자와 API Key 기반 제한 사용자의 접근 범위와 상태를 구분했습니다.',
+        },
+      ],
+    },
     detail: {
       overview: [
         'HumouR는 채용 전담 인력이 부족한 조직이 회사 정보와 채용 공고, 평가 기준, 지원서와 분석 결과를 한곳에서 관리하도록 돕는 팀 프로젝트입니다. AI가 합격 여부를 대신 결정하는 것이 아니라, 채용 담당자가 원문 근거와 추가 질문을 바탕으로 판단하도록 지원하는 것을 목표로 했습니다.',
@@ -83,6 +115,7 @@ export const portfolioData: PortfolioData = {
       id: 'vehicle-tco',
       order: 1,
       stage: 'Data Integration',
+      period: '2026.02.05 – 02.06',
       title: '차량 운영·관리 비용 계산 시스템',
       description: '공공 연비와 차량 데이터, 현재 유가와 비용 가정을 결합해 월·연간 운영비 기준선을 비교하는 시스템입니다.',
       cardRoleSummary: '공공 연비 API 수집·응답 정규화와 CSV 데이터 가공',
@@ -94,8 +127,26 @@ export const portfolioData: PortfolioData = {
       growth: '개별 코드 학습에서 기술·데이터·팀 작업이 연결되는 전체 흐름에 대한 이해로 확장',
       technologies: ['Python', 'Public API', 'JSON', 'CSV'],
       teamTechnologies: ['MySQL', 'Streamlit'],
-      githubUrl: 'https://github.com/minhyeok328/1st_project',
-      image: '',
+      githubUrl: 'https://github.com/joy-riders/joy-riders',
+      image: '/media/projects/vehicle-tco/poster.png',
+      evidence: {
+        videoSrc: '/media/projects/vehicle-tco/demo.webm',
+        disclosure: '로컬 MariaDB의 실제 적재 데이터를 사용한 데모입니다. 유가 API Key가 없는 상태에서 1,650원/L 고정 대체값을 사용했으며 외부 유가·공공데이터 호출은 실행하지 않았습니다.',
+        screenshots: [
+          {
+            src: '/media/projects/vehicle-tco/search-result.png',
+            alt: '아반떼 차량 19개 검색 결과를 보여주는 TCO Insight 화면',
+            title: '실제 차량 검색',
+            caption: 'DB에 적재한 차량·연비 데이터에서 아반떼 19개 모델을 조회한 결과입니다.',
+          },
+          {
+            src: '/media/projects/vehicle-tco/cost-result.png',
+            alt: '월간 및 연간 차량 운영비 계산 결과 화면',
+            title: '월간·연간 운영비',
+            caption: '동일한 조건에서 월 316,410원, 연 3,796,928원의 비용 구성 결과를 확인할 수 있습니다.',
+          },
+        ],
+      },
       detail: {
         overview: [
           '정적 차량·연비 데이터를 데이터베이스에 적재하고, 결과 조회 시 현재 유가와 자동차세·정비비 가정을 결합해 차량별 월·연간 운영비를 비교한 첫 팀 프로젝트입니다. 구매가·감가·보험·금융비용은 제외했기 때문에 실제 총소유비용이 아니라 동일한 조건에서 차량을 비교하기 위한 운영비 기준선에 가깝습니다.',
@@ -124,6 +175,7 @@ export const portfolioData: PortfolioData = {
       id: 'bank-churners',
       order: 2,
       stage: 'ML Experimentation',
+      period: '2026.03.16 – 03.17',
       title: '신용카드 고객 이탈 분석',
       description: '고객 행동 데이터를 탐색하고 이탈 가능성과 소득 정보의 불확실성을 분석한 머신러닝 프로젝트입니다.',
       cardRoleSummary: 'XGBoost 소득 구간 분류 실험과 EDA·전처리 탐색',
@@ -135,8 +187,26 @@ export const portfolioData: PortfolioData = {
       growth: '모델 선택과 튜닝 중심의 접근에서 데이터 구조·가설·문제 정의를 먼저 확인하는 방식으로 전환',
       technologies: ['Python', 'pandas', 'scikit-learn', 'XGBoost'],
       teamTechnologies: ['MySQL', 'FastAPI', 'MLflow', 'Streamlit'],
-      githubUrl: 'https://github.com/minhyeok328/2nd_project',
-      image: '',
+      githubUrl: 'https://github.com/SKN26-2nd-1st/2nd_project',
+      image: '/media/projects/bank-churners/poster.png',
+      evidence: {
+        videoSrc: '/media/projects/bank-churners/demo.webm',
+        disclosure: '충돌 없이 확인 가능한 커밋의 모델 지표와 EDA 산출물을 바탕으로 재구성한 사전 계산 증거입니다. 캡처 과정에서 고객 이탈 예측이나 새 모델 추론은 실행하지 않았습니다.',
+        screenshots: [
+          {
+            src: '/media/projects/bank-churners/strategy-report.png',
+            alt: 'HistGradientBoosting 사전 계산 성능을 바탕으로 정리한 CRM 전략 가이드 화면',
+            title: '사전 계산 전략 근거',
+            caption: '커밋에서 확인한 HistGradientBoosting 성능 지표를 정적 CRM 전략 가이드와 연결해 표시했습니다. 이 화면에서 실시간 추론은 실행하지 않습니다.',
+          },
+          {
+            src: '/media/projects/bank-churners/model-evidence.png',
+            alt: '신용카드 고객 특성 관계를 보여주는 EDA 시각화 화면',
+            title: 'EDA 근거',
+            caption: '모델 튜닝에 앞서 범주 구조와 특성 관계를 실제 시각화로 검토했습니다.',
+          },
+        ],
+      },
       detail: {
         overview: [
           'Kaggle BankChurners 데이터를 바탕으로 고객 행동 특성과 이탈 가능성을 분석하고, 여러 모델을 비교한 팀 프로젝트입니다. 저는 소득 정보의 Unknown 값을 단순 삭제하지 않고 예측으로 보완할 수 있는지 실험했습니다.',
@@ -164,6 +234,7 @@ export const portfolioData: PortfolioData = {
       id: 'pickle',
       order: 3,
       stage: 'LLM & RAG',
+      period: '2026.04.24 – 04.27',
       title: 'PICKLE 맛집 추천 챗봇',
       description: '사용자 조건을 구조화하고 신대방삼거리 식당 100곳의 실제 데이터를 검색해 한 곳을 추천하는 RAG 챗봇입니다.',
       cardRoleSummary: 'LangGraph RAG 파이프라인·구조화 출력·Streamlit 통합과 내부 평가',
@@ -177,8 +248,32 @@ export const portfolioData: PortfolioData = {
       growth: 'LLM 기능 구현에서 상태 흐름·검색 근거·평가 체계를 함께 설계하는 관점으로 확장',
       technologies: ['LangGraph', 'OpenAI API', 'RAG', 'SQLite', 'Streamlit'],
       teamTechnologies: ['Kakao Map API'],
-      githubUrl: 'https://github.com/minhyeok328/3rd_project',
-      image: '',
+      githubUrl: 'https://github.com/SKN26-3rd-3rd/3rd_project',
+      image: '/media/projects/pickle/poster.png',
+      evidence: {
+        videoSrc: '/media/projects/pickle/demo.webm',
+        disclosure: '실제 구축한 100개 식당 SQLite DB 기반 검색 화면입니다. 평가는 미리 계산된 50개 내부 평가 결과이며, 이 데모에서 LLM이나 임베딩 API를 다시 호출하지 않았습니다.',
+        screenshots: [
+          {
+            src: '/media/projects/pickle/search-map.png',
+            alt: 'PICKLE 식당 검색 결과와 Kakao 지도를 함께 보여주는 화면',
+            title: '검색과 지도',
+            caption: '실제 식당 검색 결과와 지도 마커를 연결해 후보의 위치와 정보를 함께 확인할 수 있습니다.',
+          },
+          {
+            src: '/media/projects/pickle/restaurant-detail.png',
+            alt: 'PICKLE 식당 메뉴와 리뷰 상세 화면',
+            title: '식당 상세',
+            caption: '추천 후보의 메뉴와 리뷰를 검색 결과의 근거로 연결했습니다.',
+          },
+          {
+            src: '/media/projects/pickle/evaluation.png',
+            alt: 'PICKLE 50개 질의 내부 평가 결과 화면',
+            title: '내부 평가 결과',
+            caption: '동일 DB·50개 케이스 기준 all-check 82%, 후보 내 목표 식당 포함률 96%를 기록했습니다.',
+          },
+        ],
+      },
       detail: {
         overview: [
           'PICKLE은 신대방삼거리 식당 100곳의 메뉴·리뷰·태그 데이터를 바탕으로 사용자의 조건에 맞는 한 곳을 추천하는 팀 프로젝트입니다. 사용자 질문을 분류하고 검색 조건을 구조화한 뒤, SQLite의 실제 식당 후보와 근거를 답변과 지도·상세 카드로 연결했습니다.',
@@ -215,6 +310,7 @@ export const portfolioData: PortfolioData = {
       id: 'lg-home-ai',
       order: 4,
       stage: 'Web Integration',
+      period: '2026.05.20 – 05.21',
       title: 'LG Home AI 가전 상담',
       description: '계정·검색·상품 상세·찜·챗봇을 연결한 Django 기반 LG 가전 검색·상담 웹 애플리케이션입니다.',
       cardRoleSummary: 'Django Templates·Tailwind·JavaScript 기반 프론트엔드와 서버 연동',
@@ -228,8 +324,32 @@ export const portfolioData: PortfolioData = {
       growth: 'AI 프로토타입에서 계정과 여러 화면이 연결된 Django 웹 서비스의 사용자 흐름으로 확장',
       technologies: ['Django Templates', 'Tailwind CSS', 'JavaScript', 'Fetch API'],
       teamTechnologies: ['Django ORM', 'LangGraph', 'Pinecone', 'SQLite'],
-      githubUrl: 'https://github.com/minhyeok328/4th_project',
-      image: '',
+      githubUrl: 'https://github.com/SKN26-4th-1st/4th_project',
+      image: '/media/projects/lg-home-ai/poster.png',
+      evidence: {
+        videoSrc: '/media/projects/lg-home-ai/demo.webm',
+        disclosure: '합성 계정과 로컬 데이터로 촬영한 데모입니다. 검색·상세·찜·챗봇 화면을 검증했으며 녹화 과정에서 AI·RAG 외부 호출은 실행하지 않았습니다.',
+        screenshots: [
+          {
+            src: '/media/projects/lg-home-ai/search-filter.png',
+            alt: 'LG Home AI 냉장고 검색과 필터 결과 화면',
+            title: '검색과 필터',
+            caption: 'Django GET·ORM·Paginator와 쿼리스트링으로 검색 조건과 페이지 상태를 유지했습니다.',
+          },
+          {
+            src: '/media/projects/lg-home-ai/product-detail.png',
+            alt: 'LG Home AI 상품 상세와 찜 완료 화면',
+            title: '상품 상세와 찜',
+            caption: '847개 실제 상품 데이터의 상세 정보와 찜 JSON 통신 상태를 하나의 흐름으로 연결했습니다.',
+          },
+          {
+            src: '/media/projects/lg-home-ai/chat.png',
+            alt: 'LG Home AI 제품 상담 챗봇 화면',
+            title: 'AI 상담 화면',
+            caption: '로딩·오류 표시와 중복 요청 방지를 고려한 채팅 인터페이스를 구현했습니다.',
+          },
+        ],
+      },
       detail: {
         overview: [
           '3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. 사용자는 847개 가전 데이터를 조건으로 검색하고, 제품 상담과 사용설명서 RAG 기능을 이용할 수 있습니다.',
@@ -282,7 +402,7 @@ export const portfolioData: PortfolioData = {
     {
       title: 'Quality & Delivery',
       primary: ['Vitest', 'Testing Library', 'MSW', 'Playwright', 'Git/GitHub'],
-      experience: ['Docker', 'GitHub Actions', 'AWS deployment configuration'],
+      experience: ['Docker', 'GitHub Actions', 'AWS deployment integration & verification'],
     },
   ],
   experiences: [],
