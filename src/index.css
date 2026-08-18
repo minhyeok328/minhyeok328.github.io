@@ -1294,6 +1294,12 @@ ol {
   gap: 0.75rem;
   margin: 0;
   padding-left: 1.25rem;
+  list-style-position: outside;
+  list-style-type: "-  ";
+}
+
+.project-detail__section > ul > li::marker {
+  color: var(--color-text-primary);
 }
 
 .project-detail__decisions {
