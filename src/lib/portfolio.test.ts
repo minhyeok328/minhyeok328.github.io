@@ -6,7 +6,7 @@ describe('portfolio visibility rules', () => {
   it('returns verified Contact links in the approved order', () => {
     expect(getVisibleContactLinks(portfolioData.profile)).toEqual([
       { label: 'GitHub', href: 'https://github.com/minhyeok328' },
-      { label: '블로그', href: 'https://minhyeok328.tistory.com/' },
+      { label: '블로그', href: 'https://blog.naver.com/m______yuk' },
       { label: 'Email', href: 'mailto:tjalsgur328@gmail.com' },
     ])
   })

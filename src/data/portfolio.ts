@@ -8,7 +8,7 @@ export const portfolioData: PortfolioData = {
     description: '데이터와 비즈니스 로직, API와 화면 사이의 연결을 이해하고 기능이 실제 사용자 경험으로 이어지도록 구현합니다.',
     profileImage: '',
     resumeUrl: '',
-    blogUrl: 'https://minhyeok328.tistory.com/',
+    blogUrl: 'https://blog.naver.com/m______yuk',
     email: 'tjalsgur328@gmail.com',
     githubUrl: 'https://github.com/minhyeok328',
     linkedinUrl: '',

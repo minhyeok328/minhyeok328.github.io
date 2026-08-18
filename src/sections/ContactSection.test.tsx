@@ -22,7 +22,7 @@ describe('ContactSection', () => {
     expect(links[0]).toHaveAttribute('href', 'https://github.com/minhyeok328')
     expect(links[0]).toHaveAttribute('target', '_blank')
     expect(links[0]).toHaveAttribute('rel', 'noreferrer')
-    expect(links[1]).toHaveAttribute('href', 'https://minhyeok328.tistory.com/')
+    expect(links[1]).toHaveAttribute('href', 'https://blog.naver.com/m______yuk')
     expect(links[1]).toHaveAttribute('target', '_blank')
     expect(links[1]).toHaveAttribute('rel', 'noreferrer')
     expect(links[2]).toHaveAttribute('href', 'mailto:tjalsgur328@gmail.com')

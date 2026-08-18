@@ -34,7 +34,7 @@ describe('HeroSection', () => {
         profile={{
           ...profile,
           resumeUrl: '/resume.pdf',
-          blogUrl: 'https://minhyeok328.tistory.com/',
+          blogUrl: 'https://blog.naver.com/m______yuk',
           email: 'hello@example.com',
           linkedinUrl: 'https://www.linkedin.com/in/example',
         }}

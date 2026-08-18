@@ -95,7 +95,7 @@ describe('App', () => {
     expect(contactLinks[2]).toHaveAccessibleName('Email 보내기')
     expect(screen.getByRole('link', { name: '블로그 보기' })).toHaveAttribute(
       'href',
-      'https://minhyeok328.tistory.com/',
+      'https://blog.naver.com/m______yuk',
     )
     expect(screen.getByRole('link', { name: 'Email 보내기' })).toHaveAttribute(
       'href',
