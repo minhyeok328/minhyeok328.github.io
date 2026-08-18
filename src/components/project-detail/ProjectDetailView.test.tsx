@@ -272,6 +272,62 @@ describe('ProjectDetailView', () => {
     }
   })
 
+  it('stacks each case-study heading above its content', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      renderDetail(makeProject({
+        detail: {
+          overview: ['프로젝트 개요 본문'],
+          decisions: [{
+            title: '기술 판단',
+            situation: '기술 판단 상황',
+            choice: '기술 판단 선택',
+            reason: '기술 판단 이유',
+            implementation: '기술 판단 구현',
+          }],
+          retrospective: ['성장과 회고 본문'],
+        },
+      }))
+
+      const sectionNames = [
+        '프로젝트 개요',
+        '직접 기여',
+        '기술 설계와 판단',
+        '기술 구성',
+        '성장과 회고',
+      ]
+
+      sectionNames.forEach((name) => {
+        const section = screen.getByRole('region', { name })
+        const heading = within(section).getByRole('heading', { level: 2, name })
+
+        expect(getComputedStyle(section).display).toBe('block')
+        expect(getComputedStyle(heading).marginBottom).toBe('24px')
+      })
+    } finally {
+      removeStyles()
+    }
+  })
+
+  it('shows hyphen markers for the direct-contribution list', () => {
+    const resetStyle = document.createElement('style')
+    resetStyle.textContent = 'ol, ul, menu { list-style-type: none; }'
+    document.head.append(resetStyle)
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      renderDetail()
+
+      const contribution = screen.getByRole('region', { name: '직접 기여' })
+      const list = within(contribution).getByRole('list')
+
+      expect(getComputedStyle(list).listStyleType).toBe('"-  "')
+      expect(getComputedStyle(list).listStylePosition).toBe('outside')
+    } finally {
+      removeStyles()
+      resetStyle.remove()
+    }
+  })
+
   it('uses a full-width demo and responsive evidence grid without autoplay', () => {
     const removeStyles = installPortfolioStylesheet(stylesheet)
     try {
