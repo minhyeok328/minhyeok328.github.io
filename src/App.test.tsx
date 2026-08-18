@@ -1,16 +1,73 @@
 import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import App from './App'
+import { installPortfolioStylesheet, readPortfolioStylesheet } from './test/portfolioStylesheet'
+
+const stylesheet = await readPortfolioStylesheet()
 
 describe('App', () => {
-  it('renders the approved portfolio positioning', () => {
+  it('presents a position-neutral full-stack identity and separates learning from collaboration', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { level: 1, name: '서민혁입니다.' })).toBeInTheDocument()
-    expect(screen.getByText('AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'About' })).toHaveTextContent(
-      'SK네트웍스 Family AI 캠프 26기',
-    )
+    expect(screen.getByText('서비스의 전체 흐름을 구조화하고 연결하는 풀스택 개발자')).toBeInTheDocument()
+    expect(screen.queryByText('AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')).not.toBeInTheDocument()
+
+    const about = screen.getByRole('region', { name: 'About' })
+    expect(about).toHaveTextContent('데이터와 로직, API와 화면이 맞물려 동작하는 하나의 흐름')
+    expect(within(about).getByRole('heading', { level: 3, name: 'How I Learn' })).toBeVisible()
+    expect(about).toHaveTextContent('주변 사람들에게 묻고 강사님께 질문하며 이해의 방향을 확인했습니다')
+
+    const workStyle = screen.getByRole('region', { name: 'How I Work' })
+    const principles = within(workStyle).getByRole('list', { name: '협업 원칙' })
+    expect(within(principles).getAllByRole('listitem')).toHaveLength(3)
+    expect(within(workStyle).getByRole('heading', { level: 3, name: '전체를 이해한 뒤 역할을 나눕니다' })).toBeVisible()
+    expect(within(workStyle).getByRole('heading', { level: 3, name: '연결 지점과 책임을 먼저 합의합니다' })).toBeVisible()
+    expect(within(workStyle).getByRole('heading', { level: 3, name: '진행 과정과 변경 사항을 보이게 관리합니다' })).toBeVisible()
+  })
+
+  it('stacks About and How I Work headings above full-width content', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      render(<App />)
+
+      const about = screen.getByRole('region', { name: 'About' })
+      const workStyle = screen.getByRole('region', { name: 'How I Work' })
+      const aboutContent = about.querySelector(':scope > .about-section__content') as HTMLElement
+      const workPrinciples = workStyle.querySelector(
+        ':scope > .work-style-section__principles',
+      ) as HTMLElement
+
+      expect(getComputedStyle(about).display).toBe('block')
+      expect(getComputedStyle(workStyle).display).toBe('block')
+      expect(getComputedStyle(aboutContent).maxWidth).toBe('none')
+      expect(getComputedStyle(workPrinciples).maxWidth).toBe('none')
+    } finally {
+      removeStyles()
+    }
+  })
+
+  it('renders How I Work as an unboxed list with aligned descriptions', () => {
+    const removeStyles = installPortfolioStylesheet(stylesheet)
+    try {
+      render(<App />)
+
+      const workStyle = screen.getByRole('region', { name: 'How I Work' })
+      const principles = within(workStyle).getByRole('list', { name: '협업 원칙' })
+      const [firstPrinciple] = within(principles).getAllByRole('listitem')
+      const marker = within(firstPrinciple).getByText('-', { selector: 'span' })
+
+      expect(principles).toHaveAttribute('role', 'list')
+      expect(getComputedStyle(principles).borderTopWidth).toBe('0px')
+      expect(getComputedStyle(principles).borderRadius).toBe('0px')
+      expect(getComputedStyle(firstPrinciple).display).toBe('grid')
+      expect(getComputedStyle(firstPrinciple).gridTemplateColumns).toBe(
+        'auto minmax(0, 1fr)',
+      )
+      expect(marker).toHaveAttribute('aria-hidden', 'true')
+    } finally {
+      removeStyles()
+    }
   })
 
   it('keeps all destinations out of the Hero and renders GitHub in Contact', () => {
@@ -67,7 +124,8 @@ describe('App', () => {
     expect(screen.getByText('ML Experimentation')).toBeInTheDocument()
     expect(screen.getAllByText('LLM & RAG').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('Web Integration')).toBeInTheDocument()
-    expect(screen.getByText('Frontend Flagship')).toBeInTheDocument()
+    expect(screen.getByText('Service Integration')).toBeInTheDocument()
+    expect(screen.queryByText('Frontend Flagship')).not.toBeInTheDocument()
   })
 
   it('gives every project card one stable dialog trigger without a visible CTA', () => {
@@ -146,7 +204,7 @@ describe('App', () => {
       '2단계 · ML Experimentation',
       '3단계 · LLM & RAG',
       '4단계 · Web Integration',
-      '5단계 · Frontend Flagship',
+      '5단계 · Service Integration',
     ])
   })
 
