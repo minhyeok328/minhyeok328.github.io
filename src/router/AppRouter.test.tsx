@@ -104,10 +104,10 @@ describe('AppRouter', () => {
     expect(window.location.search).toBe('')
     expect(window.location.hash).toBe('')
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-    expect(document.title).toBe('서민혁 | AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')
+    expect(document.title).toBe('서민혁 | 서비스의 전체 흐름을 연결하는 풀스택 개발자')
     expect(document.getElementById('page-og-title')).toHaveAttribute(
       'content',
-      '서민혁 | AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자',
+      '서민혁 | 서비스의 전체 흐름을 연결하는 풀스택 개발자',
     )
     expect(document.getElementById('page-og-url')).toHaveAttribute(
       'content',

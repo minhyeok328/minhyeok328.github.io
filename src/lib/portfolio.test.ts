@@ -13,7 +13,7 @@ describe('portfolio visibility rules', () => {
 
   it('keeps Project Journey nested under Projects and omits Experience without entries', () => {
     expect(getNavigationItems(portfolioData).map((item) => item.id)).toEqual([
-      'about', 'projects', 'skills', 'contact',
+      'about', 'work', 'projects', 'skills', 'contact',
     ])
   })
 
@@ -28,5 +28,12 @@ describe('portfolio visibility rules', () => {
     expect(portfolioData.flagshipProject.cardRoleSummary).toBe(
       'React·TypeScript 프론트엔드 구조와 서비스 통합 담당',
     )
+  })
+
+  it('keeps the flagship growth goal broader than a frontend-only position', () => {
+    const growthGoal = portfolioData.flagshipProject.detail?.retrospective?.at(-1)
+
+    expect(growthGoal).toContain('서비스 전체를 이해하고 연결하는 개발자')
+    expect(growthGoal).not.toMatch(/프론트엔드 개발자로 성장/)
   })
 })

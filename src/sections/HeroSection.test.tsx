@@ -6,7 +6,7 @@ import { HeroSection } from './HeroSection'
 const profile: Profile = {
   name: '서민혁',
   greeting: '안녕하세요,',
-  role: 'AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자',
+  role: '서비스의 전체 흐름을 구조화하고 연결하는 풀스택 개발자',
   description: '테스트 설명',
   profileImage: '',
   resumeUrl: '',
