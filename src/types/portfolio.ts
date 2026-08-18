@@ -65,6 +65,16 @@ export interface SkillGroup {
   experience: string[]
 }
 
+export interface LearningApproach {
+  title: string
+  messages: string[]
+}
+
+export interface WorkPrinciple {
+  title: string
+  description: string
+}
+
 export interface ExperienceEntry {
   id: string
   period: string
@@ -76,6 +86,8 @@ export interface ExperienceEntry {
 export interface PortfolioData {
   profile: Profile
   about: string[]
+  learningApproach: LearningApproach
+  workPrinciples: WorkPrinciple[]
   flagshipProject: Project
   journeyProjects: Project[]
   skillGroups: SkillGroup[]

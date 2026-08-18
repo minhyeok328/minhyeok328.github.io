@@ -16,6 +16,7 @@ import { ExperienceSection } from '../sections/ExperienceSection'
 import { HeroSection } from '../sections/HeroSection'
 import { ProjectsSection } from '../sections/ProjectsSection'
 import { SkillsSection } from '../sections/SkillsSection'
+import { WorkStyleSection } from '../sections/WorkStyleSection'
 
 const projects = getOrderedProjects(portfolioData)
 
@@ -67,7 +68,11 @@ export function PortfolioHomePage({ pageSessionToken }: PortfolioHomePageProps) 
         <Header items={navigationItems} activeSection={activeSection} />
         <main>
           <HeroSection profile={portfolioData.profile} />
-          <AboutSection messages={portfolioData.about} />
+          <AboutSection
+            messages={portfolioData.about}
+            learningApproach={portfolioData.learningApproach}
+          />
+          <WorkStyleSection principles={portfolioData.workPrinciples} />
           <ProjectsSection
             flagshipProject={portfolioData.flagshipProject}
             journeyProjects={portfolioData.journeyProjects}
