@@ -22,7 +22,7 @@ npm.cmd run build
 ## 콘텐츠 수정 위치
 
 - `src/data/portfolio.ts` — 소개 문구, 프로젝트 링크, 선택적인 연락처 값을 수정합니다.
-- `public/images/profile.webp` — 실제 프로필 사진을 추가할 때만 사용합니다.
+- `public/images/profile.jpg` — 실제 프로필 사진을 추가할 때만 사용합니다.
 - `public/images/projects/` — 검증된 프로젝트 스크린샷을 추가할 때만 사용합니다.
 - `public/resume.pdf` — 이력서를 추가한 뒤에만 `resumeUrl` 값을 설정합니다.
 

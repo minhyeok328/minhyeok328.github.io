@@ -106,13 +106,13 @@ describe('App', () => {
     expect(screen.queryByRole('heading', { name: 'Experience' })).not.toBeInTheDocument()
   })
 
-  it('uses an immediate accessible MH fallback when no profile image is available', () => {
+  it('shows the supplied profile photo in the Hero', () => {
     render(<App />)
 
-    const fallbackImage = screen.getByRole('img', { name: '서민혁 프로필 사진 대체 이미지' })
+    const profileImage = screen.getByRole('img', { name: '서민혁 프로필 사진' })
 
-    expect(fallbackImage).toHaveTextContent('MH')
-    expect(screen.queryByAltText('서민혁 프로필 사진')).not.toBeInTheDocument()
+    expect(profileImage).toHaveAttribute('src', '/images/profile.jpg')
+    expect(screen.queryByRole('img', { name: '서민혁 프로필 사진 대체 이미지' })).not.toBeInTheDocument()
   })
 
   it('presents HumouR as the only flagship and all four earlier stages as a journey', () => {

@@ -6,7 +6,7 @@ export const portfolioData: PortfolioData = {
     greeting: '안녕하세요,',
     role: '서비스의 전체 흐름을 구조화하고 연결하는 풀스택 개발자',
     description: '데이터와 비즈니스 로직, API와 화면 사이의 연결을 이해하고 기능이 실제 사용자 경험으로 이어지도록 구현합니다.',
-    profileImage: '',
+    profileImage: '/images/profile.jpg',
     resumeUrl: '',
     blogUrl: 'https://blog.naver.com/m______yuk',
     email: 'tjalsgur328@gmail.com',
