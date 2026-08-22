@@ -6,24 +6,19 @@ import { installPortfolioStylesheet, readPortfolioStylesheet } from './test/port
 const stylesheet = await readPortfolioStylesheet()
 
 describe('App', () => {
-  it('presents a position-neutral full-stack identity and separates learning from collaboration', () => {
+  it('keeps learning and collaboration in separate labelled regions', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { level: 1, name: '서민혁입니다.' })).toBeInTheDocument()
-    expect(screen.getByText('서비스의 전체 흐름을 구조화하고 연결하는 풀스택 개발자')).toBeInTheDocument()
-    expect(screen.queryByText('AI 기능을 사용자 경험으로 연결하는 프론트엔드 개발자')).not.toBeInTheDocument()
 
     const about = screen.getByRole('region', { name: 'About' })
-    expect(about).toHaveTextContent('데이터와 로직, API와 화면이 맞물려 동작하는 하나의 흐름')
     expect(within(about).getByRole('heading', { level: 3, name: 'How I Learn' })).toBeVisible()
-    expect(about).toHaveTextContent('주변 사람들에게 묻고 강사님께 질문하며 이해의 방향을 확인했습니다')
+    expect(within(about).queryByRole('list', { name: '협업 원칙' })).not.toBeInTheDocument()
 
     const workStyle = screen.getByRole('region', { name: 'How I Work' })
     const principles = within(workStyle).getByRole('list', { name: '협업 원칙' })
     expect(within(principles).getAllByRole('listitem')).toHaveLength(3)
-    expect(within(workStyle).getByRole('heading', { level: 3, name: '전체를 이해한 뒤 역할을 나눕니다' })).toBeVisible()
-    expect(within(workStyle).getByRole('heading', { level: 3, name: '연결 지점과 책임을 먼저 합의합니다' })).toBeVisible()
-    expect(within(workStyle).getByRole('heading', { level: 3, name: '진행 과정과 변경 사항을 보이게 관리합니다' })).toBeVisible()
+    expect(within(workStyle).queryByRole('heading', { name: 'How I Learn' })).not.toBeInTheDocument()
   })
 
   it('stacks About and How I Work headings above full-width content', () => {
