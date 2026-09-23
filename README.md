@@ -1,37 +1,13 @@
-# 서민혁 포트폴리오
+# MHDL
 
-React와 TypeScript로 제작한 개인 개발자 포트폴리오입니다. 프로젝트 결과뿐 아니라 직접 맡은 역할, 기술적 판단, 협업 방식과 성장 과정을 함께 담았습니다.
+Minhyeok’s Dev Log. 서민혁을 소개하는 개인 개발자 사이트입니다.
 
-[포트폴리오 바로가기](https://minhyeok328.github.io/)
+흰 배경과 하늘색 타이포, 짧은 소개, 스킬, 프로젝트 기록을 중심으로 구성했습니다. 넓은 화면에서는 글자 분산과 스킬 카드 중첩, 가로 프로젝트 탐색을 사용하고, 모바일에서는 세로로 읽을 수 있습니다.
 
-## 기술 스택
+React · TypeScript · Vite · GSAP · Lenis를 사용합니다. 소개와 프로젝트 자료는 기존 개인 사이트의 콘텐츠를 기반으로 합니다.
 
-- React 19, TypeScript, Vite
-- Tailwind CSS, React Router
-- Vitest, Testing Library
-- GitHub Actions, GitHub Pages
+[실행 안내](docs/development.md) · [디자인 기준](docs/design.md)
 
-## 주요 구성
+[사이트 바로가기](https://minhyeok328.github.io/)
 
-- `src/data/portfolio.ts` — 소개, 기술, 경험 및 프로젝트 콘텐츠
-- `src/sections/` — 포트폴리오의 주요 화면 섹션
-- `src/components/` — 프로젝트 카드, 상세 모달 및 공통 UI
-- `public/media/projects/` — 프로젝트별 화면과 데모 영상
-- `.github/workflows/deploy.yml` — GitHub Pages 자동 배포
-
-## 로컬 실행
-
-```bash
-npm ci
-npm run dev
-```
-
-## 품질 검사와 빌드
-
-```bash
-npm run lint
-npm run test
-npm run build
-```
-
-프로덕션 결과물은 `dist/`에 생성됩니다. `main` 브랜치에 변경 사항을 푸시하면 GitHub Actions가 빌드 결과를 GitHub Pages에 배포합니다.
+이 저장소는 리디자인한 MHDL 사이트의 GitHub Pages 배포 저장소입니다. main 브랜치에 푸시하면 .github/workflows/deploy.yml에서 의존성 설치, 테스트, 빌드를 수행한 뒤 dist 폴더를 배포합니다.
