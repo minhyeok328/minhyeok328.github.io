@@ -1,433 +1,550 @@
-import type { PortfolioData } from '../types/portfolio'
+import type { PortfolioData } from "../types/portfolio";
+import { migamProject } from "./migam";
 
 export const portfolioData: PortfolioData = {
   profile: {
-    name: '서민혁',
-    greeting: '안녕하세요,',
-    role: '복잡한 AI 서비스의 흐름을 구조화하고 연결하는 풀스택 개발자',
-    description: 'React·TypeScript를 중심으로 데이터·API·AI 파이프라인의 책임과 연결 지점을 이해하고, 팀의 기준을 맞춰 사용자가 이해하고 신뢰할 수 있는 경험으로 구현합니다.',
-    profileImage: '/images/profile.jpg',
-    resumeUrl: '',
-    blogUrl: 'https://blog.naver.com/m______yuk',
-    email: 'tjalsgur328@gmail.com',
-    githubUrl: 'https://github.com/minhyeok328',
-    linkedinUrl: '',
+    name: "서민혁",
+    greeting: "안녕하세요,",
+    role: "복잡한 AI 서비스의 흐름을 구조화하고 연결하는 풀스택 개발자",
+    description:
+      "React·TypeScript를 중심으로 데이터·API·AI 파이프라인의 책임과 연결 지점을 이해하고, 팀의 기준을 맞춰 사용자가 이해하고 신뢰할 수 있는 경험으로 구현합니다.",
+    profileImage: "/images/profile.jpg",
+    resumeUrl: "",
+    blogUrl: "https://blog.naver.com/m______yuk",
+    email: "tjalsgur328@gmail.com",
+    githubUrl: "https://github.com/minhyeok328",
+    linkedinUrl: "",
   },
   about: [
-    '처음에는 사용자에게 보이지 않는 곳에서 데이터와 복잡한 로직을 처리하는 백엔드에 매력을 느꼈습니다. 이후 프론트엔드를 담당하며 기능은 정상적으로 동작하는 것만으로 충분하지 않고, 사용자가 상태와 결과를 이해할 수 있는 형태로 전달되어야 한다는 점을 배웠습니다.',
-    '이 경험을 통해 서비스를 개별 기능의 모음이 아니라 데이터와 로직, API와 화면이 맞물려 동작하는 하나의 흐름으로 보게 되었습니다. 한 영역의 구현에 자신을 고정하기보다 각 연결 지점이 사용자가 이해하고 신뢰할 수 있는 경험으로 이어지도록, 서비스 전체를 이해하고 연결하는 개발자를 지향합니다.',
-    '현재는 React·TypeScript 기반의 사용자 경험 구현을 중심축으로 삼고, 데이터 처리와 API, AI 파이프라인을 안정적으로 연결하는 역량을 넓혀가고 있습니다.',
+    "처음에는 사용자에게 보이지 않는 곳에서 데이터와 복잡한 로직을 처리하는 백엔드에 매력을 느꼈습니다. 이후 프론트엔드를 담당하며 기능은 정상적으로 동작하는 것만으로 충분하지 않고, 사용자가 상태와 결과를 이해할 수 있는 형태로 전달되어야 한다는 점을 배웠습니다.",
+    "이 경험을 통해 서비스를 개별 기능의 모음이 아니라 데이터와 로직, API와 화면이 맞물려 동작하는 하나의 흐름으로 보게 되었습니다. 한 영역의 구현에 자신을 고정하기보다 각 연결 지점이 사용자가 이해하고 신뢰할 수 있는 경험으로 이어지도록, 서비스 전체를 이해하고 연결하는 개발자를 지향합니다.",
+    "현재는 React·TypeScript 기반의 사용자 경험 구현을 중심축으로 삼고, 데이터 처리와 API, AI 파이프라인을 안정적으로 연결하는 역량을 넓혀가고 있습니다.",
   ],
   learningApproach: {
-    title: 'How I Learn',
+    title: "How I Learn",
     messages: [
-      '과거에는 도움을 요청하는 일이 다른 사람에게 부담을 주는 일이라고 생각해 문제를 혼자 오래 붙들기도 했습니다. 지금은 질문과 업무 요청을 책임을 떠넘기는 일이 아니라 공동의 목표를 위해 정보와 책임을 나누는 과정으로 받아들이고 있습니다.',
-      '낯선 문제는 작은 단계로 나누고 가설을 세워 직접 실행한 뒤 결과를 확인합니다. 혼자 해결되지 않을 때에는 문제의 맥락과 시도한 방법, 예상과 실제 결과, 막힌 지점을 정리해 공유하고, 해결 방법을 알게 된 뒤에는 처음부터 다시 구현하며 동작 원리를 검증합니다.',
+      "과거에는 도움을 요청하는 일이 다른 사람에게 부담을 주는 일이라고 생각해 문제를 혼자 오래 붙들기도 했습니다. 지금은 질문과 업무 요청을 책임을 떠넘기는 일이 아니라 공동의 목표를 위해 정보와 책임을 나누는 과정으로 받아들이고 있습니다.",
+      "낯선 문제는 작은 단계로 나누고 가설을 세워 직접 실행한 뒤 결과를 확인합니다. 혼자 해결되지 않을 때에는 문제의 맥락과 시도한 방법, 예상과 실제 결과, 막힌 지점을 정리해 공유하고, 해결 방법을 알게 된 뒤에는 처음부터 다시 구현하며 동작 원리를 검증합니다.",
     ],
   },
   workPrinciples: [
     {
-      title: '전체를 이해한 뒤 역할을 나눕니다',
-      description: '협업은 각자 맡은 기능을 완성해 합치는 것만으로 끝나지 않는다고 생각합니다. 팀원이 전체 사용자 흐름과 시스템 구조, 자신의 작업이 다른 파트와 만나는 지점을 함께 이해해야 이후 변경과 확장에도 안정적으로 대응할 수 있습니다. 그래서 개발 전에 사용자 흐름과 데이터 구조, 아키텍처를 문서로 정리해 공통 기준을 만듭니다.',
+      title: "전체를 이해한 뒤 역할을 나눕니다",
+      description:
+        "협업은 각자 맡은 기능을 완성해 합치는 것만으로 끝나지 않는다고 생각합니다. 팀원이 전체 사용자 흐름과 시스템 구조, 자신의 작업이 다른 파트와 만나는 지점을 함께 이해해야 이후 변경과 확장에도 안정적으로 대응할 수 있습니다. 그래서 개발 전에 사용자 흐름과 데이터 구조, 아키텍처를 문서로 정리해 공통 기준을 만듭니다.",
     },
     {
-      title: '연결 지점과 책임을 먼저 합의합니다',
-      description: '프론트엔드와 백엔드는 API 명세를 공유해야 하고, 데이터 마스킹처럼 여러 파트에 걸친 처리는 담당 위치와 책임을 정해야 합니다. 구현 전에 인터페이스와 책임 경계를 확인해 각 파트의 결과가 하나의 서비스로 자연스럽게 연결되도록 합니다.',
+      title: "연결 지점과 책임을 먼저 합의합니다",
+      description:
+        "프론트엔드와 백엔드는 API 명세를 공유해야 하고, 데이터 마스킹처럼 여러 파트에 걸친 처리는 담당 위치와 책임을 정해야 합니다. 구현 전에 인터페이스와 책임 경계를 확인해 각 파트의 결과가 하나의 서비스로 자연스럽게 연결되도록 합니다.",
     },
     {
-      title: '진행 상황과 완료 기준을 함께 맞춥니다',
-      description: 'GitHub Issue와 WBS로 진행 상황을 공유하되, 상태 표시만으로 충분하다고 보지 않습니다. 작업 전에 담당 범위·기한·산출물·완료 기준을 함께 합의하고, 변경된 기대 결과와 인터페이스는 관련 문서와 화면 구조에도 반영합니다.',
+      title: "진행 상황과 완료 기준을 함께 맞춥니다",
+      description:
+        "GitHub Issue와 WBS로 진행 상황을 공유하되, 상태 표시만으로 충분하다고 보지 않습니다. 작업 전에 담당 범위·기한·산출물·완료 기준을 함께 합의하고, 변경된 기대 결과와 인터페이스는 관련 문서와 화면 구조에도 반영합니다.",
     },
   ],
+  personalProjects: [migamProject],
   flagshipProject: {
-    id: 'humour',
+    id: "humour",
     order: 5,
-    stage: 'Service Integration',
-    period: '2026.05.22 – 07.15',
-    title: 'HumouR',
-    description: '기업 정보, 채용 공고, 평가 기준, 지원서 분석, 리포트, 면접 질문과 외부 제한 공유를 하나의 업무 흐름으로 연결한 AI 채용 운영 보조 서비스입니다.',
-    cardRoleSummary: 'React·TypeScript 프론트엔드 구조와 서비스 통합 담당',
+    stage: "Service Integration",
+    period: "2026.05.22 – 07.15",
+    title: "HumouR",
+    description:
+      "기업 정보, 채용 공고, 평가 기준, 지원서 분석, 리포트, 면접 질문과 외부 제한 공유를 하나의 업무 흐름으로 연결한 AI 채용 운영 보조 서비스입니다.",
+    cardRoleSummary: "React·TypeScript 프론트엔드 구조와 서비스 통합 담당",
     contribution: [
-      'Axios·CSRF 요청 계층부터 도메인 API Client, Zod 응답 검증, Adapter, TanStack Query로 이어지는 데이터 흐름 구성',
-      '일반 로그인과 외부 API Key 기반 제한 화면의 공통 인증·세션·Query 캐시 경계 처리',
-      '인증 만료, 요청 취소, 오래된 응답 차단, 오류 정제와 캐시 정리를 포함한 요청 수명주기 처리',
-      'JD·지원서·분석 리포트·면접 질문·외부 공유·문서 챗의 화면과 API 흐름 통합',
-      '주요 화면과 사용자 동선을 선행 설계하고 공통 UI 기준과 재사용 가능한 화면 구조 구성',
-      '프론트엔드 테스트·QA·인터페이스 문서 체계 구축과 확장에 기여',
+      "Axios·CSRF 요청 계층부터 도메인 API Client, Zod 응답 검증, Adapter, TanStack Query로 이어지는 데이터 흐름 구성",
+      "일반 로그인과 외부 API Key 기반 제한 화면의 공통 인증·세션·Query 캐시 경계 처리",
+      "인증 만료, 요청 취소, 오래된 응답 차단, 오류 정제와 캐시 정리를 포함한 요청 수명주기 처리",
+      "JD·지원서·분석 리포트·면접 질문·외부 공유·문서 챗의 화면과 API 흐름 통합",
+      "주요 화면과 사용자 동선을 선행 설계하고 공통 UI 기준과 재사용 가능한 화면 구조 구성",
+      "프론트엔드 테스트·QA·인터페이스 문서 체계 구축과 확장에 기여",
     ],
-    growth: '인증·권한·보안·테스트와 배포 환경까지 함께 고려하는 서비스 관점으로 확장',
-    technologies: ['React 19', 'TypeScript', 'TanStack Query', 'Zod'],
-    teamTechnologies: ['Django', 'Celery', 'LangGraph', 'Pinecone', 'AWS'],
-    githubUrl: 'https://github.com/SKN26-Final-1st/Final_project',
-    image: '/media/projects/humour/poster.png',
-    operatingEnvironment: 'AWS 팀 배포 환경에서 프론트엔드·API 연동 및 동작 검증',
+    growth:
+      "인증·권한·보안·테스트와 배포 환경까지 함께 고려하는 서비스 관점으로 확장",
+    technologies: ["React 19", "TypeScript", "TanStack Query", "Zod"],
+    teamTechnologies: ["Django", "Celery", "LangGraph", "Pinecone", "AWS"],
+    githubUrl: "https://github.com/SKN26-Final-1st/Final_project",
+    image: "/media/projects/humour/poster.png",
+    operatingEnvironment:
+      "AWS 팀 배포 환경에서 프론트엔드·API 연동 및 동작 검증",
     evidence: {
-      videoSrc: '/media/projects/humour/demo.webm',
-      disclosure: '합성 계정과 샘플 데이터를 사용한 로컬 데모입니다. AWS 인프라 배포는 팀원이 담당했고, 저는 프론트엔드·API 연동과 동작 검증을 담당했습니다.',
+      videoSrc: "/media/projects/humour/demo.webm",
+      disclosure:
+        "합성 계정과 샘플 데이터를 사용한 로컬 데모입니다. AWS 인프라 배포는 팀원이 담당했고, 저는 프론트엔드·API 연동과 동작 검증을 담당했습니다.",
       screenshots: [
         {
-          src: '/media/projects/humour/analysis-report.png',
-          alt: '지원서 원문과 AI 평가 요약을 함께 보여주는 HumouR 분석 리포트 화면',
-          title: '분석 리포트',
-          caption: '지원서 원문과 AI 평가 요약을 한 화면에서 확인하고 후속 검토로 이어지는 흐름입니다.',
+          src: "/media/projects/humour/analysis-report.png",
+          alt: "지원서 원문과 AI 평가 요약을 함께 보여주는 HumouR 분석 리포트 화면",
+          title: "분석 리포트",
+          caption:
+            "지원서 원문과 AI 평가 요약을 한 화면에서 확인하고 후속 검토로 이어지는 흐름입니다.",
         },
         {
-          src: '/media/projects/humour/analysis-evidence.png',
-          alt: 'AI 분석 항목별 근거를 확인하는 HumouR 화면',
-          title: '분석 근거 확인',
-          caption: '평가 결과만 제시하지 않고 항목별 근거를 함께 확인할 수 있도록 구성했습니다.',
+          src: "/media/projects/humour/analysis-evidence.png",
+          alt: "AI 분석 항목별 근거를 확인하는 HumouR 화면",
+          title: "분석 근거 확인",
+          caption:
+            "평가 결과만 제시하지 않고 항목별 근거를 함께 확인할 수 있도록 구성했습니다.",
         },
         {
-          src: '/media/projects/humour/interview-questions.png',
-          alt: '분석 결과를 바탕으로 생성한 HumouR 면접 질문 화면',
-          title: '면접 질문',
-          caption: '지원서 분석 결과를 채용 담당자가 검토할 수 있는 후속 질문으로 연결했습니다.',
+          src: "/media/projects/humour/interview-questions.png",
+          alt: "분석 결과를 바탕으로 생성한 HumouR 면접 질문 화면",
+          title: "면접 질문",
+          caption:
+            "지원서 분석 결과를 채용 담당자가 검토할 수 있는 후속 질문으로 연결했습니다.",
         },
         {
-          src: '/media/projects/humour/external-sharing.png',
-          alt: '외부 제한 공유 상태를 관리하는 HumouR 화면',
-          title: '외부 제한 공유',
-          caption: '로그인 사용자와 API Key 기반 제한 사용자의 접근 범위와 상태를 구분했습니다.',
+          src: "/media/projects/humour/external-sharing.png",
+          alt: "외부 제한 공유 상태를 관리하는 HumouR 화면",
+          title: "외부 제한 공유",
+          caption:
+            "로그인 사용자와 API Key 기반 제한 사용자의 접근 범위와 상태를 구분했습니다.",
         },
       ],
     },
     detail: {
       overview: [
-        'HumouR는 채용 전담 인력이 부족한 조직이 회사 정보와 채용 공고, 평가 기준, 지원서와 분석 결과를 한곳에서 관리하도록 돕는 팀 프로젝트입니다. AI가 합격 여부를 대신 결정하는 것이 아니라, 채용 담당자가 원문 근거와 추가 질문을 바탕으로 판단하도록 지원하는 것을 목표로 했습니다.',
-        '저는 Django API, Celery 비동기 처리 상태, LangGraph·Pinecone 분석 결과가 사용자 화면까지 안정적으로 전달되도록 React·TypeScript 프론트엔드의 데이터 흐름과 서비스 통합을 담당했습니다.',
+        "HumouR는 채용 전담 인력이 부족한 조직이 회사 정보와 채용 공고, 평가 기준, 지원서와 분석 결과를 한곳에서 관리하도록 돕는 팀 프로젝트입니다. AI가 합격 여부를 대신 결정하는 것이 아니라, 채용 담당자가 원문 근거와 추가 질문을 바탕으로 판단하도록 지원하는 것을 목표로 했습니다.",
+        "저는 Django API, Celery 비동기 처리 상태, LangGraph·Pinecone 분석 결과가 사용자 화면까지 안정적으로 전달되도록 React·TypeScript 프론트엔드의 데이터 흐름과 서비스 통합을 담당했습니다.",
       ],
       decisions: [
         {
-          title: 'API 응답을 화면에 도달하기 전에 검증',
-          situation: 'JD, 지원서, 분석 리포트 등 도메인마다 응답 구조와 상태가 달라 화면에서 직접 처리하면 변환과 오류 처리가 반복될 수 있었습니다.',
-          choice: 'Axios·CSRF, 도메인 API Client, Zod 런타임 검증, Adapter, TanStack Query 순서로 요청 경계를 나눴습니다.',
-          reason: 'TypeScript 타입만으로는 실제 서버 응답을 검증할 수 없고, 계약 불일치를 화면 가까이에서 발견하면 원인을 추적하기 어려웠기 때문입니다.',
-          implementation: '공통 요청 설정과 오류 정제는 HTTP 계층에, 응답 검증과 변환은 도메인 계층에, 캐시와 서버 상태는 Query 계층에 배치했습니다.',
-          result: '화면은 정규화된 데이터만 사용하고, 요청·검증·변환·캐시의 책임을 구분할 수 있었습니다.',
-          reflection: '프론트엔드의 안정성은 컴포넌트 내부보다 외부 데이터가 들어오는 경계에서 먼저 결정된다는 것을 배웠습니다.',
+          title: "API 응답을 화면에 도달하기 전에 검증",
+          situation:
+            "JD, 지원서, 분석 리포트 등 도메인마다 응답 구조와 상태가 달라 화면에서 직접 처리하면 변환과 오류 처리가 반복될 수 있었습니다.",
+          choice:
+            "Axios·CSRF, 도메인 API Client, Zod 런타임 검증, Adapter, TanStack Query 순서로 요청 경계를 나눴습니다.",
+          reason:
+            "TypeScript 타입만으로는 실제 서버 응답을 검증할 수 없고, 계약 불일치를 화면 가까이에서 발견하면 원인을 추적하기 어려웠기 때문입니다.",
+          implementation:
+            "공통 요청 설정과 오류 정제는 HTTP 계층에, 응답 검증과 변환은 도메인 계층에, 캐시와 서버 상태는 Query 계층에 배치했습니다.",
+          result:
+            "화면은 정규화된 데이터만 사용하고, 요청·검증·변환·캐시의 책임을 구분할 수 있었습니다.",
+          reflection:
+            "프론트엔드의 안정성은 컴포넌트 내부보다 외부 데이터가 들어오는 경계에서 먼저 결정된다는 것을 배웠습니다.",
         },
         {
-          title: '일반 로그인과 외부 제한 화면의 프론트 상태 분리',
-          situation: '팀이 구현한 API Key 기반 제한 모드와 공유 리포트는 로그인 화면과 일부 UI를 함께 사용하지만, 사용할 수 있는 기능과 데이터 범위는 달랐습니다.',
-          choice: '공통 인증 상태에서 접근 방식을 구분하고, Query Key와 캐시가 사용자 흐름 사이에서 섞이지 않도록 세션 경계를 나눴습니다.',
-          reason: '두 접근 방식이 같은 클라이언트 상태와 캐시를 공유하면 제한 화면에 불필요한 기능이 보이거나 이전 데이터가 남을 가능성이 있었기 때문입니다.',
-          implementation: '제한 공유 흐름을 공통 인증·세션 모델과 연결하고, 인증 방식과 불투명 세션 식별자를 Query Key에 포함해 캐시 범위를 구분했습니다.',
-          result: '로그인 사용자와 외부 제한 사용자의 프론트 상태와 캐시가 서로 섞이지 않도록 공통 경계를 정리했습니다.',
-          reflection: '로그인 여부만 확인하는 것보다 접근 방식에 따라 프론트 상태의 범위를 나누는 것이 중요했습니다.',
+          title: "일반 로그인과 외부 제한 화면의 프론트 상태 분리",
+          situation:
+            "팀이 구현한 API Key 기반 제한 모드와 공유 리포트는 로그인 화면과 일부 UI를 함께 사용하지만, 사용할 수 있는 기능과 데이터 범위는 달랐습니다.",
+          choice:
+            "공통 인증 상태에서 접근 방식을 구분하고, Query Key와 캐시가 사용자 흐름 사이에서 섞이지 않도록 세션 경계를 나눴습니다.",
+          reason:
+            "두 접근 방식이 같은 클라이언트 상태와 캐시를 공유하면 제한 화면에 불필요한 기능이 보이거나 이전 데이터가 남을 가능성이 있었기 때문입니다.",
+          implementation:
+            "제한 공유 흐름을 공통 인증·세션 모델과 연결하고, 인증 방식과 불투명 세션 식별자를 Query Key에 포함해 캐시 범위를 구분했습니다.",
+          result:
+            "로그인 사용자와 외부 제한 사용자의 프론트 상태와 캐시가 서로 섞이지 않도록 공통 경계를 정리했습니다.",
+          reflection:
+            "로그인 여부만 확인하는 것보다 접근 방식에 따라 프론트 상태의 범위를 나누는 것이 중요했습니다.",
         },
         {
-          title: '요청 취소와 인증 만료를 하나의 수명주기로 처리',
-          situation: '연속된 입력, 분석 상태 확인과 화면 전환 과정에서 늦게 도착한 응답이 최신 상태를 덮거나, 인증 만료 후 보호된 데이터가 화면과 캐시에 남을 수 있었습니다.',
-          choice: 'AbortController와 요청 식별자로 오래된 응답을 차단하고, 인증 만료 시 진행 중인 보호 요청과 Query 캐시를 함께 정리했습니다.',
-          reason: '오류 메시지만 표시해서는 이미 시작된 요청과 남아 있는 서버 상태를 안전하게 처리할 수 없었기 때문입니다.',
-          implementation: '요청 취소 신호 전달, stale response 차단, 처리 상태 폴링, 사용자용 오류 정제와 Error Boundary를 함께 적용했습니다.',
-          result: '최신 요청만 화면에 반영하고, 세션이 만료된 시점에 보호된 요청과 상태도 함께 종료할 수 있었습니다.',
-          reflection: '로딩·실패·취소·인증 만료는 예외 상황이 아니라 정상적인 사용자 흐름의 일부로 설계해야 한다는 것을 배웠습니다.',
+          title: "요청 취소와 인증 만료를 하나의 수명주기로 처리",
+          situation:
+            "연속된 입력, 분석 상태 확인과 화면 전환 과정에서 늦게 도착한 응답이 최신 상태를 덮거나, 인증 만료 후 보호된 데이터가 화면과 캐시에 남을 수 있었습니다.",
+          choice:
+            "AbortController와 요청 식별자로 오래된 응답을 차단하고, 인증 만료 시 진행 중인 보호 요청과 Query 캐시를 함께 정리했습니다.",
+          reason:
+            "오류 메시지만 표시해서는 이미 시작된 요청과 남아 있는 서버 상태를 안전하게 처리할 수 없었기 때문입니다.",
+          implementation:
+            "요청 취소 신호 전달, stale response 차단, 처리 상태 폴링, 사용자용 오류 정제와 Error Boundary를 함께 적용했습니다.",
+          result:
+            "최신 요청만 화면에 반영하고, 세션이 만료된 시점에 보호된 요청과 상태도 함께 종료할 수 있었습니다.",
+          reflection:
+            "로딩·실패·취소·인증 만료는 예외 상황이 아니라 정상적인 사용자 흐름의 일부로 설계해야 한다는 것을 배웠습니다.",
         },
       ],
       retrospective: [
-        '4차 프로젝트인 LG Home AI 가전 상담에서 화면과 서버 통신의 오류 상태까지 다뤘지만, 당시에는 디자인과 사용자 동작을 구현하면 프론트엔드의 역할이 대부분 끝난다고 생각했습니다. HumouR에서는 구현한 기능이 배포 환경에서 실제 서비스 흐름으로 동작하려면 인증·권한·상태·검증을 더 체계적으로 다뤄야 한다는 것을 배웠습니다.',
-        '로그인 사용자와 외부 제한 사용자의 프론트 상태 경계를 나누고, CSRF와 세션 만료, 요청 취소, 오래된 응답, 오류 메시지와 캐시 정리까지 직접 다뤘습니다. 여러 사용자 흐름을 반복해서 테스트하면서 제가 프론트엔드에 대해 모르고 있던 영역이 생각보다 훨씬 많다는 것을 깨달았습니다. 보기 좋은 화면을 만드는 것에서 끝나는 것이 아니라, 사용자가 안전하고 예측 가능하게 사용할 수 있는 상태를 만들고 검증하는 것까지 프론트엔드의 역할이라는 점을 배웠습니다.',
-        '최종 점검 과정에서는 관리 문서에 기록된 작업 범위와 팀이 기대한 핵심 페이지의 범위에 차이가 있음을 확인했습니다. 책임 소재보다 결과물 완성을 우선해 공통 설계 기준과 구성 요소로 필요한 화면을 보완했고, 이후에는 진행 상태뿐 아니라 서로가 기대하는 결과와 완료 기준까지 구체적으로 확인해야 한다는 점을 배웠습니다.',
-        '아직 배워야 할 것이 많다는 사실을 체감했지만, 동시에 앞으로 서비스 전체를 이해하고 연결하는 개발자로 성장하고 싶다는 방향도 분명해졌습니다. 새로운 기능을 빠르게 구현하는 것뿐 아니라 인증·권한·상태·오류·테스트를 함께 고려하며, 실제 서비스 환경에서 신뢰할 수 있는 사용자 경험을 만드는 개발자가 되고 싶습니다.',
+        "4차 프로젝트인 LG Home AI 가전 상담에서 화면과 서버 통신의 오류 상태까지 다뤘지만, 당시에는 디자인과 사용자 동작을 구현하면 프론트엔드의 역할이 대부분 끝난다고 생각했습니다. HumouR에서는 구현한 기능이 배포 환경에서 실제 서비스 흐름으로 동작하려면 인증·권한·상태·검증을 더 체계적으로 다뤄야 한다는 것을 배웠습니다.",
+        "로그인 사용자와 외부 제한 사용자의 프론트 상태 경계를 나누고, CSRF와 세션 만료, 요청 취소, 오래된 응답, 오류 메시지와 캐시 정리까지 직접 다뤘습니다. 여러 사용자 흐름을 반복해서 테스트하면서 제가 프론트엔드에 대해 모르고 있던 영역이 생각보다 훨씬 많다는 것을 깨달았습니다. 보기 좋은 화면을 만드는 것에서 끝나는 것이 아니라, 사용자가 안전하고 예측 가능하게 사용할 수 있는 상태를 만들고 검증하는 것까지 프론트엔드의 역할이라는 점을 배웠습니다.",
+        "최종 점검 과정에서는 관리 문서에 기록된 작업 범위와 팀이 기대한 핵심 페이지의 범위에 차이가 있음을 확인했습니다. 책임 소재보다 결과물 완성을 우선해 공통 설계 기준과 구성 요소로 필요한 화면을 보완했고, 이후에는 진행 상태뿐 아니라 서로가 기대하는 결과와 완료 기준까지 구체적으로 확인해야 한다는 점을 배웠습니다.",
+        "아직 배워야 할 것이 많다는 사실을 체감했지만, 동시에 앞으로 서비스 전체를 이해하고 연결하는 개발자로 성장하고 싶다는 방향도 분명해졌습니다. 새로운 기능을 빠르게 구현하는 것뿐 아니라 인증·권한·상태·오류·테스트를 함께 고려하며, 실제 서비스 환경에서 신뢰할 수 있는 사용자 경험을 만드는 개발자가 되고 싶습니다.",
       ],
     },
   },
   journeyProjects: [
     {
-      id: 'vehicle-tco',
+      id: "vehicle-tco",
       order: 1,
-      stage: 'Data Integration',
-      period: '2026.02.05 – 02.06',
-      title: '차량 운영·관리 비용 계산 시스템',
-      description: '공공 연비와 차량 데이터, 현재 유가와 비용 가정을 결합해 월·연간 운영비 기준선을 비교하는 시스템입니다.',
-      cardRoleSummary: '공공 연비 API 수집·응답 정규화와 CSV 데이터 가공',
+      stage: "Data Integration",
+      period: "2026.02.05 – 02.06",
+      title: "차량 운영·관리 비용 계산 시스템",
+      description:
+        "공공 연비와 차량 데이터, 현재 유가와 비용 가정을 결합해 월·연간 운영비 기준선을 비교하는 시스템입니다.",
+      cardRoleSummary: "공공 연비 API 수집·응답 정규화와 CSV 데이터 가공",
       contribution: [
-        '공공 연비 API의 JSON 응답에서 서비스에 필요한 차량·연비 필드 추출',
-        'API 데이터를 CSV와 팀 데이터 흐름에서 사용할 수 있는 형태로 가공',
-        '운영비 계산 범위와 데이터 흐름을 README에 구조화해 문서화',
+        "공공 연비 API의 JSON 응답에서 서비스에 필요한 차량·연비 필드 추출",
+        "API 데이터를 CSV와 팀 데이터 흐름에서 사용할 수 있는 형태로 가공",
+        "운영비 계산 범위와 데이터 흐름을 README에 구조화해 문서화",
       ],
-      growth: '개별 코드 학습에서 기술·데이터·팀 작업이 연결되는 전체 흐름에 대한 이해로 확장',
-      technologies: ['Python', 'Public API', 'JSON', 'CSV'],
-      teamTechnologies: ['MySQL', 'Streamlit'],
-      githubUrl: 'https://github.com/joy-riders/joy-riders',
-      image: '/media/projects/vehicle-tco/poster.png',
+      growth:
+        "개별 코드 학습에서 기술·데이터·팀 작업이 연결되는 전체 흐름에 대한 이해로 확장",
+      technologies: ["Python", "Public API", "JSON", "CSV"],
+      teamTechnologies: ["MySQL", "Streamlit"],
+      githubUrl: "https://github.com/joy-riders/joy-riders",
+      image: "/media/projects/vehicle-tco/poster.png",
       evidence: {
-        videoSrc: '/media/projects/vehicle-tco/demo.webm',
-        disclosure: '로컬 MariaDB의 실제 적재 데이터를 사용한 데모입니다. 유가 API Key가 없는 상태에서 1,650원/L 고정 대체값을 사용했으며 외부 유가·공공데이터 호출은 실행하지 않았습니다.',
+        videoSrc: "/media/projects/vehicle-tco/demo.webm",
+        disclosure:
+          "로컬 MariaDB의 실제 적재 데이터를 사용한 데모입니다. 유가 API Key가 없는 상태에서 1,650원/L 고정 대체값을 사용했으며 외부 유가·공공데이터 호출은 실행하지 않았습니다.",
         screenshots: [
           {
-            src: '/media/projects/vehicle-tco/search-result.png',
-            alt: '아반떼 차량 19개 검색 결과를 보여주는 TCO Insight 화면',
-            title: '실제 차량 검색',
-            caption: 'DB에 적재한 차량·연비 데이터에서 아반떼 19개 모델을 조회한 결과입니다.',
+            src: "/media/projects/vehicle-tco/search-result.png",
+            alt: "아반떼 차량 19개 검색 결과를 보여주는 TCO Insight 화면",
+            title: "실제 차량 검색",
+            caption:
+              "DB에 적재한 차량·연비 데이터에서 아반떼 19개 모델을 조회한 결과입니다.",
           },
           {
-            src: '/media/projects/vehicle-tco/cost-result.png',
-            alt: '월간 및 연간 차량 운영비 계산 결과 화면',
-            title: '월간·연간 운영비',
-            caption: '동일한 조건에서 월 316,410원, 연 3,796,928원의 비용 구성 결과를 확인할 수 있습니다.',
+            src: "/media/projects/vehicle-tco/cost-result.png",
+            alt: "월간 및 연간 차량 운영비 계산 결과 화면",
+            title: "월간·연간 운영비",
+            caption:
+              "동일한 조건에서 월 316,410원, 연 3,796,928원의 비용 구성 결과를 확인할 수 있습니다.",
           },
         ],
       },
       detail: {
         overview: [
-          '정적 차량·연비 데이터를 데이터베이스에 적재하고, 결과 조회 시 현재 유가와 자동차세·정비비 가정을 결합해 차량별 월·연간 운영비를 비교한 첫 팀 프로젝트입니다. 구매가·감가·보험·금융비용은 제외했기 때문에 실제 총소유비용이 아니라 동일한 조건에서 차량을 비교하기 위한 운영비 기준선에 가깝습니다.',
-          '저는 공공 연비 API와 CSV 로드·파싱을 맡아 외부 데이터를 팀이 사용할 수 있는 형태로 연결하고, 비용 모델과 전체 데이터 흐름을 문서로 정리했습니다.',
+          "정적 차량·연비 데이터를 데이터베이스에 적재하고, 결과 조회 시 현재 유가와 자동차세·정비비 가정을 결합해 차량별 월·연간 운영비를 비교한 첫 팀 프로젝트입니다. 구매가·감가·보험·금융비용은 제외했기 때문에 실제 총소유비용이 아니라 동일한 조건에서 차량을 비교하기 위한 운영비 기준선에 가깝습니다.",
+          "저는 공공 연비 API와 CSV 로드·파싱을 맡아 외부 데이터를 팀이 사용할 수 있는 형태로 연결하고, 비용 모델과 전체 데이터 흐름을 문서로 정리했습니다.",
         ],
         decisions: [
           {
-            title: '외부 API 응답을 재사용 가능한 데이터 형태로 정규화',
-            situation: '공공 연비 API는 검색 결과 수에 따라 단일 객체와 목록 형태가 달라질 수 있고, 필요한 차량 정보도 여러 필드에 흩어져 있었습니다.',
-            choice: '응답이 단일 객체일 때도 목록으로 정규화하고, 서비스에 필요한 차량명·제조사·연료·연비·연식 필드만 추출했습니다.',
-            reason: '뒤 단계의 CSV·DB 처리에서 응답 형태마다 별도 분기를 만들지 않고 같은 데이터 구조를 사용하기 위해서였습니다.',
-            implementation: 'JSON 응답 구조를 확인한 뒤 단일 항목을 목록으로 변환하고, 필요한 필드를 일정한 순서의 행 데이터로 가공했습니다.',
-            result: '외부 API 결과를 CSV와 팀의 데이터 적재 흐름에서 사용할 수 있는 형태로 전달할 수 있었습니다.',
-            reflection: '외부 데이터를 가져오는 일은 호출 자체보다 다음 단계가 신뢰할 수 있는 형태로 바꾸는 과정이 중요하다는 것을 배웠습니다.',
+            title: "외부 API 응답을 재사용 가능한 데이터 형태로 정규화",
+            situation:
+              "공공 연비 API는 검색 결과 수에 따라 단일 객체와 목록 형태가 달라질 수 있고, 필요한 차량 정보도 여러 필드에 흩어져 있었습니다.",
+            choice:
+              "응답이 단일 객체일 때도 목록으로 정규화하고, 서비스에 필요한 차량명·제조사·연료·연비·연식 필드만 추출했습니다.",
+            reason:
+              "뒤 단계의 CSV·DB 처리에서 응답 형태마다 별도 분기를 만들지 않고 같은 데이터 구조를 사용하기 위해서였습니다.",
+            implementation:
+              "JSON 응답 구조를 확인한 뒤 단일 항목을 목록으로 변환하고, 필요한 필드를 일정한 순서의 행 데이터로 가공했습니다.",
+            result:
+              "외부 API 결과를 CSV와 팀의 데이터 적재 흐름에서 사용할 수 있는 형태로 전달할 수 있었습니다.",
+            reflection:
+              "외부 데이터를 가져오는 일은 호출 자체보다 다음 단계가 신뢰할 수 있는 형태로 바꾸는 과정이 중요하다는 것을 배웠습니다.",
           },
         ],
         retrospective: [
-          '첫 팀 프로젝트였던 만큼, 단순히 코드를 공부하는 것과 여러 기술을 연결해 하나의 서비스를 만드는 일 사이에 큰 차이가 있다는 것을 처음 체감했습니다. 당시에는 개별 언어의 문법과 코드 작성에 집중해왔기 때문에, 라이브러리와 프레임워크가 프로젝트 안에서 어떤 역할을 하고 서로 어떻게 연결되는지에 대한 이해가 부족했습니다.',
-          '연비 API와 CSV 로드·파싱을 맡았지만, 제가 가공한 데이터가 실제 서비스에서 어떻게 사용되는지 이해하려면 Streamlit 화면과 데이터베이스 흐름까지 함께 알아야 했습니다. SQL 문법은 알고 있었지만 Python에서 데이터베이스에 연결하고 쿼리를 실행한 뒤, 그 결과를 다시 화면에 전달하는 과정은 낯설었습니다. 공공 API의 JSON 응답이 CSV와 데이터베이스를 거쳐 Streamlit 결과로 나타나는 전체 흐름을 따라가는 데 많은 시간이 필요했습니다.',
-          '이 과정에서 팀 프로젝트는 각자 맡은 코드만 완성한다고 끝나는 것이 아니라, 내가 만든 결과가 다음 사람의 작업에서 어떻게 사용되는지 이해하고 서로의 작업 경계를 맞추는 과정이라는 것을 배웠습니다. 개발자는 하나의 언어나 문법만 잘 아는 사람이 아니라 여러 기술과 데이터를 연결해 동작하는 흐름을 만드는 사람이라는 점을 처음 깨달았습니다.',
-          '이후 새로운 기술을 배울 때는 사용법만 외우기보다 전체 시스템 안에서 어떤 역할을 하고 앞뒤 단계와 어떻게 연결되는지 먼저 이해하려고 노력하게 되었습니다. 이 경험은 이후 데이터 파이프라인, LLM 워크플로우와 프론트엔드·API 통합까지 관심 범위를 넓혀가는 출발점이 되었습니다.',
+          "첫 팀 프로젝트였던 만큼, 단순히 코드를 공부하는 것과 여러 기술을 연결해 하나의 서비스를 만드는 일 사이에 큰 차이가 있다는 것을 처음 체감했습니다. 당시에는 개별 언어의 문법과 코드 작성에 집중해왔기 때문에, 라이브러리와 프레임워크가 프로젝트 안에서 어떤 역할을 하고 서로 어떻게 연결되는지에 대한 이해가 부족했습니다.",
+          "연비 API와 CSV 로드·파싱을 맡았지만, 제가 가공한 데이터가 실제 서비스에서 어떻게 사용되는지 이해하려면 Streamlit 화면과 데이터베이스 흐름까지 함께 알아야 했습니다. SQL 문법은 알고 있었지만 Python에서 데이터베이스에 연결하고 쿼리를 실행한 뒤, 그 결과를 다시 화면에 전달하는 과정은 낯설었습니다. 공공 API의 JSON 응답이 CSV와 데이터베이스를 거쳐 Streamlit 결과로 나타나는 전체 흐름을 따라가는 데 많은 시간이 필요했습니다.",
+          "이 과정에서 팀 프로젝트는 각자 맡은 코드만 완성한다고 끝나는 것이 아니라, 내가 만든 결과가 다음 사람의 작업에서 어떻게 사용되는지 이해하고 서로의 작업 경계를 맞추는 과정이라는 것을 배웠습니다. 개발자는 하나의 언어나 문법만 잘 아는 사람이 아니라 여러 기술과 데이터를 연결해 동작하는 흐름을 만드는 사람이라는 점을 처음 깨달았습니다.",
+          "이후 새로운 기술을 배울 때는 사용법만 외우기보다 전체 시스템 안에서 어떤 역할을 하고 앞뒤 단계와 어떻게 연결되는지 먼저 이해하려고 노력하게 되었습니다. 이 경험은 이후 데이터 파이프라인, LLM 워크플로우와 프론트엔드·API 통합까지 관심 범위를 넓혀가는 출발점이 되었습니다.",
         ],
       },
     },
     {
-      id: 'bank-churners',
+      id: "bank-churners",
       order: 2,
-      stage: 'ML Experimentation',
-      period: '2026.03.16 – 03.17',
-      title: '신용카드 고객 이탈 분석',
-      description: '고객 행동 데이터를 탐색하고 이탈 가능성과 소득 정보의 불확실성을 분석한 머신러닝 프로젝트입니다.',
-      cardRoleSummary: 'XGBoost 소득 구간 분류 실험과 EDA·전처리 탐색',
+      stage: "ML Experimentation",
+      period: "2026.03.16 – 03.17",
+      title: "신용카드 고객 이탈 분석",
+      description:
+        "고객 행동 데이터를 탐색하고 이탈 가능성과 소득 정보의 불확실성을 분석한 머신러닝 프로젝트입니다.",
+      cardRoleSummary: "XGBoost 소득 구간 분류 실험과 EDA·전처리 탐색",
       contribution: [
-        '식별자와 범주형 특성을 정리하는 전처리 탐색 노트북 구성',
-        'Unknown 소득 정보를 보완하기 위한 다중·이진 XGBoost 분류 실험',
-        '특성 분포와 상관관계를 설명하는 EDA 시각화 및 Streamlit 초기 화면 제작',
+        "식별자와 범주형 특성을 정리하는 전처리 탐색 노트북 구성",
+        "Unknown 소득 정보를 보완하기 위한 다중·이진 XGBoost 분류 실험",
+        "특성 분포와 상관관계를 설명하는 EDA 시각화 및 Streamlit 초기 화면 제작",
       ],
-      growth: '모델 선택과 튜닝 중심의 접근에서 데이터 구조·가설·문제 정의를 먼저 확인하는 방식으로 전환',
-      technologies: ['Python', 'pandas', 'scikit-learn', 'XGBoost'],
-      teamTechnologies: ['MySQL', 'FastAPI', 'MLflow', 'Streamlit'],
-      githubUrl: 'https://github.com/SKN26-2nd-1st/2nd_project',
-      image: '/media/projects/bank-churners/poster.png',
+      growth:
+        "모델 선택과 튜닝 중심의 접근에서 데이터 구조·가설·문제 정의를 먼저 확인하는 방식으로 전환",
+      technologies: ["Python", "pandas", "scikit-learn", "XGBoost"],
+      teamTechnologies: ["MySQL", "FastAPI", "MLflow", "Streamlit"],
+      githubUrl: "https://github.com/SKN26-2nd-1st/2nd_project",
+      image: "/media/projects/bank-churners/poster.png",
       evidence: {
-        videoSrc: '/media/projects/bank-churners/demo.webm',
-        disclosure: '충돌 없이 확인 가능한 커밋의 모델 지표와 EDA 산출물을 바탕으로 재구성한 사전 계산 증거입니다. 캡처 과정에서 고객 이탈 예측이나 새 모델 추론은 실행하지 않았습니다.',
+        videoSrc: "/media/projects/bank-churners/demo.webm",
+        disclosure:
+          "충돌 없이 확인 가능한 커밋의 모델 지표와 EDA 산출물을 바탕으로 재구성한 사전 계산 증거입니다. 캡처 과정에서 고객 이탈 예측이나 새 모델 추론은 실행하지 않았습니다.",
         screenshots: [
           {
-            src: '/media/projects/bank-churners/strategy-report.png',
-            alt: 'HistGradientBoosting 사전 계산 성능을 바탕으로 정리한 CRM 전략 가이드 화면',
-            title: '사전 계산 전략 근거',
-            caption: '커밋에서 확인한 HistGradientBoosting 성능 지표를 정적 CRM 전략 가이드와 연결해 표시했습니다. 이 화면에서 실시간 추론은 실행하지 않습니다.',
+            src: "/media/projects/bank-churners/strategy-report.png",
+            alt: "HistGradientBoosting 사전 계산 성능을 바탕으로 정리한 CRM 전략 가이드 화면",
+            title: "사전 계산 전략 근거",
+            caption:
+              "커밋에서 확인한 HistGradientBoosting 성능 지표를 정적 CRM 전략 가이드와 연결해 표시했습니다. 이 화면에서 실시간 추론은 실행하지 않습니다.",
           },
           {
-            src: '/media/projects/bank-churners/model-evidence.png',
-            alt: '신용카드 고객 특성 관계를 보여주는 EDA 시각화 화면',
-            title: 'EDA 근거',
-            caption: '모델 튜닝에 앞서 범주 구조와 특성 관계를 실제 시각화로 검토했습니다.',
+            src: "/media/projects/bank-churners/model-evidence.png",
+            alt: "신용카드 고객 특성 관계를 보여주는 EDA 시각화 화면",
+            title: "EDA 근거",
+            caption:
+              "모델 튜닝에 앞서 범주 구조와 특성 관계를 실제 시각화로 검토했습니다.",
           },
         ],
       },
       detail: {
         overview: [
-          'Kaggle BankChurners 데이터를 바탕으로 고객 행동 특성과 이탈 가능성을 분석하고, 여러 모델을 비교한 팀 프로젝트입니다. 저는 소득 정보의 Unknown 값을 단순 삭제하지 않고 예측으로 보완할 수 있는지 실험했습니다.',
-          '이 실험은 실제 Unknown 값을 모두 대체해 운영 파이프라인에 반영하는 단계까지 완성되지는 않았습니다. 대신 기대보다 낮은 다중 분류 결과를 통해 모델보다 데이터 구조와 문제 정의를 먼저 확인해야 한다는 교훈을 얻었습니다.',
+          "Kaggle BankChurners 데이터를 바탕으로 고객 행동 특성과 이탈 가능성을 분석하고, 여러 모델을 비교한 팀 프로젝트입니다. 저는 소득 정보의 Unknown 값을 단순 삭제하지 않고 예측으로 보완할 수 있는지 실험했습니다.",
+          "이 실험은 실제 Unknown 값을 모두 대체해 운영 파이프라인에 반영하는 단계까지 완성되지는 않았습니다. 대신 기대보다 낮은 다중 분류 결과를 통해 모델보다 데이터 구조와 문제 정의를 먼저 확인해야 한다는 교훈을 얻었습니다.",
         ],
         decisions: [
           {
-            title: '튜닝을 반복하기보다 소득 분류 문제를 다시 정의',
-            situation: '알려진 소득 구간을 사용한 다중 분류에서 클래스 경계가 충분히 나뉘지 않아 기대한 성능을 얻지 못했습니다.',
-            choice: '특성 분포를 시각화해 클래스 구조를 확인하고, 소득 구간을 Low와 High로 묶은 이진 분류도 별도로 실험했습니다.',
-            reason: '파라미터를 계속 조정하기 전에 현재 특성으로 세부 소득 구간을 구분할 수 있는지부터 확인할 필요가 있었기 때문입니다.',
-            implementation: 'Unknown 행을 제외한 알려진 구간으로 학습·검증 데이터를 나누고, XGBoost 다중 분류와 그룹 재정의 실험을 진행했습니다.',
-            result: '문제를 단순화했을 때 결과가 어떻게 달라지는지 확인했지만, 실제 Unknown 보완과 파이프라인 반영은 후속 과제로 남았습니다.',
-            reflection: '낮은 성능을 알고리즘의 문제로만 보지 않고 가설과 레이블 구조를 다시 살펴보는 태도가 중요하다는 것을 배웠습니다.',
+            title: "튜닝을 반복하기보다 소득 분류 문제를 다시 정의",
+            situation:
+              "알려진 소득 구간을 사용한 다중 분류에서 클래스 경계가 충분히 나뉘지 않아 기대한 성능을 얻지 못했습니다.",
+            choice:
+              "특성 분포를 시각화해 클래스 구조를 확인하고, 소득 구간을 Low와 High로 묶은 이진 분류도 별도로 실험했습니다.",
+            reason:
+              "파라미터를 계속 조정하기 전에 현재 특성으로 세부 소득 구간을 구분할 수 있는지부터 확인할 필요가 있었기 때문입니다.",
+            implementation:
+              "Unknown 행을 제외한 알려진 구간으로 학습·검증 데이터를 나누고, XGBoost 다중 분류와 그룹 재정의 실험을 진행했습니다.",
+            result:
+              "문제를 단순화했을 때 결과가 어떻게 달라지는지 확인했지만, 실제 Unknown 보완과 파이프라인 반영은 후속 과제로 남았습니다.",
+            reflection:
+              "낮은 성능을 알고리즘의 문제로만 보지 않고 가설과 레이블 구조를 다시 살펴보는 태도가 중요하다는 것을 배웠습니다.",
           },
         ],
         retrospective: [
-          '데이터 파이프라인과 XGBoost 기반 소득 구간 모델링을 맡아, Unknown으로 남아 있는 소득 정보를 단순히 삭제하지 않고 예측으로 보완하는 방법을 실험했습니다. 처음에는 모델과 파라미터를 바꾸면 성능이 개선될 것이라고 생각해 분류와 클러스터링 등 여러 접근을 시도했지만, 다중 소득 구간을 구분하는 성능은 기대만큼 나오지 않았습니다.',
-          '계속 튜닝하기보다 각 특성의 분포와 클래스 구조를 시각화해보면서, 모델보다 먼저 데이터가 실제로 구분 가능한 구조인지 확인해야 한다는 것을 배웠습니다. 이후 소득 구간을 Low와 High로 다시 나누어 문제를 단순화해보며, 같은 데이터도 문제를 어떻게 정의하느냐에 따라 모델링 난도와 결과가 달라질 수 있다는 점을 경험했습니다.',
-          '좋은 결과는 알고리즘이나 파라미터만으로 만들어지는 것이 아니라, 가설을 세우고 데이터를 시각화하며 문제 정의가 적절한지 반복해서 확인하는 과정에서 나온다는 것을 배웠습니다. 이후 프로젝트에서는 구현부터 시작하기보다 먼저 가설과 평가 기준을 정하고, 데이터 구조를 확인한 뒤 기술을 선택하려고 노력하게 되었습니다.',
+          "데이터 파이프라인과 XGBoost 기반 소득 구간 모델링을 맡아, Unknown으로 남아 있는 소득 정보를 단순히 삭제하지 않고 예측으로 보완하는 방법을 실험했습니다. 처음에는 모델과 파라미터를 바꾸면 성능이 개선될 것이라고 생각해 분류와 클러스터링 등 여러 접근을 시도했지만, 다중 소득 구간을 구분하는 성능은 기대만큼 나오지 않았습니다.",
+          "계속 튜닝하기보다 각 특성의 분포와 클래스 구조를 시각화해보면서, 모델보다 먼저 데이터가 실제로 구분 가능한 구조인지 확인해야 한다는 것을 배웠습니다. 이후 소득 구간을 Low와 High로 다시 나누어 문제를 단순화해보며, 같은 데이터도 문제를 어떻게 정의하느냐에 따라 모델링 난도와 결과가 달라질 수 있다는 점을 경험했습니다.",
+          "좋은 결과는 알고리즘이나 파라미터만으로 만들어지는 것이 아니라, 가설을 세우고 데이터를 시각화하며 문제 정의가 적절한지 반복해서 확인하는 과정에서 나온다는 것을 배웠습니다. 이후 프로젝트에서는 구현부터 시작하기보다 먼저 가설과 평가 기준을 정하고, 데이터 구조를 확인한 뒤 기술을 선택하려고 노력하게 되었습니다.",
         ],
       },
     },
     {
-      id: 'pickle',
+      id: "pickle",
       order: 3,
-      stage: 'LLM & RAG',
-      period: '2026.04.24 – 04.27',
-      title: 'PICKLE 맛집 추천 챗봇',
-      description: '사용자 조건을 구조화하고 신대방삼거리 식당 100곳의 실제 데이터를 검색해 한 곳을 추천하는 RAG 챗봇입니다.',
-      cardRoleSummary: 'LangGraph RAG 파이프라인·구조화 출력·Streamlit 통합과 내부 평가',
+      stage: "LLM & RAG",
+      period: "2026.04.24 – 04.27",
+      title: "PICKLE 맛집 추천 챗봇",
+      description:
+        "사용자 조건을 구조화하고 신대방삼거리 식당 100곳의 실제 데이터를 검색해 한 곳을 추천하는 RAG 챗봇입니다.",
+      cardRoleSummary:
+        "LangGraph RAG 파이프라인·구조화 출력·Streamlit 통합과 내부 평가",
       contribution: [
-        'LangChain 기반 흐름을 라우팅·슬롯 추출·검색·생성 단계의 LangGraph 상태 그래프로 구조화',
-        'OpenAI strict JSON Schema로 검색 조건 슬롯의 형식과 필수 필드 고정',
-        'SQLite 임베딩·관계 테이블 검색을 추천 파이프라인에 연결',
-        'Streamlit 스트리밍 답변과 지도·매장 상세 화면 통합',
-        '동일한 50개 케이스로 반복 비교하는 내부 평가·실패 리포트 체계 구축',
+        "LangChain 기반 흐름을 라우팅·슬롯 추출·검색·생성 단계의 LangGraph 상태 그래프로 구조화",
+        "OpenAI strict JSON Schema로 검색 조건 슬롯의 형식과 필수 필드 고정",
+        "SQLite 임베딩·관계 테이블 검색을 추천 파이프라인에 연결",
+        "Streamlit 스트리밍 답변과 지도·매장 상세 화면 통합",
+        "동일한 50개 케이스로 반복 비교하는 내부 평가·실패 리포트 체계 구축",
       ],
-      growth: 'LLM 기능 구현에서 상태 흐름·검색 근거·평가 체계를 함께 설계하는 관점으로 확장',
-      technologies: ['LangGraph', 'OpenAI API', 'RAG', 'SQLite', 'Streamlit'],
-      teamTechnologies: ['Kakao Map API'],
-      githubUrl: 'https://github.com/SKN26-3rd-3rd/3rd_project',
-      image: '/media/projects/pickle/poster.png',
+      growth:
+        "LLM 기능 구현에서 상태 흐름·검색 근거·평가 체계를 함께 설계하는 관점으로 확장",
+      technologies: ["LangGraph", "OpenAI API", "RAG", "SQLite", "Streamlit"],
+      teamTechnologies: ["Kakao Map API"],
+      githubUrl: "https://github.com/SKN26-3rd-3rd/3rd_project",
+      image: "/media/projects/pickle/poster.png",
       evidence: {
-        videoSrc: '/media/projects/pickle/demo.webm',
-        disclosure: '실제 구축한 100개 식당 SQLite DB 기반 검색 화면입니다. 평가는 미리 계산된 50개 내부 평가 결과이며, 이 데모에서 LLM이나 임베딩 API를 다시 호출하지 않았습니다.',
+        videoSrc: "/media/projects/pickle/demo.webm",
+        disclosure:
+          "실제 구축한 100개 식당 SQLite DB 기반 검색 화면입니다. 평가는 미리 계산된 50개 내부 평가 결과이며, 이 데모에서 LLM이나 임베딩 API를 다시 호출하지 않았습니다.",
         screenshots: [
           {
-            src: '/media/projects/pickle/search-map.png',
-            alt: 'PICKLE 식당 검색 결과와 Kakao 지도를 함께 보여주는 화면',
-            title: '검색과 지도',
-            caption: '실제 식당 검색 결과와 지도 마커를 연결해 후보의 위치와 정보를 함께 확인할 수 있습니다.',
+            src: "/media/projects/pickle/search-map.png",
+            alt: "PICKLE 식당 검색 결과와 Kakao 지도를 함께 보여주는 화면",
+            title: "검색과 지도",
+            caption:
+              "실제 식당 검색 결과와 지도 마커를 연결해 후보의 위치와 정보를 함께 확인할 수 있습니다.",
           },
           {
-            src: '/media/projects/pickle/restaurant-detail.png',
-            alt: 'PICKLE 식당 메뉴와 리뷰 상세 화면',
-            title: '식당 상세',
-            caption: '추천 후보의 메뉴와 리뷰를 검색 결과의 근거로 연결했습니다.',
+            src: "/media/projects/pickle/restaurant-detail.png",
+            alt: "PICKLE 식당 메뉴와 리뷰 상세 화면",
+            title: "식당 상세",
+            caption:
+              "추천 후보의 메뉴와 리뷰를 검색 결과의 근거로 연결했습니다.",
           },
           {
-            src: '/media/projects/pickle/evaluation.png',
-            alt: 'PICKLE 50개 질의 내부 평가 결과 화면',
-            title: '내부 평가 결과',
-            caption: '동일 DB·50개 케이스 기준 all-check 82%, 후보 내 목표 식당 포함률 96%를 기록했습니다.',
+            src: "/media/projects/pickle/evaluation.png",
+            alt: "PICKLE 50개 질의 내부 평가 결과 화면",
+            title: "내부 평가 결과",
+            caption:
+              "동일 DB·50개 케이스 기준 all-check 82%, 후보 내 목표 식당 포함률 96%를 기록했습니다.",
           },
         ],
       },
       detail: {
         overview: [
-          'PICKLE은 신대방삼거리 식당 100곳의 메뉴·리뷰·태그 데이터를 바탕으로 사용자의 조건에 맞는 한 곳을 추천하는 팀 프로젝트입니다. 사용자 질문을 분류하고 검색 조건을 구조화한 뒤, SQLite의 실제 식당 후보와 근거를 답변과 지도·상세 카드로 연결했습니다.',
-          '저는 LLM 시스템 설계와 Streamlit 프론트엔드를 함께 다루며 사용자 질의부터 데이터 검색, 응답 생성과 결과 표시까지 이어지는 흐름을 하나의 서비스 형태로 통합했습니다.',
+          "PICKLE은 신대방삼거리 식당 100곳의 메뉴·리뷰·태그 데이터를 바탕으로 사용자의 조건에 맞는 한 곳을 추천하는 팀 프로젝트입니다. 사용자 질문을 분류하고 검색 조건을 구조화한 뒤, SQLite의 실제 식당 후보와 근거를 답변과 지도·상세 카드로 연결했습니다.",
+          "저는 LLM 시스템 설계와 Streamlit 프론트엔드를 함께 다루며 사용자 질의부터 데이터 검색, 응답 생성과 결과 표시까지 이어지는 흐름을 하나의 서비스 형태로 통합했습니다.",
         ],
         decisions: [
           {
-            title: '단일 체인을 상태 기반 LangGraph 파이프라인으로 전환',
-            situation: '질문 유형에 따라 고정 조건 검색과 의미 기반 검색이 갈리고, 슬롯 추출·검색·생성 단계가 늘어나면서 단일 체인만으로 흐름을 추적하기 어려워졌습니다.',
-            choice: '라우터, 슬롯 추출, 데이터 커넥터와 생성기를 명시적인 상태와 조건 분기로 연결한 LangGraph 구조로 전환했습니다.',
-            reason: '각 단계의 입력과 출력을 분리하고, 질문 유형별 흐름을 코드에서 확인할 수 있게 하기 위해서였습니다.',
-            implementation: 'typed state에 질의·라우트·검색 조건·후보를 담고, 라우팅 결과에 따라 서로 다른 슬롯 추출과 검색 경로를 거쳐 생성 단계로 합류하도록 구성했습니다.',
-            result: '사용자 질의부터 검색·생성까지의 흐름을 단계별로 구분하고 실제 SQLite 데이터와 Streamlit UI에 연결했습니다.',
-            reflection: '구현을 시작하기 전에 상태와 인터페이스를 충분히 정하지 않아 후속 수정이 많았고, 초기 아키텍처 합의의 중요성을 배웠습니다.',
+            title: "단일 체인을 상태 기반 LangGraph 파이프라인으로 전환",
+            situation:
+              "질문 유형에 따라 고정 조건 검색과 의미 기반 검색이 갈리고, 슬롯 추출·검색·생성 단계가 늘어나면서 단일 체인만으로 흐름을 추적하기 어려워졌습니다.",
+            choice:
+              "라우터, 슬롯 추출, 데이터 커넥터와 생성기를 명시적인 상태와 조건 분기로 연결한 LangGraph 구조로 전환했습니다.",
+            reason:
+              "각 단계의 입력과 출력을 분리하고, 질문 유형별 흐름을 코드에서 확인할 수 있게 하기 위해서였습니다.",
+            implementation:
+              "typed state에 질의·라우트·검색 조건·후보를 담고, 라우팅 결과에 따라 서로 다른 슬롯 추출과 검색 경로를 거쳐 생성 단계로 합류하도록 구성했습니다.",
+            result:
+              "사용자 질의부터 검색·생성까지의 흐름을 단계별로 구분하고 실제 SQLite 데이터와 Streamlit UI에 연결했습니다.",
+            reflection:
+              "구현을 시작하기 전에 상태와 인터페이스를 충분히 정하지 않아 후속 수정이 많았고, 초기 아키텍처 합의의 중요성을 배웠습니다.",
           },
           {
-            title: '내부 평가로 실패 지점을 단계별로 분류',
-            situation: '답변이 자연스러워 보여도 검색 조건이나 후보 식당이 잘못되면 추천 품질을 판단하기 어려웠습니다.',
-            choice: '고정 질의 20개와 임베딩 질의 30개로 구성한 내부 평가에서 route·payload·target·answer·retrieval을 각각 검사했습니다.',
-            reason: '프롬프트 수정뿐 아니라 슬롯 추출과 검색 단계 중 어디에서 실패하는지 구분하기 위해서였습니다.',
-            implementation: '동일한 50개 케이스와 평가 기준을 세 차례 유지하고, 실패 유형과 단계별 비율을 JSON·HTML 리포트로 남겼습니다.',
-            result: '팀의 검색·프롬프트 변경을 거치며 내부 all-check 통과율은 46%에서 82%, 후보 내 목표 식당 포함률은 52%에서 96%로 변했습니다. 이는 프로덕션 정확도가 아닌 동일 DB에서 자동 생성한 내부 평가 결과입니다.',
-            reflection: 'LLM 품질은 답변 문장만 보는 것이 아니라 입력 구조화와 검색 근거를 함께 측정해야 한다는 것을 배웠습니다.',
+            title: "내부 평가로 실패 지점을 단계별로 분류",
+            situation:
+              "답변이 자연스러워 보여도 검색 조건이나 후보 식당이 잘못되면 추천 품질을 판단하기 어려웠습니다.",
+            choice:
+              "고정 질의 20개와 임베딩 질의 30개로 구성한 내부 평가에서 route·payload·target·answer·retrieval을 각각 검사했습니다.",
+            reason:
+              "프롬프트 수정뿐 아니라 슬롯 추출과 검색 단계 중 어디에서 실패하는지 구분하기 위해서였습니다.",
+            implementation:
+              "동일한 50개 케이스와 평가 기준을 세 차례 유지하고, 실패 유형과 단계별 비율을 JSON·HTML 리포트로 남겼습니다.",
+            result:
+              "팀의 검색·프롬프트 변경을 거치며 내부 all-check 통과율은 46%에서 82%, 후보 내 목표 식당 포함률은 52%에서 96%로 변했습니다. 이는 프로덕션 정확도가 아닌 동일 DB에서 자동 생성한 내부 평가 결과입니다.",
+            reflection:
+              "LLM 품질은 답변 문장만 보는 것이 아니라 입력 구조화와 검색 근거를 함께 측정해야 한다는 것을 배웠습니다.",
           },
         ],
         retrospective: [
-          'LLM 시스템 설계와 프론트엔드 구현을 함께 담당하며, 모델의 응답을 실제 식당 데이터와 사용자 화면으로 연결하는 경험을 했습니다. 초기에는 LangChain 기반으로 흐름을 구성했지만, 질문 분류와 조건 추출, 검색과 생성 과정이 복잡해지면서 LangGraph 상태 그래프로 전환했습니다. 이를 통해 하나의 LLM 호출보다 각 단계의 역할과 상태를 명확하게 나누는 것이 중요하다는 점을 배웠습니다.',
-          '프로젝트 초기에 전체 구조와 기술 간 인터페이스를 충분히 합의하지 않은 상태로 설계와 구현을 동시에 진행했습니다. 그 결과 기능이 추가될수록 기존 코드를 다시 수정하고 연결하는 데 많은 시간이 들었습니다. 동작하는 기능을 빠르게 만드는 것만큼, 개발 전에 데이터 흐름과 상태, 팀원별 작업 경계를 정하는 일이 중요하다는 것을 체감했습니다.',
-          '내부 평가 체계를 만들고 실패 사례를 분류하면서 LLM 품질은 프롬프트만 수정해서 개선되는 것이 아니라 슬롯 추출과 검색 후보, 데이터 구조까지 함께 살펴야 한다는 것을 배웠습니다. 이 경험을 계기로 이후 프로젝트에서는 구현 전에 사용자 흐름과 아키텍처를 먼저 구체화하고, 팀원들과 진행 상황과 인터페이스 변경을 지속적으로 공유하려고 노력하게 되었습니다.',
+          "LLM 시스템 설계와 프론트엔드 구현을 함께 담당하며, 모델의 응답을 실제 식당 데이터와 사용자 화면으로 연결하는 경험을 했습니다. 초기에는 LangChain 기반으로 흐름을 구성했지만, 질문 분류와 조건 추출, 검색과 생성 과정이 복잡해지면서 LangGraph 상태 그래프로 전환했습니다. 이를 통해 하나의 LLM 호출보다 각 단계의 역할과 상태를 명확하게 나누는 것이 중요하다는 점을 배웠습니다.",
+          "프로젝트 초기에 전체 구조와 기술 간 인터페이스를 충분히 합의하지 않은 상태로 설계와 구현을 동시에 진행했습니다. 그 결과 기능이 추가될수록 기존 코드를 다시 수정하고 연결하는 데 많은 시간이 들었습니다. 동작하는 기능을 빠르게 만드는 것만큼, 개발 전에 데이터 흐름과 상태, 팀원별 작업 경계를 정하는 일이 중요하다는 것을 체감했습니다.",
+          "내부 평가 체계를 만들고 실패 사례를 분류하면서 LLM 품질은 프롬프트만 수정해서 개선되는 것이 아니라 슬롯 추출과 검색 후보, 데이터 구조까지 함께 살펴야 한다는 것을 배웠습니다. 이 경험을 계기로 이후 프로젝트에서는 구현 전에 사용자 흐름과 아키텍처를 먼저 구체화하고, 팀원들과 진행 상황과 인터페이스 변경을 지속적으로 공유하려고 노력하게 되었습니다.",
         ],
       },
     },
     {
-      id: 'lg-home-ai',
+      id: "lg-home-ai",
       order: 4,
-      stage: 'Web Integration',
-      period: '2026.05.20 – 05.21',
-      title: 'LG Home AI 가전 상담',
-      description: '계정·검색·상품 상세·찜·챗봇을 연결한 Django 기반 LG 가전 검색·상담 웹 애플리케이션입니다.',
-      cardRoleSummary: 'Django Templates·Tailwind·JavaScript 기반 프론트엔드와 서버 연동',
+      stage: "Web Integration",
+      period: "2026.05.20 – 05.21",
+      title: "LG Home AI 가전 상담",
+      description:
+        "계정·검색·상품 상세·찜·챗봇을 연결한 Django 기반 LG 가전 검색·상담 웹 애플리케이션입니다.",
+      cardRoleSummary:
+        "Django Templates·Tailwind·JavaScript 기반 프론트엔드와 서버 연동",
       contribution: [
-        'Figma로 메인·검색·상품 상세·챗봇의 사용자 동선과 화면 구조 설계',
-        'GET·SSR 기반 필터 검색과 쿼리스트링 상태 복원·페이지네이션 구현',
-        '찜·채팅 JSON 통신에 CSRF·오류·로딩·중복 요청 방지 처리 적용',
-        'AI 응답 HTML 정제와 서버 대화 이력의 안전한 DOM 렌더링',
-        '모바일 입력·사이드바 UX와 static·template 구조 및 Git 통합 정리',
+        "Figma로 메인·검색·상품 상세·챗봇의 사용자 동선과 화면 구조 설계",
+        "GET·SSR 기반 필터 검색과 쿼리스트링 상태 복원·페이지네이션 구현",
+        "찜·채팅 JSON 통신에 CSRF·오류·로딩·중복 요청 방지 처리 적용",
+        "AI 응답 HTML 정제와 서버 대화 이력의 안전한 DOM 렌더링",
+        "모바일 입력·사이드바 UX와 static·template 구조 및 Git 통합 정리",
       ],
-      growth: 'AI 프로토타입에서 계정과 여러 화면이 연결된 Django 웹 서비스의 사용자 흐름으로 확장',
-      technologies: ['Django Templates', 'Tailwind CSS', 'JavaScript', 'Fetch API'],
-      teamTechnologies: ['Django ORM', 'LangGraph', 'Pinecone', 'SQLite'],
-      githubUrl: 'https://github.com/SKN26-4th-1st/4th_project',
-      image: '/media/projects/lg-home-ai/poster.png',
+      growth:
+        "AI 프로토타입에서 계정과 여러 화면이 연결된 Django 웹 서비스의 사용자 흐름으로 확장",
+      technologies: [
+        "Django Templates",
+        "Tailwind CSS",
+        "JavaScript",
+        "Fetch API",
+      ],
+      teamTechnologies: ["Django ORM", "LangGraph", "Pinecone", "SQLite"],
+      githubUrl: "https://github.com/SKN26-4th-1st/4th_project",
+      image: "/media/projects/lg-home-ai/poster.png",
       evidence: {
-        videoSrc: '/media/projects/lg-home-ai/demo.webm',
-        disclosure: '합성 계정과 로컬 데이터로 촬영한 데모입니다. 검색·상세·찜·챗봇 화면을 검증했으며 녹화 과정에서 AI·RAG 외부 호출은 실행하지 않았습니다.',
+        videoSrc: "/media/projects/lg-home-ai/demo.webm",
+        disclosure:
+          "합성 계정과 로컬 데이터로 촬영한 데모입니다. 검색·상세·찜·챗봇 화면을 검증했으며 녹화 과정에서 AI·RAG 외부 호출은 실행하지 않았습니다.",
         screenshots: [
           {
-            src: '/media/projects/lg-home-ai/search-filter.png',
-            alt: 'LG Home AI 냉장고 검색과 필터 결과 화면',
-            title: '검색과 필터',
-            caption: 'Django GET·ORM·Paginator와 쿼리스트링으로 검색 조건과 페이지 상태를 유지했습니다.',
+            src: "/media/projects/lg-home-ai/search-filter.png",
+            alt: "LG Home AI 냉장고 검색과 필터 결과 화면",
+            title: "검색과 필터",
+            caption:
+              "Django GET·ORM·Paginator와 쿼리스트링으로 검색 조건과 페이지 상태를 유지했습니다.",
           },
           {
-            src: '/media/projects/lg-home-ai/product-detail.png',
-            alt: 'LG Home AI 상품 상세와 찜 완료 화면',
-            title: '상품 상세와 찜',
-            caption: '847개 실제 상품 데이터의 상세 정보와 찜 JSON 통신 상태를 하나의 흐름으로 연결했습니다.',
+            src: "/media/projects/lg-home-ai/product-detail.png",
+            alt: "LG Home AI 상품 상세와 찜 완료 화면",
+            title: "상품 상세와 찜",
+            caption:
+              "847개 실제 상품 데이터의 상세 정보와 찜 JSON 통신 상태를 하나의 흐름으로 연결했습니다.",
           },
           {
-            src: '/media/projects/lg-home-ai/chat.png',
-            alt: 'LG Home AI 제품 상담 챗봇 화면',
-            title: 'AI 상담 화면',
-            caption: '로딩·오류 표시와 중복 요청 방지를 고려한 채팅 인터페이스를 구현했습니다.',
+            src: "/media/projects/lg-home-ai/chat.png",
+            alt: "LG Home AI 제품 상담 챗봇 화면",
+            title: "AI 상담 화면",
+            caption:
+              "로딩·오류 표시와 중복 요청 방지를 고려한 채팅 인터페이스를 구현했습니다.",
           },
         ],
       },
       detail: {
         overview: [
-          '3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. 사용자는 847개 가전 데이터를 조건으로 검색하고, 제품 상담과 사용설명서 RAG 기능을 이용할 수 있습니다.',
-          '저는 AI 모델링 자체보다 사용자 동선과 정보 구조, Django 템플릿과 클라이언트 동작, 찜·채팅 서버 통신을 연결하는 프론트엔드 범위를 담당했습니다.',
+          "3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. 사용자는 847개 가전 데이터를 조건으로 검색하고, 제품 상담과 사용설명서 RAG 기능을 이용할 수 있습니다.",
+          "저는 AI 모델링 자체보다 사용자 동선과 정보 구조, Django 템플릿과 클라이언트 동작, 찜·채팅 서버 통신을 연결하는 프론트엔드 범위를 담당했습니다.",
         ],
         decisions: [
           {
-            title: '검색 조건을 URL에 보존하는 SSR 흐름',
-            situation: '제품군마다 필터 항목이 다르고, 조건을 변경하거나 페이지를 이동한 뒤에도 현재 검색 상태가 유지되어야 했습니다.',
-            choice: '검색을 별도 REST API로 만들지 않고 Django GET·ORM·Paginator 기반 SSR로 처리하며 쿼리스트링을 상태로 사용했습니다.',
-            reason: '새로고침과 링크 공유에도 검색 조건을 유지하고, 서버의 검색 결과와 브라우저 상태를 한 기준으로 맞추기 위해서였습니다.',
-            implementation: '필터 적용·삭제·초기화와 페이지 이동 시 기존 쿼리스트링을 보존하고, 브라우저가 URL을 기준으로 선택 상태를 복원하도록 구성했습니다.',
-            result: 'SPA 상태 관리 없이도 검색 조건과 페이지 이동을 일관되게 유지하는 흐름을 만들었습니다.',
-            reflection: '화면 상태를 무조건 JavaScript 메모리에 두기보다 서버 렌더링과 URL 특성에 맞는 기준을 선택하는 것이 중요했습니다.',
+            title: "검색 조건을 URL에 보존하는 SSR 흐름",
+            situation:
+              "제품군마다 필터 항목이 다르고, 조건을 변경하거나 페이지를 이동한 뒤에도 현재 검색 상태가 유지되어야 했습니다.",
+            choice:
+              "검색을 별도 REST API로 만들지 않고 Django GET·ORM·Paginator 기반 SSR로 처리하며 쿼리스트링을 상태로 사용했습니다.",
+            reason:
+              "새로고침과 링크 공유에도 검색 조건을 유지하고, 서버의 검색 결과와 브라우저 상태를 한 기준으로 맞추기 위해서였습니다.",
+            implementation:
+              "필터 적용·삭제·초기화와 페이지 이동 시 기존 쿼리스트링을 보존하고, 브라우저가 URL을 기준으로 선택 상태를 복원하도록 구성했습니다.",
+            result:
+              "SPA 상태 관리 없이도 검색 조건과 페이지 이동을 일관되게 유지하는 흐름을 만들었습니다.",
+            reflection:
+              "화면 상태를 무조건 JavaScript 메모리에 두기보다 서버 렌더링과 URL 특성에 맞는 기준을 선택하는 것이 중요했습니다.",
           },
           {
-            title: '찜·채팅 요청의 공통 오류와 중복 실행 처리',
-            situation: '사용자가 버튼을 반복해서 누르거나 서버가 HTML·JSON 오류를 다르게 반환하면 중복 요청과 불명확한 피드백이 발생할 수 있었습니다.',
-            choice: '공통 요청·응답 정규화 계층을 두고 기능별 in-flight 상태, CSRF, 오류·로딩 표시와 AI 응답 정제를 적용했습니다.',
-            reason: '성공 경로뿐 아니라 네트워크 실패와 반복 입력에서도 사용자가 현재 상태를 이해할 수 있게 하기 위해서였습니다.',
-            implementation: 'HTTP·JSON 파싱 결과를 같은 형태로 변환하고, 찜·채팅 실행 중 재요청을 막았습니다. AI 마크다운은 이스케이프와 허용 목록 기반 정제를 거쳐 DOM에 표시했습니다.',
-            result: '찜과 채팅의 중복 실행을 줄이고 오류·로딩 상태를 일관되게 표시하도록 구현했으며, 정적 QA로 코드 경계를 점검했습니다.',
-            reflection: '사용자에게 보이는 동작은 정상 응답뿐 아니라 실패와 입력 반복까지 포함해 설계해야 한다는 것을 배웠습니다.',
+            title: "찜·채팅 요청의 공통 오류와 중복 실행 처리",
+            situation:
+              "사용자가 버튼을 반복해서 누르거나 서버가 HTML·JSON 오류를 다르게 반환하면 중복 요청과 불명확한 피드백이 발생할 수 있었습니다.",
+            choice:
+              "공통 요청·응답 정규화 계층을 두고 기능별 in-flight 상태, CSRF, 오류·로딩 표시와 AI 응답 정제를 적용했습니다.",
+            reason:
+              "성공 경로뿐 아니라 네트워크 실패와 반복 입력에서도 사용자가 현재 상태를 이해할 수 있게 하기 위해서였습니다.",
+            implementation:
+              "HTTP·JSON 파싱 결과를 같은 형태로 변환하고, 찜·채팅 실행 중 재요청을 막았습니다. AI 마크다운은 이스케이프와 허용 목록 기반 정제를 거쳐 DOM에 표시했습니다.",
+            result:
+              "찜과 채팅의 중복 실행을 줄이고 오류·로딩 상태를 일관되게 표시하도록 구현했으며, 정적 QA로 코드 경계를 점검했습니다.",
+            reflection:
+              "사용자에게 보이는 동작은 정상 응답뿐 아니라 실패와 입력 반복까지 포함해 설계해야 한다는 것을 배웠습니다.",
           },
         ],
         retrospective: [
-          '3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 처음으로 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. Figma에서 사용자 동선과 정보 배치를 먼저 구성하고, Tailwind CSS와 Django 템플릿, JavaScript로 설계를 실제 화면과 동작에 연결했습니다.',
-          '개발 과정에서는 Tailwind와 Django를 연결하는 패키지 충돌, Node 실행 오류와 경로 설정 문제를 반복해서 경험했습니다. 실행 구조와 환경 설정을 하나씩 확인하면서 프론트엔드 개발에도 빌드 도구와 서버 환경에 대한 이해가 필요하다는 것을 배웠습니다. Git 브랜치와 static·template 구조를 정리하며 여러 사람의 작업을 통합하는 과정도 경험했습니다.',
-          '팀원들이 처음 맡은 분야를 함께 학습하며 개발하는 과정에서 역할이 겹치고 업무 범위에 대한 이해 차이가 생겼습니다. 각자가 생각한 역할과 작업 범위를 먼저 확인한 뒤, 제가 준비한 방식을 고집하기보다 팀이 이미 구축한 구조에 맞춰 화면을 구현해 중복 작업을 줄였습니다.',
-          '이 프로젝트를 통해 예쁜 화면보다 사용자가 서비스를 어떤 순서로 이용하고 각 동작이 서버와 어떻게 연결되는지를 함께 고려해야 한다는 것을 배웠습니다. 화면과 서버 통신의 오류 상태까지 구현했지만, 인증·권한·테스트와 배포 환경을 하나의 운영 관점에서 체계화하는 단계까지는 나아가지 못했습니다. 이후 HumouR에서 이 경계를 직접 다루면서 프론트엔드의 책임 범위를 더 넓게 이해하게 되었습니다.',
+          "3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 처음으로 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. Figma에서 사용자 동선과 정보 배치를 먼저 구성하고, Tailwind CSS와 Django 템플릿, JavaScript로 설계를 실제 화면과 동작에 연결했습니다.",
+          "개발 과정에서는 Tailwind와 Django를 연결하는 패키지 충돌, Node 실행 오류와 경로 설정 문제를 반복해서 경험했습니다. 실행 구조와 환경 설정을 하나씩 확인하면서 프론트엔드 개발에도 빌드 도구와 서버 환경에 대한 이해가 필요하다는 것을 배웠습니다. Git 브랜치와 static·template 구조를 정리하며 여러 사람의 작업을 통합하는 과정도 경험했습니다.",
+          "팀원들이 처음 맡은 분야를 함께 학습하며 개발하는 과정에서 역할이 겹치고 업무 범위에 대한 이해 차이가 생겼습니다. 각자가 생각한 역할과 작업 범위를 먼저 확인한 뒤, 제가 준비한 방식을 고집하기보다 팀이 이미 구축한 구조에 맞춰 화면을 구현해 중복 작업을 줄였습니다.",
+          "이 프로젝트를 통해 예쁜 화면보다 사용자가 서비스를 어떤 순서로 이용하고 각 동작이 서버와 어떻게 연결되는지를 함께 고려해야 한다는 것을 배웠습니다. 화면과 서버 통신의 오류 상태까지 구현했지만, 인증·권한·테스트와 배포 환경을 하나의 운영 관점에서 체계화하는 단계까지는 나아가지 못했습니다. 이후 HumouR에서 이 경계를 직접 다루면서 프론트엔드의 책임 범위를 더 넓게 이해하게 되었습니다.",
         ],
       },
     },
   ],
   skillGroups: [
     {
-      title: 'Frontend',
-      primary: ['React', 'TypeScript', 'Axios', 'TanStack Query', 'Zod'],
-      experience: ['JavaScript', 'Tailwind CSS', 'Ant Design', 'Django Templates', 'Streamlit'],
+      title: "Frontend",
+      primary: ["React", "TypeScript", "Axios", "TanStack Query", "Zod"],
+      experience: [
+        "JavaScript",
+        "Tailwind CSS",
+        "Ant Design",
+        "Django Templates",
+        "Streamlit",
+      ],
     },
     {
-      title: 'LLM Application',
-      primary: ['LangGraph', 'LangChain', 'RAG', 'OpenAI API', 'Structured Output'],
-      experience: ['Pinecone integration'],
+      title: "LLM Application",
+      primary: [
+        "LangGraph",
+        "LangChain",
+        "RAG",
+        "OpenAI API",
+        "Structured Output",
+      ],
+      experience: ["Pinecone integration"],
     },
     {
-      title: 'Backend & Data',
-      primary: ['Python', 'Django', 'pandas', 'scikit-learn', 'XGBoost'],
-      experience: ['FastAPI consumption', 'MySQL/SQLite integration', 'Celery/MLflow boundary'],
+      title: "Backend & Data",
+      primary: ["Python", "Django", "pandas", "scikit-learn", "XGBoost"],
+      experience: [
+        "FastAPI consumption",
+        "MySQL/SQLite integration",
+        "Celery/MLflow boundary",
+      ],
     },
     {
-      title: 'Quality & Delivery',
-      primary: ['Vitest', 'Testing Library', 'MSW', 'Playwright', 'Git/GitHub'],
-      experience: ['Docker', 'GitHub Actions', 'AWS deployment integration & verification'],
+      title: "Quality & Delivery",
+      primary: ["Vitest", "Testing Library", "MSW", "Playwright", "Git/GitHub"],
+      experience: [
+        "Docker",
+        "GitHub Actions",
+        "AWS deployment integration & verification",
+      ],
     },
   ],
   experiences: [],
-}
+};

@@ -1,95 +1,96 @@
 export interface Profile {
-  name: string
-  greeting: string
-  role: string
-  description: string
-  profileImage: string
-  resumeUrl: string
-  blogUrl: string
-  email: string
-  githubUrl: string
-  linkedinUrl: string
+  name: string;
+  greeting: string;
+  role: string;
+  description: string;
+  profileImage: string;
+  resumeUrl: string;
+  blogUrl: string;
+  email: string;
+  githubUrl: string;
+  linkedinUrl: string;
 }
 
 export interface ProjectDecision {
-  title: string
-  situation: string
-  choice: string
-  reason: string
-  implementation: string
-  result?: string
-  reflection?: string
+  title: string;
+  situation: string;
+  choice: string;
+  reason: string;
+  implementation: string;
+  result?: string;
+  reflection?: string;
 }
 
 export interface ProjectDetail {
-  overview?: string[]
-  decisions?: ProjectDecision[]
-  retrospective?: string[]
+  overview?: string[];
+  decisions?: ProjectDecision[];
+  retrospective?: string[];
 }
 
 export interface ProjectEvidenceScreenshot {
-  src: string
-  alt: string
-  title: string
-  caption: string
+  src: string;
+  alt: string;
+  title: string;
+  caption: string;
 }
 
 export interface ProjectEvidence {
-  videoSrc: string
-  disclosure: string
-  screenshots: ProjectEvidenceScreenshot[]
+  videoSrc?: string;
+  disclosure: string;
+  screenshots: ProjectEvidenceScreenshot[];
 }
 
 export interface Project {
-  id: string
-  order: number
-  stage: string
-  period: string
-  title: string
-  description: string
-  contribution: string[]
-  growth: string
-  technologies: string[]
-  teamTechnologies?: string[]
-  githubUrl: string
-  image: string
-  operatingEnvironment?: string
-  evidence?: ProjectEvidence
-  cardRoleSummary?: string
-  detail?: ProjectDetail
+  id: string;
+  order: number;
+  stage: string;
+  period: string;
+  title: string;
+  description: string;
+  contribution: string[];
+  growth: string;
+  technologies: string[];
+  teamTechnologies?: string[];
+  githubUrl: string;
+  image: string;
+  operatingEnvironment?: string;
+  evidence?: ProjectEvidence;
+  cardRoleSummary?: string;
+  detail?: ProjectDetail;
 }
 
 export interface SkillGroup {
-  title: string
-  primary: string[]
-  experience: string[]
+  title: string;
+  primary: string[];
+  experience: string[];
 }
 
 export interface LearningApproach {
-  title: string
-  messages: string[]
+  title: string;
+  messages: string[];
 }
 
 export interface WorkPrinciple {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 export interface ExperienceEntry {
-  id: string
-  period: string
-  organization: string
-  title: string
-  description: string
+  id: string;
+  period: string;
+  organization: string;
+  title: string;
+  description: string;
 }
 
 export interface PortfolioData {
-  profile: Profile
-  about: string[]
-  learningApproach: LearningApproach
-  workPrinciples: WorkPrinciple[]
-  flagshipProject: Project
-  journeyProjects: Project[]
-  skillGroups: SkillGroup[]
-  experiences: ExperienceEntry[]
+  profile: Profile;
+  about: string[];
+  learningApproach: LearningApproach;
+  workPrinciples: WorkPrinciple[];
+  personalProjects: Project[];
+  flagshipProject: Project;
+  journeyProjects: Project[];
+  skillGroups: SkillGroup[];
+  experiences: ExperienceEntry[];
 }
