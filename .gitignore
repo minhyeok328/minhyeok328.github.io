@@ -1,5 +1,7 @@
 node_modules/
 dist/
+*.log
+.DS_Store
 coverage/
 __pycache__/
 *.py[cod]
@@ -7,7 +9,6 @@ __pycache__/
 .env.*
 !.env.example
 .superpowers/
-.DS_Store
 Thumbs.db
 .vscode/
 *.tsbuildinfo
