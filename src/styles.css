@@ -128,18 +128,29 @@ summary::-webkit-details-marker {
   transform: translate(-50%, 0);
 }
 .hero {
-  height: 100svh;
-  min-height: 740px;
-  max-height: 1100px;
+  --hero-title-size: clamp(40px, min(6.7vw, 12svh), 114px);
+  --hero-top: clamp(88px, 13svh, 140px);
+  --hero-gap: clamp(20px, 3vw, 48px);
+  /* Reserve both title lines (2 × 1.13em) before sizing the word. */
+  --hero-word-size: min(
+    32vw,
+    640px,
+    max(160px, calc((100svh - var(--hero-top) - var(--hero-title-size) * 2.26 - var(--hero-gap) - 24px) / 0.96875))
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 2000px;
+  margin-inline: auto;
   position: relative;
-  padding: 108px 40px 0;
+  padding: var(--hero-top) 40px 24px;
   isolation: isolate;
 }
 .hero-title {
-  font: 500 clamp(64px, 6.7vw, 114px)/1.05 var(--font-display);
+  width: 100%;
+  font: 500 var(--hero-title-size)/1.05 var(--font-display);
   letter-spacing: -0.067em;
   text-align: right;
-  margin-top: 32px;
 }
 .hero-title-line {
   display: block;
@@ -156,10 +167,17 @@ summary::-webkit-details-marker {
   user-select: none;
 }
 .hero-word {
-  position: absolute;
-  inset: auto 1.6% 20px;
-  height: 31vw;
-  max-height: 510px;
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--hero-word-size) * 3.025);
+  height: calc(var(--hero-word-size) * 0.96875);
+  margin-top: var(--hero-gap);
+}
+.hero-word .glyph {
+  font-size: var(--hero-word-size);
+}
+.hero-word .letter-0 .glyph {
+  font-size: calc(var(--hero-word-size) * 0.96875);
 }
 .letter {
   flex: 1;
@@ -463,6 +481,16 @@ summary::-webkit-details-marker {
   z-index: 2;
   margin-top: 84px;
   background: #f2f9fe;
+}
+/* Expanded content must scroll in full before the next card enters. */
+.skills-stack:has(.experience[open]) {
+  perspective: none;
+}
+.skills-stack:has(.experience[open]) .skill-card {
+  position: relative;
+  top: auto;
+  transform: none !important;
+  filter: none !important;
 }
 .skill-card-heading {
   display: flex;
@@ -1018,14 +1046,6 @@ summary::-webkit-details-marker {
 .project-image:focus-visible .image-overlay {
   opacity: 1;
 }
-@media (min-width: 1650px) {
-  .hero-word {
-    max-height: none;
-  }
-  .hero {
-    min-height: 950px;
-  }
-}
 @media (max-width: 1200px) {
   .skills {
     grid-template-columns: 180px minmax(0, 1fr);
@@ -1047,8 +1067,8 @@ summary::-webkit-details-marker {
   .about-grid {
     gap: 40px;
   }
-  .hero-title {
-    font-size: 7.4vw;
+  .hero {
+    --hero-title-size: clamp(40px, min(7.4vw, 12svh), 114px);
   }
   .about-bottom {
     margin-top: 65px;
@@ -1059,13 +1079,6 @@ summary::-webkit-details-marker {
   }
 }
 @media (max-width: 1080px), (max-height: 679px) {
-  .hero {
-    min-height: 680px;
-    height: 90svh;
-  }
-  .hero-word {
-    bottom: 24px;
-  }
   .about {
     margin-top: 135px;
     padding-bottom: 100px;
@@ -1217,6 +1230,8 @@ summary::-webkit-details-marker {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
+    align-self: stretch;
+    width: auto;
     height: auto;
     max-height: none;
     margin: 20px -7px 0;
@@ -1529,7 +1544,7 @@ summary::-webkit-details-marker {
     font-size: 22px;
   }
   .phrases > span {
-    font-size: 33px;
+    font-size: clamp(24px, 11.5vw, 33px);
   }
   .project-info {
     padding: 22px;
@@ -1542,6 +1557,11 @@ summary::-webkit-details-marker {
   }
   .footer-bottom {
     padding-inline: 14px;
+  }
+}
+@media (max-width: 319px) {
+  .about-panel {
+    padding-top: 72px;
   }
 }
 .motion-off .phrases > span {
