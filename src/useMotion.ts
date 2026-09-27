@@ -31,12 +31,6 @@ export function useMotion(
           stagger: 0.13,
           ease: "power2.out",
         });
-        gsap.from(".hero-intro", {
-          x: -35,
-          opacity: 0,
-          duration: 0.7,
-          delay: 0.15,
-        });
         gsap.from(".portrait-wrap", {
           y: 130,
           opacity: 0,

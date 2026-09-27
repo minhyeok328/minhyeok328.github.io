@@ -113,15 +113,6 @@ summary::-webkit-details-marker {
   font: 400 12px/1.5 var(--font-display);
   color: var(--blue);
 }
-.tiny-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--blue);
-  margin-right: 8px;
-  vertical-align: 2px;
-}
 .skip-link {
   position: fixed;
   top: 12px;
@@ -144,13 +135,6 @@ summary::-webkit-details-marker {
   padding: 108px 40px 0;
   isolation: isolate;
 }
-.hero-topline {
-  display: flex;
-  justify-content: space-between;
-  font: 400 10px/1.4 var(--font-display);
-  letter-spacing: 0.16em;
-  color: var(--muted);
-}
 .hero-title {
   font: 500 clamp(64px, 6.7vw, 114px)/1.05 var(--font-display);
   letter-spacing: -0.067em;
@@ -164,16 +148,6 @@ summary::-webkit-details-marker {
 }
 .hero-title-line > span {
   display: block;
-}
-.hero-intro {
-  position: absolute;
-  left: 4%;
-  top: 41%;
-  font-size: 15px;
-  line-height: 1.9;
-  letter-spacing: -0.04em;
-  color: #435c6b;
-  z-index: 1;
 }
 .brand-word {
   display: flex;
@@ -233,17 +207,33 @@ summary::-webkit-details-marker {
   position: absolute;
   left: 40px;
   right: 40px;
-  bottom: 6px;
+  bottom: 12px;
   display: flex;
+  min-height: 44px;
   align-items: center;
   justify-content: space-between;
   font: 400 10px/1.5 var(--font-display);
   letter-spacing: 0.12em;
   color: var(--muted);
 }
-.scroll-cue > span:last-child {
-  font-size: 26px;
-  color: var(--ink);
+.scroll-cue__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--blue);
+}
+.scroll-cue__arrow svg {
+  display: block;
+  transition: transform 180ms ease;
+}
+.scroll-cue:focus-visible {
+  outline: none;
+}
+.scroll-cue:focus-visible .scroll-cue__arrow {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 .about {
   position: relative;
@@ -261,40 +251,22 @@ summary::-webkit-details-marker {
   box-shadow: 0 12px 54px -43px #417fa544;
 }
 .about-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 70px;
-}
-.section-number {
-  font: 400 11px/1.5 var(--font-display);
-  color: var(--muted);
-  letter-spacing: 0.06em;
 }
 .about-grid {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
   gap: 70px;
 }
-.about-heading h2 {
+.about-heading h3 {
   font-size: clamp(27px, 2.8vw, 42px);
   line-height: 1.5;
   font-weight: 500;
   letter-spacing: -0.055em;
   word-break: keep-all;
 }
-.about-heading h2 > span {
+.about-heading h3 > span {
   color: var(--blue);
-}
-.about-name {
-  font-size: 14px;
-  margin-top: 28px;
-}
-.about-name > span {
-  font: 400 10px var(--font-display);
-  color: var(--muted);
-  margin-left: 14px;
-  letter-spacing: 0.07em;
 }
 .about-copy {
   padding-top: 8px;
@@ -413,11 +385,6 @@ summary::-webkit-details-marker {
 .phrases > span:nth-child(3) {
   animation-delay: 6s;
 }
-.about-bottom > p {
-  font-size: 12px;
-  line-height: 1.9;
-  color: var(--muted);
-}
 @keyframes phrase {
   0% {
     opacity: 0;
@@ -462,6 +429,7 @@ summary::-webkit-details-marker {
   position: sticky;
   top: 155px;
 }
+.about-top h2,
 .section-side h2,
 .projects-heading h2 {
   font: 500 clamp(36px, 4vw, 56px)/1.1 var(--font-display);
@@ -506,12 +474,6 @@ summary::-webkit-details-marker {
 .skill-card-heading h3 {
   font: 500 29px/1.2 var(--font-display);
   letter-spacing: -0.04em;
-}
-.skill-card-heading > span {
-  font: 400 10px/1.6 var(--font-display);
-  color: var(--muted);
-  letter-spacing: 0.07em;
-  white-space: nowrap;
 }
 .skill-groups {
   display: flex;
@@ -647,12 +609,6 @@ summary::-webkit-details-marker {
   color: var(--muted);
   margin-left: auto;
   padding-bottom: 5px;
-}
-.project-skip {
-  font: 400 10px var(--font-display);
-  gap: 28px;
-  border-bottom: 0;
-  min-height: 26px;
 }
 .project-window {
   position: relative;
@@ -1034,6 +990,9 @@ summary::-webkit-details-marker {
   }
 }
 @media (hover: hover) and (pointer: fine) {
+  .site:not(.motion-off) .scroll-cue:hover .scroll-cue__arrow svg {
+    transform: translateY(3px);
+  }
   .pill:hover {
     background: var(--blue);
     border-color: var(--blue);
@@ -1065,9 +1024,6 @@ summary::-webkit-details-marker {
   }
   .hero {
     min-height: 950px;
-  }
-  .hero-intro {
-    top: 38%;
   }
 }
 @media (max-width: 1200px) {
@@ -1107,9 +1063,6 @@ summary::-webkit-details-marker {
     min-height: 680px;
     height: 90svh;
   }
-  .hero-intro {
-    top: 44%;
-  }
   .hero-word {
     bottom: 24px;
   }
@@ -1125,6 +1078,7 @@ summary::-webkit-details-marker {
     position: static;
     margin-bottom: 35px;
   }
+  .about-top h2,
   .section-side h2 {
     margin-top: 14px;
   }
@@ -1212,9 +1166,6 @@ summary::-webkit-details-marker {
   .project-controls {
     display: none;
   }
-  .project-skip {
-    display: none;
-  }
   .projects-heading > p {
     max-width: 190px;
     line-height: 1.7;
@@ -1253,22 +1204,12 @@ summary::-webkit-details-marker {
     min-height: 0;
     max-height: none;
   }
-  .hero-topline {
-    font-size: 8px;
-    letter-spacing: 0.08em;
-  }
   .hero-title {
     font-size: 10.4vw;
     text-align: left;
     line-height: 1.08;
     margin-top: 35px;
     letter-spacing: -0.065em;
-  }
-  .hero-intro {
-    position: static;
-    margin-top: 25px;
-    font-size: 13px;
-    line-height: 1.9;
   }
   .hero-word {
     position: relative;
@@ -1299,11 +1240,12 @@ summary::-webkit-details-marker {
   .scroll-cue {
     left: 22px;
     right: 22px;
-    bottom: 0;
+    bottom: 6px;
     font-size: 8px;
   }
-  .scroll-cue > span:last-child {
-    font-size: 22px;
+  .scroll-cue__arrow svg {
+    width: 21px;
+    height: 25px;
   }
   .about {
     margin-top: 120px;
@@ -1322,9 +1264,6 @@ summary::-webkit-details-marker {
     font-size: 9px;
     letter-spacing: 0.09em;
   }
-  .section-number {
-    display: none;
-  }
   .portrait-wrap {
     width: 112px;
     right: 18px;
@@ -1339,16 +1278,9 @@ summary::-webkit-details-marker {
   .about-grid {
     display: block;
   }
-  .about-heading h2 {
+  .about-heading h3 {
     font-size: 28px;
     line-height: 1.5;
-  }
-  .about-name {
-    margin-top: 17px;
-    font-size: 12px;
-  }
-  .about-name > span {
-    font-size: 9px;
   }
   .about-copy {
     margin-top: 24px;
@@ -1374,10 +1306,6 @@ summary::-webkit-details-marker {
   .phrases > span {
     font-size: 38px;
   }
-  .about-bottom > p {
-    margin-top: 10px;
-    font-size: 11px;
-  }
   .principles {
     grid-template-columns: 1fr;
     gap: 17px;
@@ -1392,6 +1320,7 @@ summary::-webkit-details-marker {
   .skills {
     padding-bottom: 64px;
   }
+  .about-top h2,
   .section-side h2,
   .projects-heading h2 {
     font-size: 35px;
@@ -1414,9 +1343,6 @@ summary::-webkit-details-marker {
   }
   .skill-card-heading h3 {
     font-size: 24px;
-  }
-  .skill-card-heading > span {
-    font-size: 8px;
   }
   .skill-groups {
     gap: 23px;
@@ -1592,21 +1518,15 @@ summary::-webkit-details-marker {
   .hero {
     padding-inline: 16px;
   }
-  .hero-intro {
-    font-size: 12px;
-  }
   .about-panel,
   .skill-card {
     padding-inline: 19px;
   }
-  .about-heading h2 {
+  .about-heading h3 {
     font-size: 25px;
   }
   .skill-card-heading h3 {
     font-size: 22px;
-  }
-  .skill-card-heading > span {
-    font-size: 7px;
   }
   .phrases > span {
     font-size: 33px;
@@ -1691,6 +1611,9 @@ summary::-webkit-details-marker {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .site:not(.motion-off) .scroll-cue:hover .scroll-cue__arrow svg {
+    transform: none;
+  }
   *,
   *::before,
   *::after {

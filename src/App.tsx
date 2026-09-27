@@ -284,10 +284,6 @@ export default function App() {
             tabIndex={-1}
             aria-label="Minhyeok’s Dev Log"
           >
-            <div className="hero-topline">
-              <span>FULL-STACK DEVELOPER</span>
-              <span>SEO MINHYEOK</span>
-            </div>
             <h1 className="hero-title">
               <span className="hero-title-line">
                 <span>MINHYEOK’S</span>
@@ -298,22 +294,32 @@ export default function App() {
                 </span>
               </span>
             </h1>
-            <p className="hero-intro">
-              복잡한 AI 서비스의 흐름을 구조화하고
-              <br />
-              연결하는 풀스택 개발자, 서민혁입니다.
-            </p>
             <Word className="hero-word" />
             <a
               href={pageUrl}
               className="scroll-cue"
+              aria-label="소개 섹션으로 이동"
               onClick={(event) => {
                 event.preventDefault();
                 navigate("about");
               }}
             >
               <span>SCROLL TO EXPLORE</span>
-              <span aria-hidden="true">↓</span>
+              <span className="scroll-cue__arrow" aria-hidden="true">
+                <svg
+                  width="24"
+                  height="28"
+                  viewBox="0 0 24 28"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  focusable="false"
+                >
+                  <path d="M12 4v20m-6-6 6 6 6-6" />
+                </svg>
+              </span>
             </a>
           </section>
 
@@ -325,21 +331,18 @@ export default function App() {
           >
             <div className="about-panel">
               <div className="about-top">
-                <p className="eyebrow">
-                  <span className="tiny-dot" /> A LITTLE ABOUT ME
-                </p>
-                <span className="section-number">01 / ABOUT</span>
+                <p className="eyebrow">01 / A LITTLE ABOUT ME</p>
+                <h2 id="about-title">
+                  ABOUT<span className="title-period">.</span>
+                </h2>
               </div>
               <div className="about-grid">
                 <div className="about-heading">
-                  <h2 id="about-title">
-                    흐름을 이해하고,
+                  <h3>
+                    전체의 흐름을 이해하고,
                     <br />
-                    <span>경험으로 연결합니다.</span>
-                  </h2>
-                  <p className="about-name">
-                    서민혁 <span>SEO MINHYEOK</span>
-                  </p>
+                    <span>하나의 경험으로 연결합니다.</span>
+                  </h3>
                 </div>
                 <div className="about-copy">
                   <p>{data.profile.description}</p>
@@ -375,11 +378,6 @@ export default function App() {
                     <span>Build.</span>
                   </div>
                 </div>
-                <p>
-                  전체를 이해하는 시선으로,
-                  <br />
-                  하나의 경험을 만들어갑니다.
-                </p>
               </div>
               <div className="principles">
                 {data.workPrinciples.map((principle, index) => (
@@ -398,7 +396,7 @@ export default function App() {
                 height="1440"
                 fetchPriority="high"
               />
-              <figcaption>Minhyeok, beyond the screen.</figcaption>
+              <figcaption>Hi, I'm Minhyeok.</figcaption>
             </figure>
           </section>
 
@@ -423,7 +421,6 @@ export default function App() {
               <article className="skill-card skill-card--core">
                 <div className="skill-card-heading">
                   <h3>Core stack</h3>
-                  <span>01 — TOOLS</span>
                 </div>
                 <div className="skill-groups">
                   {data.skillGroups.map((group) => (
@@ -454,7 +451,6 @@ export default function App() {
               <article className="skill-card skill-card--practice">
                 <div className="skill-card-heading">
                   <h3>In practice</h3>
-                  <span>02 — APPROACH</span>
                 </div>
                 <ol className="skill-usage">
                   {usage.map(([title, description], index) => (
@@ -496,16 +492,6 @@ export default function App() {
                   </h2>
                 </div>
                 <p>배우고, 만들고, 연결해 온 기록.</p>
-                <a
-                  className="text-link project-skip"
-                  href={pageUrl}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    navigate("contact");
-                  }}
-                >
-                  CONTACT <span aria-hidden="true">↘</span>
-                </a>
               </div>
               <div
                 className="project-window"
