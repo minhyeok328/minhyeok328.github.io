@@ -6,8 +6,6 @@ Minhyeok’s Dev Log. 서민혁을 소개하는 개인 개발자 사이트입니
 
 React · TypeScript · Vite · GSAP · Lenis를 사용합니다. 소개와 프로젝트 자료는 기존 개인 사이트의 콘텐츠를 기반으로 합니다.
 
-[실행 안내](docs/development.md) · [디자인 기준](docs/design.md)
-
 [사이트 바로가기](https://minhyeok328.github.io/)
 
 이 저장소는 리디자인한 MHDL 사이트의 GitHub Pages 배포 저장소입니다. main 브랜치에 푸시하면 .github/workflows/deploy.yml에서 의존성 설치, 테스트, 빌드를 수행한 뒤 dist 폴더를 배포합니다.
