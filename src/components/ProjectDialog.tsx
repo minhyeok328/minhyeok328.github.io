@@ -41,6 +41,10 @@ export function ProjectDialog({
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
   const titleId = useId();
   const screenshots = project.evidence?.screenshots ?? [];
+  const growthParagraphs = project.growth
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
   const currentImage =
     galleryIndex === null ? undefined : screenshots[galleryIndex];
   const isGalleryOpen = currentImage !== undefined;
@@ -186,7 +190,7 @@ export function ProjectDialog({
         )}
 
         <section className="project-dialog__section">
-          <h3>제가 맡은 일</h3>
+          <h3>담당 역할</h3>
           <ul className="project-dialog__contributions">
             {project.contribution.map((contribution, index) => (
               <li key={index}>{contribution}</li>
@@ -221,7 +225,7 @@ export function ProjectDialog({
 
         {project.evidence && (
           <section className="project-dialog__section">
-            <h3>화면과 동작</h3>
+            <h3>주요 화면·시연</h3>
             {project.evidence.videoSrc && (
               <video
                 className="project-dialog__video"
@@ -266,7 +270,7 @@ export function ProjectDialog({
 
         {!!project.detail?.decisions?.length && (
           <section className="project-dialog__section">
-            <h3>선택과 구현</h3>
+            <h3>구현 과정</h3>
             <div className="project-dialog__decisions">
               {project.detail.decisions.map((decision) => (
                 <details
@@ -296,25 +300,13 @@ export function ProjectDialog({
           </section>
         )}
 
-        {!!project.detail?.retrospective?.length && (
-          <details className="project-dialog__disclosure-block project-dialog__retrospective">
-            <summary>
-              <span>프로젝트를 돌아보며</span>
-              <span className="project-dialog__expand" aria-hidden="true">
-                +
-              </span>
-            </summary>
-            <div className="project-dialog__prose">
-              {project.detail.retrospective.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-          </details>
-        )}
-
         <aside className="project-dialog__growth">
-          <p>이 경험에서 넓어진 시야</p>
-          <strong>{project.growth}</strong>
+          <p className="project-dialog__growth-label">배운 점</p>
+          <div className="project-dialog__growth-body">
+            {growthParagraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </aside>
       </div>
 
