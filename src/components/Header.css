@@ -91,12 +91,14 @@
 
 .mhdl-header__progress-label {
   flex: 0 0 auto;
+  width: 5ch;
   color: #182b38;
   font-family: var(--font-display, "Poppins", sans-serif);
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .mhdl-header__nav {

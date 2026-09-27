@@ -144,7 +144,9 @@ export function Header({
                   style={{ transform: `scaleX(${safeProgress})` }}
                 />
               </span>
-              <span className="mhdl-header__progress-label">Dev Log</span>
+              <span className="mhdl-header__progress-label">
+                {Math.round(safeProgress * 100)}%
+              </span>
             </div>
           </div>
 
