@@ -53,13 +53,13 @@ export const portfolioData: PortfolioData = {
     title: "HumouR",
     description:
       "기업 정보, 채용 공고, 평가 기준, 지원서 분석, 리포트, 면접 질문과 외부 제한 공유를 하나의 업무 흐름으로 연결한 AI 채용 운영 보조 서비스입니다.",
-    cardRoleSummary: "React·TypeScript 프론트엔드 구조와 서비스 통합 담당",
+    cardRoleSummary: "6인 팀의 Figma 화면 설계·React 프론트엔드·API 연동",
     contribution: [
       "Axios·CSRF 요청 계층부터 도메인 API Client, Zod 응답 검증, Adapter, TanStack Query로 이어지는 데이터 흐름 구성",
       "일반 로그인과 외부 API Key 기반 제한 화면의 공통 인증·세션·Query 캐시 경계 처리",
       "인증 만료, 요청 취소, 오래된 응답 차단, 오류 정제와 캐시 정리를 포함한 요청 수명주기 처리",
       "JD·지원서·분석 리포트·면접 질문·외부 공유·문서 챗의 화면과 API 흐름 통합",
-      "주요 화면과 사용자 동선을 선행 설계하고 공통 UI 기준과 재사용 가능한 화면 구조 구성",
+      "Figma로 주요 화면과 사용자 동선을 설계하고 공통 UI 기준과 재사용 가능한 화면 구조 구성",
       "프론트엔드 테스트·QA·인터페이스 문서 체계 구축과 확장에 기여",
     ],
     growth: [
@@ -67,7 +67,7 @@ export const portfolioData: PortfolioData = {
       "로그인 사용자와 외부 공유로 접근하는 사용자의 화면 상태를 구분하고, 세션 만료·요청 취소·캐시 정리를 직접 다뤘습니다. 인증 방식과 권한에 맞게 화면 상태를 관리하고 검증하는 일도 프론트엔드의 역할이라는 것을 배웠습니다.",
       "최종 점검에서 문서에 정리된 작업 범위와 팀이 기대한 화면의 범위가 다르다는 것을 확인하고, 필요한 화면을 보완했습니다. 진행 상황뿐 아니라 맡은 작업과 완료 기준도 구체적으로 맞춰야 한다고 느꼈습니다.",
     ].join("\n\n"),
-    technologies: ["React 19", "TypeScript", "TanStack Query", "Zod"],
+    technologies: ["React 19", "TypeScript", "TanStack Query", "Zod", "Figma"],
     teamTechnologies: ["Django", "Celery", "LangGraph", "Pinecone", "AWS"],
     githubUrl: "https://github.com/SKN26-Final-1st/Final_project",
     image: "/media/projects/humour/poster.png",
@@ -111,7 +111,7 @@ export const portfolioData: PortfolioData = {
     detail: {
       overview: [
         "HumouR는 채용 전담 인력이 부족한 조직이 회사 정보와 채용 공고, 평가 기준, 지원서와 분석 결과를 한곳에서 관리하도록 돕는 팀 프로젝트입니다. AI가 합격 여부를 대신 결정하는 것이 아니라, 채용 담당자가 원문 근거와 추가 질문을 바탕으로 판단하도록 지원하는 것을 목표로 했습니다.",
-        "저는 Django API, Celery 비동기 처리 상태, LangGraph·Pinecone 분석 결과가 사용자 화면까지 안정적으로 전달되도록 React·TypeScript 프론트엔드의 데이터 흐름과 서비스 통합을 담당했습니다.",
+        "6인 팀에서 Figma 화면 설계와 React·TypeScript 프론트엔드 개발, API 연동을 담당했습니다. 팀이 구현한 Django API, Celery 비동기 처리 상태, LangGraph·Pinecone 분석 결과를 사용자가 확인할 수 있도록 프론트엔드의 데이터 흐름과 화면 동작을 구성했습니다.",
       ],
       decisions: [
         {
@@ -168,7 +168,7 @@ export const portfolioData: PortfolioData = {
       order: 1,
       stage: "Data Integration",
       period: "2026.02.05 – 02.06",
-      title: "차량 운영·관리 비용 계산 시스템",
+      title: "TCO Insight",
       description:
         "공공 연비와 차량 데이터, 현재 유가와 비용 가정을 결합해 월·연간 운영비 기준선을 비교하는 시스템입니다.",
       cardRoleSummary: "공공 연비 API 수집·응답 정규화와 CSV 데이터 가공",
@@ -235,7 +235,7 @@ export const portfolioData: PortfolioData = {
       order: 2,
       stage: "ML Experimentation",
       period: "2026.03.16 – 03.17",
-      title: "신용카드 고객 이탈 분석",
+      title: "신용카드 고객 이탈 예측 시스템",
       description:
         "고객 행동 데이터를 탐색하고 이탈 가능성과 소득 정보의 불확실성을 분석한 머신러닝 프로젝트입니다.",
       cardRoleSummary: "XGBoost 소득 구간 분류 실험과 EDA·전처리 탐색",
@@ -306,13 +306,13 @@ export const portfolioData: PortfolioData = {
       description:
         "사용자 조건을 구조화하고 신대방삼거리 식당 100곳의 실제 데이터를 검색해 한 곳을 추천하는 RAG 챗봇입니다.",
       cardRoleSummary:
-        "LangGraph RAG 파이프라인·구조화 출력·Streamlit 통합과 내부 평가",
+        "LLM 흐름 설계·LangGraph 전환·공동 평가와 프론트엔드 참여",
       contribution: [
         "LangChain 기반 흐름을 라우팅·슬롯 추출·검색·생성 단계의 LangGraph 상태 그래프로 구조화",
         "OpenAI strict JSON Schema로 검색 조건 슬롯의 형식과 필수 필드 고정",
         "SQLite 임베딩·관계 테이블 검색을 추천 파이프라인에 연결",
-        "Streamlit 스트리밍 답변과 지도·매장 상세 화면 통합",
-        "동일한 50개 케이스로 반복 비교하는 내부 평가·실패 리포트 체계 구축",
+        "Streamlit 스트리밍 답변과 지도·매장 상세 화면 통합에 참여",
+        "내부 평가·실패 리포트 코드를 구성하고 LLM 담당 동료 1명과 동일한 50개 케이스로 공동 평가·개선",
       ],
       growth: [
         "질문 유형에 따라 검색 경로가 달라지면서, LangChain 기반의 단일 체인으로 각 단계의 입력과 출력을 추적하기 어려워졌습니다. LangGraph 상태 그래프로 단계를 나눴지만, 초기에 각 단계가 주고받는 데이터 형식과 연결 방식을 충분히 맞추지 않아 기능을 추가할 때 기존 코드를 다시 수정하고 연결하는 데 시간이 들었습니다. 이후에는 구현 전에 데이터가 오가는 순서와 각 단계의 역할을 구체화하고, 팀원들과 진행 상황과 변경 사항을 공유하려고 했습니다.",
@@ -353,7 +353,7 @@ export const portfolioData: PortfolioData = {
       detail: {
         overview: [
           "PICKLE은 신대방삼거리 식당 100곳의 메뉴·리뷰·태그 데이터를 바탕으로 사용자의 조건에 맞는 한 곳을 추천하는 팀 프로젝트입니다. 사용자 질문을 분류하고 검색 조건을 구조화한 뒤, SQLite의 실제 식당 후보와 근거를 답변과 지도·상세 카드로 연결했습니다.",
-          "저는 LLM 시스템 설계와 Streamlit 프론트엔드를 함께 다루며 사용자 질의부터 데이터 검색, 응답 생성과 결과 표시까지 이어지는 흐름을 하나의 서비스 형태로 통합했습니다.",
+          "LLM 흐름 설계와 LangGraph 전환, Streamlit 프론트엔드 구현에 참여했습니다. 평가 코드를 구성하고 LLM 담당 동료 한 명과 실패 결과를 확인하며 검색 로직과 프롬프트 수정, 재평가를 함께 진행했습니다.",
         ],
         decisions: [
           {
@@ -380,9 +380,9 @@ export const portfolioData: PortfolioData = {
             reason:
               "프롬프트 수정뿐 아니라 슬롯 추출과 검색 단계 중 어디에서 실패하는지 구분하기 위해서였습니다.",
             implementation:
-              "동일한 50개 케이스와 평가 기준을 세 차례 유지하고, 실패 유형과 단계별 비율을 JSON·HTML 리포트로 남겼습니다.",
+              "동일한 50개 케이스와 평가 기준을 세 차례 유지하고, 실패 유형과 단계별 비율을 JSON·HTML 리포트로 남겼습니다. LLM 담당 동료 한 명과 결과를 함께 검토하며 수정과 재평가를 반복했습니다.",
             result:
-              "팀의 검색·프롬프트 변경을 거치며 내부 all-check 통과율은 46%에서 82%, 후보 내 목표 식당 포함률은 52%에서 96%로 변했습니다. 이는 프로덕션 정확도가 아닌 동일 DB에서 자동 생성한 내부 평가 결과입니다.",
+              "공동으로 검색 로직과 프롬프트를 개선하며 동일 골든셋의 전체 검사 통과율은 46%(23/50)에서 78%(39/50), 82%(41/50)로 변했습니다. 최종 의도 분기는 50/50, 조건 추출은 43/50, 기대 식당 포함은 48/50이었습니다. 팀원과 함께 개선한 내부 테스트 결과이며, 운영 환경의 추천 정확도나 LangGraph 전환만의 효과를 의미하지 않습니다.",
             reflection:
               "LLM 품질은 답변 문장만 보는 것이 아니라 입력 구조화와 검색 근거를 함께 측정해야 한다는 것을 배웠습니다.",
           },
@@ -398,7 +398,7 @@ export const portfolioData: PortfolioData = {
       description:
         "계정·검색·상품 상세·찜·챗봇을 연결한 Django 기반 LG 가전 검색·상담 웹 애플리케이션입니다.",
       cardRoleSummary:
-        "Django Templates·Tailwind·JavaScript 기반 프론트엔드와 서버 연동",
+        "Figma 화면 설계·Django Templates 기반 프론트엔드 공동 구현",
       contribution: [
         "Figma로 메인·검색·상품 상세·챗봇의 사용자 동선과 화면 구조 설계",
         "GET·SSR 기반 필터 검색과 쿼리스트링 상태 복원·페이지네이션 구현",
@@ -416,6 +416,7 @@ export const portfolioData: PortfolioData = {
         "Tailwind CSS",
         "JavaScript",
         "Fetch API",
+        "Figma",
       ],
       teamTechnologies: ["Django ORM", "LangGraph", "Pinecone", "SQLite"],
       githubUrl: "https://github.com/SKN26-4th-1st/4th_project",
@@ -451,7 +452,7 @@ export const portfolioData: PortfolioData = {
       detail: {
         overview: [
           "3차 프로젝트에서 Streamlit 기반 AI 프로토타입을 구현한 뒤, 4차에서는 계정·검색·상품 상세·찜·챗봇이 연결된 Django 웹 애플리케이션의 프론트엔드를 경험했습니다. 사용자는 847개 가전 데이터를 조건으로 검색하고, 제품 상담과 사용설명서 RAG 기능을 이용할 수 있습니다.",
-          "저는 AI 모델링 자체보다 사용자 동선과 정보 구조, Django 템플릿과 클라이언트 동작, 찜·채팅 서버 통신을 연결하는 프론트엔드 범위를 담당했습니다.",
+          "Figma로 사용자 동선과 화면 구조를 설계하고 프론트엔드 팀원과 함께 구현했습니다. 검색 필터·페이지 이동·상품 상세 탭·찜·채팅 동작과 서버 통신을 담당했습니다.",
         ],
         decisions: [
           {
