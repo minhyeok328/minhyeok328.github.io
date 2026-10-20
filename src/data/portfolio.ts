@@ -5,9 +5,9 @@ export const portfolioData: PortfolioData = {
   profile: {
     name: "서민혁",
     greeting: "안녕하세요,",
-    role: "복잡한 AI 서비스의 흐름을 구조화하고 연결하는 풀스택 개발자",
+    role: "일상에서 발견한 불편을 서비스로 풀어내는 풀스택 개발자",
     description:
-      "React·TypeScript를 중심으로 데이터·API·AI 파이프라인의 책임과 연결 지점을 이해하고, 팀의 기준을 맞춰 사용자가 이해하고 신뢰할 수 있는 경험으로 구현합니다.",
+      "일상에서 발견한 불편을 서비스로 풀어내는 풀스택 개발자 서민혁입니다. 화면부터 API와 데이터 처리까지 구현하고, AI와 작업을 나누며 결과를 테스트와 실제 데이터로 확인합니다.",
     profileImage: "/images/profile.jpg",
     resumeUrl: "",
     blogUrl: "https://blog.naver.com/m______yuk",
@@ -17,8 +17,8 @@ export const portfolioData: PortfolioData = {
   },
   about: [
     "처음에는 사용자에게 보이지 않는 곳에서 데이터와 복잡한 로직을 처리하는 백엔드에 매력을 느꼈습니다. 이후 프론트엔드를 담당하며 기능은 정상적으로 동작하는 것만으로 충분하지 않고, 사용자가 상태와 결과를 이해할 수 있는 형태로 전달되어야 한다는 점을 배웠습니다.",
-    "이 경험을 통해 서비스를 개별 기능의 모음이 아니라 데이터와 로직, API와 화면이 맞물려 동작하는 하나의 흐름으로 보게 되었습니다. 한 영역의 구현에 자신을 고정하기보다 각 연결 지점이 사용자가 이해하고 신뢰할 수 있는 경험으로 이어지도록, 서비스 전체를 이해하고 연결하는 개발자를 지향합니다.",
-    "현재는 React·TypeScript 기반의 사용자 경험 구현을 중심축으로 삼고, 데이터 처리와 API, AI 파이프라인을 안정적으로 연결하는 역량을 넓혀가고 있습니다.",
+    "팀 프로젝트에서는 React·TypeScript로 화면과 API를 연결했습니다. 개인 프로젝트 미감에서는 서비스 기획과 UI 설계부터 Django REST Framework 기반 API, 전시 데이터 수집·통합까지 구현했습니다. 사용자가 필요한 정보를 찾고, 그 정보의 근거를 확인할 수 있는 서비스를 만드는 데 관심이 있습니다.",
+    "AI를 함께 문제를 풀어가는 동료로 생각합니다. 제가 정한 UI와 기능 요구사항을 바탕으로 설계안을 논의하고 작업을 나누어 구현합니다. 선택의 근거를 살피고 결과는 테스트·실제 데이터·화면에서 확인하며, 직접 만들어 보며 ‘Why not?’에 답합니다.",
   ],
   learningApproach: {
     title: "How I Learn",
@@ -498,6 +498,7 @@ export const portfolioData: PortfolioData = {
         "Ant Design",
         "Django Templates",
         "Streamlit",
+        "Figma",
       ],
     },
     {
@@ -513,7 +514,14 @@ export const portfolioData: PortfolioData = {
     },
     {
       title: "Backend & Data",
-      primary: ["Python", "Django", "pandas", "scikit-learn", "XGBoost"],
+      primary: [
+        "Python",
+        "Django REST Framework",
+        "SQLite",
+        "pandas",
+        "scikit-learn",
+        "XGBoost",
+      ],
       experience: [
         "FastAPI consumption",
         "MySQL/SQLite integration",

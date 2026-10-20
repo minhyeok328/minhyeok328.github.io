@@ -24,12 +24,12 @@ const projects = [
 ].map((project, index) => ({ ...project, order: index + 1 }));
 const usage = [
   [
-    "화면과 데이터를 연결합니다.",
-    "React·TypeScript를 중심으로 API 응답 검증과 상태 관리를 연결합니다.",
+    "화면부터 API까지 구현합니다.",
+    "React·TypeScript와 Django REST Framework로 화면·API를 구현하고, 응답 검증과 요청·오류 상태를 처리합니다.",
   ],
   [
-    "실패 상황까지 함께 다룹니다.",
-    "인증 만료, 요청 취소, 오류와 캐시 정리를 사용자 흐름 안에서 처리합니다.",
+    "출처가 다른 데이터를 통합합니다.",
+    "출처별 수집·정규화와 중복 병합 기준을 정하고, 원본·출처·충돌 기록을 보존합니다.",
   ],
   [
     "AI 흐름을 단계별로 구성합니다.",
@@ -339,9 +339,9 @@ export default function App() {
               <div className="about-grid">
                 <div className="about-heading">
                   <h3>
-                    전체의 흐름을 이해하고,
+                    일상의 불편을 발견하고,
                     <br />
-                    <span>하나의 경험으로 연결합니다.</span>
+                    <span>서비스로 구현합니다.</span>
                   </h3>
                 </div>
                 <div className="about-copy">
